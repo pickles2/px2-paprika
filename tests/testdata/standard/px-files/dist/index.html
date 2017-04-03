@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>HOME | px2-include-php-code</title>
+ 	</head>
+	<body>
+
+
+<!-- echo を実行するテスト -->
+<p><?php echo "echo in theme"; ?></p>
+
+
+<!-- include するテスト -->
+<?php include($_SERVER['DOCUMENT_ROOT'].'/common/includes/test.inc'); ?>
+
+
+<div class="contents">
+<!-- echo を実行するテスト -->
+<p><?php echo "echo in contents"; ?></p>
+</div>
+	</body>
+</html>

@@ -1,0 +1,39 @@
+{
+    "name": "tomk79/px2-webapp-fw-2.x",
+    "description": "Publishing Web Application with \"Pickles 2\".",
+    "keywords": ["pickles2","pickles"],
+    "license": "MIT",
+    "scripts":{
+        "test": [
+            "php ./vendor/phpunit/phpunit/phpunit"
+        ]
+    } ,
+    "authors": [
+        {
+            "name": "Tomoya Koyanagi",
+            "email": "tomk79@gmail.com"
+        }
+    ],
+    "repositories": [
+    ],
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "require-dev": {
+        "pickles2/px-fw-2.x": "2.0.*",
+        "pickles2/broccoli-module-fess": "0.1.*",
+        "pickles2/broccoli-module-plain-html-elements": "0.1.*",
+        "pickles2/px2-multitheme": "2.0.*",
+        "pickles2/px2-path-resolver": "2.0.*",
+        "pickles2/px2-px2dthelper": "2.0.*",
+        "pickles2/px2-remove-attr": "2.0.*",
+        "pickles2/px2-sitemapexcel": "2.0.*",
+        "phpunit/phpunit": "^4.1.0",
+        "phpdocumentor/phpdocumentor": "^2.7.0"
+    },
+    "autoload": {
+        "files": [
+            "php/main.php"
+        ]
+    }
+}
