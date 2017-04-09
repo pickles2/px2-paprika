@@ -19,7 +19,7 @@ while(1){
 }
 unset($tmp_path_autoload);
 
-$pxApp = new \tomk79\pickles2\px2_webapp_fw_2\pxApp();
+$pxApp = new \tomk79\pickles2\px2_webapp_fw_2\pxApp(json_decode("{\"test\":\"test\"}"));
 
 ?>
 <?php

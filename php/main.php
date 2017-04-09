@@ -17,6 +17,7 @@ class main{
 	/**
 	 * Starting function
 	 * @param object $px Picklesオブジェクト
+	 * @param object $json プラグイン設定オブジェクト
 	 */
 	public static function exec( $px, $json ){
 		$proc_type = $px->get_path_proc_type();
@@ -39,7 +40,7 @@ class main{
 	 * @param object $json プラグインオプション
 	 * @return string 加工後の出力コード
 	 */
-	public function apply($json){
+	public function apply($config){
 		$px = $this->px;
 		$proc_type = $this->px->get_path_proc_type();
 		$current_path = $this->px->req()->get_request_file_path();
@@ -51,7 +52,9 @@ class main{
 		$src = '';
 		if( $this->px->is_publish_tool() ){
 			// パブリッシュ時
-			$src .= file_get_contents( __DIR__.'/resources/dist_src/header.php' );
+			$template = file_get_contents( __DIR__.'/resources/dist_src/header.php.template' );
+			$template = str_replace( '{$config}', json_encode(json_encode($config)), $template );
+			$src .= $template;
 			$src .= file_get_contents( $realpath_script );
 
 			// 最終出力
@@ -74,7 +77,7 @@ class main{
 
 		}else{
 			// プレビュー時
-			$pxApp = new pxApp();
+			$pxApp = new pxApp($config);
 			include( $realpath_script );
 		}
 

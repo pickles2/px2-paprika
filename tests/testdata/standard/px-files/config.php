@@ -188,7 +188,9 @@ return call_user_func( function(){
 		'tomk79\pickles2\px2dthelper\main::register' ,
 
 		// PHPアプリケーションフレームワーク
-		'tomk79\pickles2\px2_webapp_fw_2\main::exec()' ,
+		'tomk79\pickles2\px2_webapp_fw_2\main::exec('.json_encode( array(
+			'test'=>'test'
+		) ).')' ,
 	);
 
 
