@@ -51,7 +51,7 @@ class main{
 			// --------------------
 			// パブリッシュ時
 			$template = file_get_contents( __DIR__.'/resources/dist_src/header.php.template' );
-			$template = str_replace( '{$config}', json_encode(json_encode($config)), $template );
+			$template = str_replace( '{$paprika_config}', json_encode(json_encode($config)), $template );
 			$src .= $template;
 			$src .= file_get_contents( $realpath_script );
 
@@ -76,7 +76,7 @@ class main{
 		}else{
 			// --------------------
 			// プレビュー時
-			$paprika = new paprika($config);
+			$paprika = new paprika($config, $this->px);
 			include( $realpath_script );
 		}
 
