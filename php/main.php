@@ -18,9 +18,12 @@ class main{
 	 * Starting function
 	 * @param object $px Picklesオブジェクト
 	 */
-	public static function exec( $px ){
-		$me = new self( $px );
-		$px->bowl()->each( array($me, 'apply') );
+	public static function exec( $px, $json ){
+		$proc_type = $px->get_path_proc_type();
+		if( $proc_type == 'php' ){
+			$me = new self( $px );
+			$me->apply($json);
+		}
 	}
 
 	/**
@@ -33,16 +36,46 @@ class main{
 
 	/**
 	 * apply output filter
-	 * @param string $src HTML, CSS, JavaScriptなどの出力コード
-	 * @param string $current_path コンテンツのカレントディレクトリパス
+	 * @param object $json プラグインオプション
 	 * @return string 加工後の出力コード
 	 */
-	public function apply($src, $current_path = null){
-		if( is_null($current_path) ){
-			$current_path = $this->px->req()->get_request_file_path();
+	public function apply($json){
+		$px = $this->px;
+		$proc_type = $this->px->get_path_proc_type();
+		$current_path = $this->px->req()->get_request_file_path();
+		$realpath_script = $this->px->fs()->get_realpath($this->px->get_realpath_docroot().$this->px->get_path_controot().$current_path);
+		// var_dump($proc_type);
+		// var_dump($current_path);
+		// var_dump($realpath_script);
+
+		$src = '';
+		if( $this->px->is_publish_tool() ){
+			// パブリッシュ時
+			$src = file_get_contents( $realpath_script );
+
+			// 最終出力
+			switch( $px->req()->get_cli_option('-o') ){
+				case 'json':
+					$json = new \stdClass;
+					$json->status = $px->get_status();
+					$json->message = $px->get_status_message();
+					$json->relatedlinks = $px->get_relatedlinks();
+					$json->errors = $px->get_errors();
+					$json->body_base64 = base64_encode($src);
+					$json->header = $px->header_list();
+					print json_encode($json);
+					break;
+				default:
+					print $src;
+					break;
+			}
+
+		}else{
+			// プレビュー時
+			include( $realpath_script );
 		}
 
-		return $src;
+		exit();
 	}
 
 }

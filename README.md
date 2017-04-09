@@ -21,7 +21,7 @@ Publishing Web Application with "Pickles 2".
 </IfModule>
 ```
 
-### `config.php` を開き、拡張子 `php` のプロセッサを登録します。
+### `config.php` を開き、プラグインを設定します。
 
 ```php
 <?php
@@ -44,9 +44,17 @@ return call_user_func( function(){
 	// ...中略...
 
 	// php 用のプロセッサを追加
-	$conf->funcs->processor->php = array(
+
+	/**
+	 * funcs: Before content
+	 */
+	$conf->funcs->before_content = array(
+		// ...中略...
+
 		// PHPアプリケーションフレームワーク
 		'tomk79\pickles2\px2_webapp_fw_2\main::exec()' ,
+
+		// ...中略...
 	);
 
 ```

@@ -186,6 +186,9 @@ return call_user_func( function(){
 
 		// PX=px2dthelper
 		'tomk79\pickles2\px2dthelper\main::register' ,
+
+		// PHPアプリケーションフレームワーク
+		'tomk79\pickles2\px2_webapp_fw_2\main::exec()' ,
 	);
 
 
@@ -230,11 +233,6 @@ return call_user_func( function(){
 
 		// output_encoding, output_eol_coding の設定に従ってエンコード変換する。
 		'picklesFramework2\processors\encodingconverter\encodingconverter::exec' ,
-	);
-
-	$conf->funcs->processor->php = array(
-		// PHPアプリケーションフレームワーク
-		'tomk79\pickles2\px2_webapp_fw_2\main::exec()' ,
 	);
 
 	$conf->funcs->processor->css = array(
@@ -283,8 +281,8 @@ return call_user_func( function(){
 		//       - false: 省略できるindexファイル名を削除
 		//       - null: そのまま (default)
 		'tomk79\pickles2\pathResolver\main::exec('.json_encode(array(
-			'to' => 'absolute' ,
-			'supply_index_filename' => false
+			'to' => 'relate' ,
+			'supply_index_filename' => true
 		)).')' ,
 
 	);

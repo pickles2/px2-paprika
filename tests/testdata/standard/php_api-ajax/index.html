@@ -1,2 +1,18 @@
 <p>DEMO: AJAX</p>
 <p><a href="./index_files/apis/sample.php" target="_blank">sample.php</a></p>
+<script type="text/javascript">
+$(window).on('load', function(e){
+    $.ajax({
+        'url': './index_files/apis/sample.php',
+        'success': function(data, dataType){
+            console.log(data, dataType);
+        },
+        'error': function(XMLHttpRequest, textStatus, errorThrown){
+            console.error(XMLHttpRequest, textStatus, errorThrown);
+        },
+        'complete': function(XMLHttpRequest, textStatus){
+            console.log(XMLHttpRequest, textStatus);
+        }
+    });
+})
+</script>
