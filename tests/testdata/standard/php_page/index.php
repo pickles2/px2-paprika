@@ -1,16 +1,4 @@
 <?php
-@header('Content-type: text/html');
-
-// -----------------------------------
-// require autoload.php
-if( is_file('../../../../vendor/autoload.php') ){
-	// is preview
-	require_once('../../../../vendor/autoload.php');
-}elseif( is_file('../../../../../vendor/autoload.php') ){
-	// is finalized
-	require_once('../../../../../vendor/autoload.php');
-}
-
 
 // -----------------------------------
 // テンプレートを取得する

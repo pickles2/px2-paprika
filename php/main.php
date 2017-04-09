@@ -51,9 +51,11 @@ class main{
 		$src = '';
 		if( $this->px->is_publish_tool() ){
 			// パブリッシュ時
-			$src = file_get_contents( $realpath_script );
+			$src .= file_get_contents( __DIR__.'/resources/dist_src/header.php' );
+			$src .= file_get_contents( $realpath_script );
 
 			// 最終出力
+			// (`pickles.php` からコピー)
 			switch( $px->req()->get_cli_option('-o') ){
 				case 'json':
 					$json = new \stdClass;
