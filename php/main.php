@@ -74,6 +74,7 @@ class main{
 
 		}else{
 			// プレビュー時
+			$pxApp = new pxApp();
 			include( $realpath_script );
 		}
 

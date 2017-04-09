@@ -18,11 +18,15 @@ while(1){
     continue;
 }
 unset($tmp_path_autoload);
+
+$pxApp = new \tomk79\pickles2\px2_webapp_fw_2\pxApp();
+
 ?>
 <?php
 // AJAX API の実装サンプル
 @header('Content-type: text/json');
 $obj = array();
 $obj['_SERVER'] = $_SERVER;
+$obj['pxApp'] = $pxApp;
 echo json_encode( $obj );
 exit;
