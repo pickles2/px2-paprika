@@ -1,2 +1,4 @@
 "* path","* content","* id","* title","* title_breadcrumb","* title_h1","* title_label","* title_full","* logical_path","* list_flg","* layout","* orderby","* keywords","* description","* category_top_flg","* role","* **delete_flg"
 "/index.html",,,"HOME",,,,,,1,,,,,,,
+"/php_page/index.php",,,"PHPで実行するページのテスト",,,,,,1,,,,,,,
+"/php_api-ajax/index.html",,,"PHPによるAPIにAJAX通信するページのテスト",,,,,,1,,,,,,,

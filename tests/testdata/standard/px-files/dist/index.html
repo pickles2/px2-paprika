@@ -2,22 +2,15 @@
 <html>
 	<head>
 		<meta charset="UTF-8" />
-		<title>HOME | px2-include-php-code</title>
+		<title>HOME | px2-webapp-fw-2.x</title>
  	</head>
 	<body>
-
-
-<!-- echo を実行するテスト -->
-<p><?php echo "echo in theme"; ?></p>
-
-
-<!-- include するテスト -->
-<?php include($_SERVER['DOCUMENT_ROOT'].'/common/includes/test.inc'); ?>
-
-
 <div class="contents">
-<!-- echo を実行するテスト -->
-<p><?php echo "echo in contents"; ?></p>
+<p>Welcome to Pickles 2.</p>
+
+<ul><li><a href="/php_page/index.php">PHPで実行するページのテスト</a></li>
+<li><a href="/php_api-ajax/">PHPによるAPIにAJAX通信するページのテスト</a></li>
+</ul>
 </div>
 	</body>
 </html>

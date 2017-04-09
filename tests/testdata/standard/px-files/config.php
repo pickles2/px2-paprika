@@ -99,6 +99,7 @@ return call_user_func( function(){
 
 		'*.html' => 'html' ,
 		'*.htm' => 'html' ,
+		'*.php' => 'php' ,
 		'*.css' => 'css' ,
 		'*.js' => 'js' ,
 		'*.png' => 'pass' ,
@@ -229,6 +230,11 @@ return call_user_func( function(){
 
 		// output_encoding, output_eol_coding の設定に従ってエンコード変換する。
 		'picklesFramework2\processors\encodingconverter\encodingconverter::exec' ,
+	);
+
+	$conf->funcs->processor->php = array(
+		// PHPアプリケーションフレームワーク
+		'tomk79\pickles2\px2_webapp_fw_2\main::exec()' ,
 	);
 
 	$conf->funcs->processor->css = array(
