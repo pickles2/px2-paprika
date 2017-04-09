@@ -16,7 +16,7 @@ while(1){
 }
 unset($tmp_path_autoload);
 
-$paprika = new \tomk79\pickles2\paprikaFramework2\paprika(json_decode("{}"), false);
+$paprika = new \tomk79\pickles2\paprikaFramework2\paprika(json_decode('{"path_controot":"/"}'), false);
 
 ?>
 <?php

@@ -24,6 +24,7 @@ class main{
 		if( $proc_type == 'php' ){
 			$me = new self( $px );
 			$config = json_decode('{}');
+			$config->path_controot = $px->get_path_controot();
 			$me->apply($config);
 		}
 	}
@@ -51,7 +52,7 @@ class main{
 			// --------------------
 			// パブリッシュ時
 			$template = file_get_contents( __DIR__.'/resources/dist_src/header.php.template' );
-			$template = str_replace( '{$paprika_config}', json_encode(json_encode($config)), $template );
+			$template = str_replace( '{$paprika_config}', escapeshellarg(json_encode($config,JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE)), $template );
 			$src .= $template;
 			$src .= file_get_contents( $realpath_script );
 
