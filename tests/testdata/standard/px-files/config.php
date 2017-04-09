@@ -13,9 +13,9 @@ return call_user_func( function(){
 	// project
 
 	/** サイト名 */
-	$conf->name = 'px2-webapp-fw-2.x';
+	$conf->name = 'Paprika Framework 2';
 	/** コピーライト表記 */
-	$conf->copyright = 'Pickles 2 Project';
+	$conf->copyright = 'Tomoya Koyanagi';
 	/** ドメイン(本番環境のドメイン) */
 	$conf->domain = null;
 	/** コンテンツルートディレクトリ */
@@ -187,9 +187,8 @@ return call_user_func( function(){
 		// PX=px2dthelper
 		'tomk79\pickles2\px2dthelper\main::register' ,
 
-		// PHPアプリケーションフレームワーク
-		'tomk79\pickles2\px2_webapp_fw_2\main::exec('.json_encode( array(
-			'test'=>'test'
+		// PHPアプリケーションフレームワーク "Paprika"
+		'tomk79\pickles2\paprikaFramework2\main::exec('.json_encode( array(
 		) ).')' ,
 	);
 

@@ -1,4 +1,4 @@
-# px2-webapp-fw-2.x
+# Paprika Framework 2 for Pickles 2
 Publishing Web Application with "Pickles 2".
 
 
@@ -52,7 +52,7 @@ return call_user_func( function(){
 		// ...中略...
 
 		// PHPアプリケーションフレームワーク
-		'tomk79\pickles2\px2_webapp_fw_2\main::exec()' ,
+		'tomk79\pickles2\paprikaFramework2\main::exec()' ,
 
 		// ...中略...
 	);

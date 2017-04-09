@@ -1,8 +1,8 @@
 <?php
 /**
- * px2-webapp-fw-2.x
+ * px2-paprika-fw-2.x
  */
-namespace tomk79\pickles2\px2_webapp_fw_2;
+namespace tomk79\pickles2\paprikaFramework2;
 
 /**
  * main.php
@@ -23,7 +23,8 @@ class main{
 		$proc_type = $px->get_path_proc_type();
 		if( $proc_type == 'php' ){
 			$me = new self( $px );
-			$me->apply($json);
+			$config = json_decode('{}');
+			$me->apply($config);
 		}
 	}
 
@@ -42,15 +43,12 @@ class main{
 	 */
 	public function apply($config){
 		$px = $this->px;
-		$proc_type = $this->px->get_path_proc_type();
-		$current_path = $this->px->req()->get_request_file_path();
-		$realpath_script = $this->px->fs()->get_realpath($this->px->get_realpath_docroot().$this->px->get_path_controot().$current_path);
-		// var_dump($proc_type);
-		// var_dump($current_path);
+		$realpath_script = $this->px->fs()->get_realpath($this->px->get_realpath_docroot().$this->px->get_path_controot().$this->px->req()->get_request_file_path());
 		// var_dump($realpath_script);
 
 		$src = '';
 		if( $this->px->is_publish_tool() ){
+			// --------------------
 			// パブリッシュ時
 			$template = file_get_contents( __DIR__.'/resources/dist_src/header.php.template' );
 			$template = str_replace( '{$config}', json_encode(json_encode($config)), $template );
@@ -76,8 +74,9 @@ class main{
 			}
 
 		}else{
+			// --------------------
 			// プレビュー時
-			$pxApp = new pxApp($config);
+			$paprika = new paprika($config);
 			include( $realpath_script );
 		}
 

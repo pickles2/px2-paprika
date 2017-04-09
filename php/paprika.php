@@ -1,13 +1,13 @@
 <?php
 /**
- * Pickles Application Framework
+ * Pickles 2 - Paprika Framework
  */
-namespace tomk79\pickles2\px2_webapp_fw_2;
+namespace tomk79\pickles2\paprikaFramework2;
 
 /**
- * pxApp.php
+ * paprika.php
  */
-class pxApp{
+class paprika{
 
 	/** config object */
 	private $conf;

@@ -3,7 +3,7 @@
 @header('Content-type: text/json');
 $obj = array();
 $obj['_SERVER'] = $_SERVER;
-$obj['pxApp'] = $pxApp;
-$obj['pxAppConf'] = $pxApp->conf();
+$obj['paprika'] = $paprika;
+$obj['paprikaConf'] = $paprika->conf();
 echo json_encode( $obj );
 exit;

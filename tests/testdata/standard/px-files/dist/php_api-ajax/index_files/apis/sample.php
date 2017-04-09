@@ -19,7 +19,7 @@ while(1){
 }
 unset($tmp_path_autoload);
 
-$pxApp = new \tomk79\pickles2\px2_webapp_fw_2\pxApp(json_decode("{\"test\":\"test\"}"));
+$paprika = new \tomk79\pickles2\paprikaFramework2\paprika(json_decode("{}"));
 
 ?>
 <?php
@@ -27,7 +27,7 @@ $pxApp = new \tomk79\pickles2\px2_webapp_fw_2\pxApp(json_decode("{\"test\":\"tes
 @header('Content-type: text/json');
 $obj = array();
 $obj['_SERVER'] = $_SERVER;
-$obj['pxApp'] = $pxApp;
-$obj['pxAppConf'] = $pxApp->conf();
+$obj['paprika'] = $paprika;
+$obj['paprikaConf'] = $paprika->conf();
 echo json_encode( $obj );
 exit;
