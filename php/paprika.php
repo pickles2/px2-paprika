@@ -46,11 +46,11 @@ class paprika{
 		$tpl = '';
 		if( $this->px ){
 			// is preview
-			// $px が存在する場合は、プレビュー環境だと判断。
+			// `$this->px` が存在する場合は、プレビュー環境だと判断。
 			$tpl = $this->px->internal_sub_request($path_tpl);
 		}else{
 			// is finalized
-			// .px_execute.php が存在しなければ、パブリッシュ後の実行であると判断。
+			// `$this->px` が存在しなければ、パブリッシュ後の実行であると判断。
 			$tpl = file_get_contents( $_SERVER['DOCUMENT_ROOT'].$this->conf->path_controot.$path_tpl );
 		}
 
