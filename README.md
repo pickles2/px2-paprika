@@ -4,7 +4,34 @@ Publishing Web Application with "Pickles 2".
 
 ## Setup - セットアップ手順
 
-### `.htaccess` を開き、 RewriteCond の条件に 拡張子 `.php` を追加します。
+### [Pickles 2 プロジェクト](http://pickles2.pxt.jp/) をセットアップ
+
+### `composer.json` に、パッケージ情報を追加
+
+```
+{
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/tomk79/px2-paprika-fw-2.x.git"
+        }
+    ],
+    "require": {
+        "tomk79/px2-paprika-fw-2.x": "dev-master"
+    }
+}
+```
+
+### `composer update` を実行
+
+更新したパッケージ情報を反映します。
+
+```
+$ composer update
+```
+
+
+### `.htaccess` を開き、 `RewriteCond` の条件に 拡張子 `.php` を追加
 
 ```
 #-------------------------
@@ -21,7 +48,7 @@ Publishing Web Application with "Pickles 2".
 </IfModule>
 ```
 
-### `px-files/config.php` を開き、プラグインを設定します。
+### `px-files/config.php` を開き、プラグインを設定
 
 ```php
 <?php
@@ -59,7 +86,7 @@ return call_user_func( function(){
 
 ```
 
-### `px-files/config_paprika.php` を作成し、 Paprika Framework 2 を設定します。
+### `px-files/config_paprika.php` を作成し、 Paprika Framework 2 を設定
 
 ```php
 <?php
