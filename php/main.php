@@ -23,20 +23,7 @@ class main{
 		$proc_type = $px->get_path_proc_type();
 		if( $proc_type == 'php' ){
 			$me = new self( $px );
-			$config = json_decode('{}');
-			$config->path_controot = $px->get_path_controot();
-
-			// config for $fs
-			$config->file_default_permission = $px->conf()->file_default_permission;
-			$config->dir_default_permission = $px->conf()->dir_default_permission;
-			$config->filesystem_encoding = $px->conf()->filesystem_encoding;
-
-			// config for $req
-			$config->session_name = $px->conf()->session_name;
-			$config->session_expire = $px->conf()->session_expire;
-			$config->directory_index = $px->conf()->directory_index;
-
-			$me->apply($config);
+			$me->apply($json);
 		}
 	}
 
@@ -50,18 +37,49 @@ class main{
 
 	/**
 	 * apply output filter
-	 * @param object $json プラグインオプション
+	 * @param object $json プラグイン設定
 	 * @return string 加工後の出力コード
 	 */
-	public function apply($config){
+	public function apply($json){
 		$px = $this->px;
 		$realpath_script = $this->px->fs()->get_realpath($this->px->get_realpath_docroot().$this->px->get_path_controot().$this->px->req()->get_request_file_path());
 		// var_dump($realpath_script);
+
+		// making config object
+		$config = json_decode('{}');
+
+		// config for $fs
+		$config->file_default_permission = $px->conf()->file_default_permission;
+		$config->dir_default_permission = $px->conf()->dir_default_permission;
+		$config->filesystem_encoding = $px->conf()->filesystem_encoding;
+
+		// config for $req
+		$config->session_name = $px->conf()->session_name;
+		$config->session_expire = $px->conf()->session_expire;
+		$config->directory_index = $px->conf()->directory_index;
+
+		// 内部パス情報
+		$config->realpath_controot = $px->fs()->get_relatedpath(
+			$px->get_realpath_docroot().$px->get_path_controot(),
+			$realpath_script
+		);
+		$config->realpath_homedir = $px->fs()->get_relatedpath(
+			$px->get_realpath_homedir(),
+			$realpath_script
+		);
+		$config->path_controot = $px->get_path_controot();
 
 		$src = '';
 		if( $this->px->is_publish_tool() ){
 			// --------------------
 			// パブリッシュ時
+
+			// 内部パス情報の再計算
+			$config->realpath_homedir = $px->fs()->get_relatedpath(
+				$px->get_realpath_homedir(),
+				$px->fs()->get_realpath($this->px->conf()->path_publish_dir.$this->px->get_path_controot().$this->px->req()->get_request_file_path())
+			);
+
 			$template = file_get_contents( __DIR__.'/resources/dist_src/header.php.template' );
 			$template = str_replace( '{$paprika_config}', escapeshellarg(json_encode($config,JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE)), $template );
 			$src .= $template;
