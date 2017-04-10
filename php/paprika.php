@@ -16,6 +16,12 @@ class paprika{
 	private $px;
 
 	/**
+	 * オブジェクト
+	 * @access private
+	 */
+	private $fs, $req;
+
+	/**
 	 * constructor
 	 * @param object $conf Paprika Config
 	 * @param object $px Picklesオブジェクト (プレビュー時は `$px` オブジェクト、パブリッシュ後には `false` を受け取ります)
@@ -24,8 +30,54 @@ class paprika{
 		$this->conf = $conf;
 		$this->px = $px; // パブリッシュ後には `false` を受け取ります。
 
+		// initialize PHP
+		if( !extension_loaded( 'mbstring' ) ){
+			trigger_error('mbstring not loaded.');
+		}
+		if( is_callable('mb_internal_encoding') ){
+			mb_internal_encoding('UTF-8');
+			@ini_set( 'mbstring.internal_encoding' , 'UTF-8' );
+			@ini_set( 'mbstring.http_input' , 'UTF-8' );
+			@ini_set( 'mbstring.http_output' , 'UTF-8' );
+		}
+		@ini_set( 'default_charset' , 'UTF-8' );
+		if( is_callable('mb_detect_order') ){
+			@ini_set( 'mbstring.detect_order' , 'UTF-8,SJIS-win,eucJP-win,SJIS,EUC-JP,JIS,ASCII' );
+			mb_detect_order( 'UTF-8,SJIS-win,eucJP-win,SJIS,EUC-JP,JIS,ASCII' );
+		}
+		@header_remove('X-Powered-By');
+
+		if( !array_key_exists( 'REMOTE_ADDR' , $_SERVER ) ){
+			// commandline only
+			if( realpath($_SERVER['SCRIPT_FILENAME']) === false ||
+				dirname(realpath($_SERVER['SCRIPT_FILENAME'])) !== realpath('./')
+			){
+				if( array_key_exists( 'PWD' , $_SERVER ) && is_file($_SERVER['PWD'].'/'.$_SERVER['SCRIPT_FILENAME']) ){
+					$_SERVER['SCRIPT_FILENAME'] = realpath($_SERVER['PWD'].'/'.$_SERVER['SCRIPT_FILENAME']);
+				}else{
+					// for Windows
+					// .px_execute.php で chdir(__DIR__) されていることが前提。
+					$_SERVER['SCRIPT_FILENAME'] = realpath('./'.basename($_SERVER['SCRIPT_FILENAME']));
+				}
+			}
+		}
+
 		// デフォルトのHTTPレスポンスヘッダー
 		@header('Content-type: text/html');
+
+		// make instance $fs
+		$this->fs = new \tomk79\filesystem( json_decode( json_encode( array(
+			'file_default_permission' => @$this->conf->file_default_permission,
+			'dir_default_permission' => @$this->conf->dir_default_permission,
+			'filesystem_encoding' => @$this->conf->filesystem_encoding,
+		) ) ) );
+
+		// make instance $req
+		$this->req = new \tomk79\request( json_decode( json_encode( array(
+			'session_name' => @$this->conf->session_name,
+			'session_expire' => @$this->conf->session_expire,
+			'directory_index_primary' => @$this->conf->directory_index[0],
+		) ) ) );
 	}
 
 	/**
@@ -34,6 +86,30 @@ class paprika{
 	 */
 	public function conf(){
 		return $this->conf;
+	}
+
+	/**
+	 * `$fs` オブジェクトを取得する。
+	 *
+	 * `$fs`(class [tomk79\filesystem](tomk79.filesystem.html))のインスタンスを返します。
+	 *
+	 * @see https://github.com/tomk79/filesystem
+	 * @return object $fs オブジェクト
+	 */
+	public function fs(){
+		return $this->fs;
+	}
+
+	/**
+	 * `$req` オブジェクトを取得する。
+	 *
+	 * `$req`(class [tomk79\request](tomk79.request.html))のインスタンスを返します。
+	 *
+	 * @see https://github.com/tomk79/request
+	 * @return object $req オブジェクト
+	 */
+	public function req(){
+		return $this->req;
 	}
 
 	/**

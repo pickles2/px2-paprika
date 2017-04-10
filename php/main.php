@@ -25,6 +25,17 @@ class main{
 			$me = new self( $px );
 			$config = json_decode('{}');
 			$config->path_controot = $px->get_path_controot();
+
+			// config for $fs
+			$config->file_default_permission = $px->conf()->file_default_permission;
+			$config->dir_default_permission = $px->conf()->dir_default_permission;
+			$config->filesystem_encoding = $px->conf()->filesystem_encoding;
+
+			// config for $req
+			$config->session_name = $px->conf()->session_name;
+			$config->session_expire = $px->conf()->session_expire;
+			$config->directory_index = $px->conf()->directory_index;
+
 			$me->apply($config);
 		}
 	}
@@ -77,6 +88,7 @@ class main{
 		}else{
 			// --------------------
 			// プレビュー時
+			chdir( dirname($realpath_script) );
 			$paprika = new paprika($config, $this->px);
 			include( $realpath_script );
 		}
