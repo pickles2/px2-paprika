@@ -32,6 +32,7 @@ class paprika{
 	public function __construct( $paprika_plugin_conf, $px ){
 		$this->paprika_plugin_conf = $paprika_plugin_conf;
 		$this->px = $px; // パブリッシュ後には `false` を受け取ります。
+		// var_dump($this->paprika_plugin_conf);
 
 		// initialize PHP
 		if( !extension_loaded( 'mbstring' ) ){
@@ -102,6 +103,7 @@ class paprika{
 			'session_name' => @$this->paprika_plugin_conf->session_name,
 			'session_expire' => @$this->paprika_plugin_conf->session_expire,
 			'directory_index_primary' => @$this->paprika_plugin_conf->directory_index[0],
+			'cookie_default_path' => @$this->paprika_plugin_conf->path_controot,
 		) ) ) );
 	}
 
