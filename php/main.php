@@ -63,6 +63,7 @@ class main{
 			$px->get_realpath_docroot().$px->get_path_controot(),
 			$realpath_script
 		);
+		$config->realpath_controot_preview = $config->realpath_controot;
 		$config->realpath_homedir = $px->fs()->get_relatedpath(
 			$px->get_realpath_homedir(),
 			$realpath_script
@@ -75,6 +76,10 @@ class main{
 			// パブリッシュ時
 
 			// 内部パス情報の再計算
+			$config->realpath_controot_preview = $px->fs()->get_relatedpath(
+				$px->get_realpath_docroot().$px->get_path_controot(),
+				$px->fs()->get_realpath($this->px->conf()->path_publish_dir.$this->px->get_path_controot().$this->px->req()->get_request_file_path())
+			);
 			$config->realpath_homedir = $px->fs()->get_relatedpath(
 				$px->get_realpath_homedir(),
 				$px->fs()->get_realpath($this->px->conf()->path_publish_dir.$this->px->get_path_controot().$this->px->req()->get_request_file_path())

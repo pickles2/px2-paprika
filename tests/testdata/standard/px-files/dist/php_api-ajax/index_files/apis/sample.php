@@ -16,16 +16,25 @@ while(1){
 }
 unset($tmp_path_autoload);
 
-$paprika = new \tomk79\pickles2\paprikaFramework2\paprika(json_decode('{"file_default_permission":"775","dir_default_permission":"775","filesystem_encoding":"UTF-8","session_name":"PXSID","session_expire":1800,"directory_index":["index.html"],"realpath_controot":"../../../","realpath_homedir":"../../../../","path_controot":"/"}'), false);
+$paprika = new \tomk79\pickles2\paprikaFramework2\paprika(json_decode('{"file_default_permission":"775","dir_default_permission":"775","filesystem_encoding":"UTF-8","session_name":"PXSID","session_expire":1800,"directory_index":["index.html"],"realpath_controot":"../../../","realpath_controot_preview":"../../../../../","realpath_homedir":"../../../../","path_controot":"/"}'), false);
 
 ?>
 <?php
 // AJAX API の実装サンプル
 @header('Content-type: text/json');
+
+
+$pdo = new PDO(
+    $paprika->conf()->database->dbms.':'.$paprika->conf()->database->host,
+    null,
+    null,
+    array(\PDO::ATTR_PERSISTENT => false)
+);
+
 $obj = array();
 $obj['_SERVER'] = $_SERVER;
 $obj['paprika'] = $paprika;
 $obj['paprikaConf'] = $paprika->conf();
-$obj['realpath_current_dir'] = $paprika->fs()->get_realpath('.');
+$obj['realpath_current_dir'] = $paprika->fs()->get_realpath('./');
 echo json_encode( $obj );
 exit;

@@ -68,18 +68,34 @@ class paprika{
 		// デフォルトのHTTPレスポンスヘッダー
 		@header('Content-type: text/html');
 
-		// Paprika の設定を読み込む
-		$this->conf = new \stdClass;
-		if( @is_file( $this->paprika_plugin_conf->realpath_homedir.'config_paprika.php' ) ){
-			$this->conf = include( $this->paprika_plugin_conf->realpath_homedir.DIRECTORY_SEPARATOR.'config_paprika.php' );
-		}
-
 		// make instance $fs
 		$this->fs = new \tomk79\filesystem( json_decode( json_encode( array(
 			'file_default_permission' => @$this->paprika_plugin_conf->file_default_permission,
 			'dir_default_permission' => @$this->paprika_plugin_conf->dir_default_permission,
 			'filesystem_encoding' => @$this->paprika_plugin_conf->filesystem_encoding,
 		) ) ) );
+
+		// パス系設定の解釈
+		$this->paprika_plugin_conf->realpath_controot = $this->fs->get_realpath($this->paprika_plugin_conf->realpath_controot);
+		$this->paprika_plugin_conf->realpath_controot_preview = $this->fs->get_realpath($this->paprika_plugin_conf->realpath_controot_preview);
+		$this->paprika_plugin_conf->realpath_homedir = $this->fs->get_realpath($this->paprika_plugin_conf->realpath_homedir);
+
+		// Paprika の設定を読み込む
+		$this->conf = new \stdClass;
+		if( @is_file( $this->paprika_plugin_conf->realpath_homedir.'config_paprika.php' ) ){
+			$tmp_cd = $this->fs->get_realpath('./');
+			chdir($this->paprika_plugin_conf->realpath_controot_preview);
+
+			$this->conf = include( $this->paprika_plugin_conf->realpath_homedir.'config_paprika.php' );
+
+			// パス系設定の解釈
+			if($this->conf->database->dbms == 'sqlite' || $this->conf->database->dbms == 'sqlite2'){
+				$this->conf->database->host = $this->fs->get_realpath($this->conf->database->host);
+			}
+			chdir($tmp_cd);
+			unset($tmp_cd);
+		}
+
 
 		// make instance $req
 		$this->req = new \tomk79\request( json_decode( json_encode( array(
