@@ -9,7 +9,10 @@ namespace tomk79\pickles2\paprikaFramework2;
  */
 class paprika{
 
-	/** config object */
+	/** Plugin config object */
+	private $paprika_plugin_conf;
+
+	/** Paprika config object */
 	private $conf;
 
 	/** Pickles Framework 2 Object */
@@ -23,11 +26,11 @@ class paprika{
 
 	/**
 	 * constructor
-	 * @param object $conf Paprika Config
+	 * @param object $paprika_plugin_conf Paprika Plugin Config
 	 * @param object $px Picklesオブジェクト (プレビュー時は `$px` オブジェクト、パブリッシュ後には `false` を受け取ります)
 	 */
-	public function __construct( $conf, $px ){
-		$this->conf = $conf;
+	public function __construct( $paprika_plugin_conf, $px ){
+		$this->paprika_plugin_conf = $paprika_plugin_conf;
 		$this->px = $px; // パブリッシュ後には `false` を受け取ります。
 
 		// initialize PHP
@@ -65,18 +68,24 @@ class paprika{
 		// デフォルトのHTTPレスポンスヘッダー
 		@header('Content-type: text/html');
 
+		// Paprika の設定を読み込む
+		$this->conf = new \stdClass;
+		if( @is_file( $this->paprika_plugin_conf->realpath_homedir.'config_paprika.php' ) ){
+			$this->conf = include( $this->paprika_plugin_conf->realpath_homedir.DIRECTORY_SEPARATOR.'config_paprika.php' );
+		}
+
 		// make instance $fs
 		$this->fs = new \tomk79\filesystem( json_decode( json_encode( array(
-			'file_default_permission' => @$this->conf->file_default_permission,
-			'dir_default_permission' => @$this->conf->dir_default_permission,
-			'filesystem_encoding' => @$this->conf->filesystem_encoding,
+			'file_default_permission' => @$this->paprika_plugin_conf->file_default_permission,
+			'dir_default_permission' => @$this->paprika_plugin_conf->dir_default_permission,
+			'filesystem_encoding' => @$this->paprika_plugin_conf->filesystem_encoding,
 		) ) ) );
 
 		// make instance $req
 		$this->req = new \tomk79\request( json_decode( json_encode( array(
-			'session_name' => @$this->conf->session_name,
-			'session_expire' => @$this->conf->session_expire,
-			'directory_index_primary' => @$this->conf->directory_index[0],
+			'session_name' => @$this->paprika_plugin_conf->session_name,
+			'session_expire' => @$this->paprika_plugin_conf->session_expire,
+			'directory_index_primary' => @$this->paprika_plugin_conf->directory_index[0],
 		) ) ) );
 	}
 

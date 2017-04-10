@@ -21,7 +21,7 @@ Publishing Web Application with "Pickles 2".
 </IfModule>
 ```
 
-### `config.php` を開き、プラグインを設定します。
+### `px-files/config.php` を開き、プラグインを設定します。
 
 ```php
 <?php
@@ -57,6 +57,27 @@ return call_user_func( function(){
 		// ...中略...
 	);
 
+```
+
+### `px-files/config_paprika.php` を作成し、 Paprika Framework 2 を設定します。
+
+```php
+<?php
+/**
+ * config_paprika.php template
+ */
+return call_user_func( function(){
+
+	// initialize
+
+	/** コンフィグオブジェクト */
+	$conf_paprika = new stdClass;
+
+	/** database setting */
+	$conf_paprika->database = new stdClass;
+
+	return $conf_paprika;
+} );
 ```
 
 
