@@ -6,7 +6,7 @@ Publishing Web Application with "Pickles 2".
 
 ### [Pickles 2 プロジェクト](http://pickles2.pxt.jp/) をセットアップ
 
-### `composer.json` に、パッケージ情報を追加
+### 1. `composer.json` に、パッケージ情報を追加
 
 ```
 {
@@ -22,7 +22,7 @@ Publishing Web Application with "Pickles 2".
 }
 ```
 
-### `composer update` を実行
+### 2. `composer update` を実行
 
 更新したパッケージ情報を反映します。
 
@@ -31,7 +31,7 @@ $ composer update
 ```
 
 
-### `.htaccess` を開き、 `RewriteCond` の条件に 拡張子 `.php` を追加
+### 3. `.htaccess` を開き、 `RewriteCond` の条件に 拡張子 `.php` を追加
 
 ```
 #-------------------------
@@ -48,7 +48,7 @@ $ composer update
 </IfModule>
 ```
 
-### `px-files/config.php` を開き、プラグインを設定
+### 4. `px-files/config.php` を開き、プラグインを設定
 
 ```php
 <?php
@@ -70,7 +70,13 @@ return call_user_func( function(){
 
 	// ...中略...
 
-	// php 用のプロセッサを追加
+	// 拡張子 `*.php` で、サイトマップを有効化
+	$conf->paths_enable_sitemap = array(
+		// ...中略...
+		'*.php', // <- add
+	);
+
+	// before content 処理を設定
 
 	/**
 	 * funcs: Before content
@@ -84,9 +90,19 @@ return call_user_func( function(){
 		// ...中略...
 	);
 
+	// php 用のプロセッサを追加
+
+	/**
+	 * processor
+	 */
+	$conf->funcs->processor->php = array(
+		// html のデフォルトの処理を追加
+		$conf->funcs->processor->html ,
+	);
+
 ```
 
-### `px-files/config_paprika.php` を作成し、 Paprika Framework 2 を設定
+### 5. `px-files/config_paprika.php` を作成し、 Paprika Framework 2 を設定
 
 ```php
 <?php

@@ -41,6 +41,12 @@ class main{
 	 * @return string 加工後の出力コード
 	 */
 	public function apply($json){
+		if($this->px->req()->get_param('PX') == 'paprika.publish_template'){
+			// PX=paprika.publish_template は、テンプレートソースを出力するリクエストにつけられるパラメータ。
+			// テンプレート生成時には、通常のHTMLと同様に振る舞うべきなので、処理をしない。
+			return;
+		}
+
 		$px = $this->px;
 		$realpath_script = $this->px->fs()->get_realpath($this->px->get_realpath_docroot().$this->px->get_path_controot().$this->px->req()->get_request_file_path());
 		// var_dump($realpath_script);

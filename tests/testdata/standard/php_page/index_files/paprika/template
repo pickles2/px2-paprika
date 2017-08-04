@@ -45,7 +45,7 @@
 					</div>
 					<div class="col-sm-3">
 						<nav class="theme_common_navi">
-							<p><a href="/php_page/index_files/templates/">PHPで実行</a></p>
+							<p><a href="/php_page/index.php">PHPで実行</a></p>
 						</nav>
 					</div>
 				</div><!-- /.row -->

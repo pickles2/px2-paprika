@@ -123,6 +123,7 @@ return call_user_func( function(){
 	$conf->paths_enable_sitemap = array(
 		'*.html',
 		'*.htm',
+		'*.php',
 	);
 
 
@@ -250,6 +251,11 @@ return call_user_func( function(){
 		// Markdown文法を処理する
 		'picklesFramework2\processors\md\ext::exec' ,
 
+		// html のデフォルトの処理を追加
+		$conf->funcs->processor->html ,
+	);
+
+	$conf->funcs->processor->php = array(
 		// html のデフォルトの処理を追加
 		$conf->funcs->processor->html ,
 	);

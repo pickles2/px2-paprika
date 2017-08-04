@@ -139,31 +139,31 @@ class paprika{
 		return $this->req;
 	}
 
-	/**
-	 * テンプレートにコンテンツをバインドする
-	 * @return string 完成したHTML
-	 */
-	public function bind_template($contents, $path_tpl){
-		// -----------------------------------
-		// テンプレートを取得する
-		$tpl = '';
-		if( $this->px ){
-			// is preview
-			// `$this->px` が存在する場合は、プレビュー環境だと判断。
-			$tpl = $this->px->internal_sub_request($path_tpl);
-		}else{
-			// is finalized
-			// `$this->px` が存在しなければ、パブリッシュ後の実行であると判断。
-			$tpl = file_get_contents( $this->paprika_plugin_conf->realpath_controot.$path_tpl );
-		}
-
-		// -----------------------------------
-		// テンプレートにHTMLをバインドする
-		foreach($contents as $search=>$content){
-			$tpl = str_replace( $search, $content, $tpl );
-		}
-
-		return $tpl;
-	}
+	// /**
+	//  * テンプレートにコンテンツをバインドする
+	//  * @return string 完成したHTML
+	//  */
+	// public function bind_template($contents, $path_tpl){
+	// 	// -----------------------------------
+	// 	// テンプレートを取得する
+	// 	$tpl = '';
+	// 	if( $this->px ){
+	// 		// is preview
+	// 		// `$this->px` が存在する場合は、プレビュー環境だと判断。
+	// 		$tpl = $this->px->internal_sub_request($path_tpl);
+	// 	}else{
+	// 		// is finalized
+	// 		// `$this->px` が存在しなければ、パブリッシュ後の実行であると判断。
+	// 		$tpl = file_get_contents( $this->paprika_plugin_conf->realpath_controot.$path_tpl );
+	// 	}
+	//
+	// 	// -----------------------------------
+	// 	// テンプレートにHTMLをバインドする
+	// 	foreach($contents as $search=>$content){
+	// 		$tpl = str_replace( $search, $content, $tpl );
+	// 	}
+	//
+	// 	return $tpl;
+	// }
 
 }
