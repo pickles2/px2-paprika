@@ -154,7 +154,7 @@ class paprika{
 		}else{
 			// is finalized
 			// `$this->px` が存在しなければ、パブリッシュ後の実行であると判断。
-			$tpl = file_get_contents( $_SERVER['DOCUMENT_ROOT'].$this->conf->path_controot.$path_tpl );
+			$tpl = file_get_contents( $this->paprika_plugin_conf->realpath_controot.$path_tpl );
 		}
 
 		// -----------------------------------
