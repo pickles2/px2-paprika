@@ -141,31 +141,39 @@ class paprika{
 		return $this->req;
 	}
 
-	// /**
-	//  * テンプレートにコンテンツをバインドする
-	//  * @return string 完成したHTML
-	//  */
-	// public function bind_template($contents, $path_tpl){
-	// 	// -----------------------------------
-	// 	// テンプレートを取得する
-	// 	$tpl = '';
-	// 	if( $this->px ){
-	// 		// is preview
-	// 		// `$this->px` が存在する場合は、プレビュー環境だと判断。
-	// 		$tpl = $this->px->internal_sub_request($path_tpl);
-	// 	}else{
-	// 		// is finalized
-	// 		// `$this->px` が存在しなければ、パブリッシュ後の実行であると判断。
-	// 		$tpl = file_get_contents( $this->paprika_plugin_conf->realpath_controot.$path_tpl );
-	// 	}
-	//
-	// 	// -----------------------------------
-	// 	// テンプレートにHTMLをバインドする
-	// 	foreach($contents as $search=>$content){
-	// 		$tpl = str_replace( $search, $content, $tpl );
-	// 	}
-	//
-	// 	return $tpl;
-	// }
+	/**
+	 * テンプレートにコンテンツをバインドする
+	 * @param array $contents 埋め込みキーワードをキーに、置き換えるコードを値に持つ連想配列。
+	 * @return string 完成したHTML
+	 */
+	public function bind_template($contents){
+		$realpath_tpl = $this->paprika_plugin_conf->realpath_files.'paprika/template';
+
+		// -----------------------------------
+		// テンプレートを生成する
+		if( $this->px ){
+			$current_page_path = $this->px->req()->get_request_file_path();
+			$tpl = $this->px->internal_sub_request(
+				$current_page_path.'?PX=paprika.publish_template',
+				array(
+					'user_agent'=>'PicklesCrawler'
+				)
+			);
+			$this->fs()->mkdir_r( dirname($realpath_tpl) );
+			$this->fs()->save_file( $realpath_tpl, $tpl );
+		}
+
+		// -----------------------------------
+		// テンプレートを取得する
+		$tpl = $this->fs()->read_file( $realpath_tpl );
+
+		// -----------------------------------
+		// テンプレートにHTMLをバインドする
+		foreach($contents as $search=>$content){
+			$tpl = str_replace( $search, $content, $tpl );
+		}
+
+		return $tpl;
+	}
 
 }
