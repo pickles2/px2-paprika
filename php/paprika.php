@@ -86,6 +86,8 @@ class paprika{
 		if( @is_file( $this->paprika_plugin_conf->realpath_homedir.'config_paprika.php' ) ){
 			$tmp_cd = $this->fs->get_realpath('./');
 			chdir($this->paprika_plugin_conf->realpath_controot_preview);
+				// config_paprika.php 内に設定されうる相対パスを解決するために、
+				// プレビュー環境(=パブリッシュ前)の Entry Script の起点に移動してから読み込む。
 
 			$this->conf = include( $this->paprika_plugin_conf->realpath_homedir.'config_paprika.php' );
 

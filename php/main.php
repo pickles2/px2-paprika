@@ -70,11 +70,16 @@ class main{
 			$realpath_script
 		);
 		$config->realpath_controot_preview = $config->realpath_controot;
+			// ↑プレビュー環境(パブリッシュ前)の controot を格納する。
 		$config->realpath_homedir = $px->fs()->get_relatedpath(
 			$px->get_realpath_homedir(),
 			$realpath_script
 		);
 		$config->path_controot = $px->get_path_controot();
+		$config->realpath_files = $px->fs()->get_relatedpath(
+			$px->realpath_files(),
+			$px->fs()->get_realpath($px->get_realpath_docroot().$px->get_path_controot().$this->px->req()->get_request_file_path())
+		);
 
 		$src = '';
 		if( $this->px->is_publish_tool() ){
