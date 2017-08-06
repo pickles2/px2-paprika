@@ -52,31 +52,31 @@ class main{
 		// var_dump($realpath_script);
 
 		// making config object
-		$config = json_decode('{}');
+		$paprika_env = json_decode('{}');
 
 		// config for $fs
-		$config->file_default_permission = $px->conf()->file_default_permission;
-		$config->dir_default_permission = $px->conf()->dir_default_permission;
-		$config->filesystem_encoding = $px->conf()->filesystem_encoding;
+		$paprika_env->file_default_permission = $px->conf()->file_default_permission;
+		$paprika_env->dir_default_permission = $px->conf()->dir_default_permission;
+		$paprika_env->filesystem_encoding = $px->conf()->filesystem_encoding;
 
 		// config for $req
-		$config->session_name = $px->conf()->session_name;
-		$config->session_expire = $px->conf()->session_expire;
-		$config->directory_index = $px->conf()->directory_index;
+		$paprika_env->session_name = $px->conf()->session_name;
+		$paprika_env->session_expire = $px->conf()->session_expire;
+		$paprika_env->directory_index = $px->conf()->directory_index;
 
 		// 内部パス情報
-		$config->realpath_controot = $px->fs()->get_relatedpath(
+		$paprika_env->realpath_controot = $px->fs()->get_relatedpath(
 			$px->get_realpath_docroot().$px->get_path_controot(),
 			$realpath_script
 		);
-		$config->realpath_controot_preview = $config->realpath_controot;
+		$paprika_env->realpath_controot_preview = $paprika_env->realpath_controot;
 			// ↑プレビュー環境(パブリッシュ前)の controot を格納する。
-		$config->realpath_homedir = $px->fs()->get_relatedpath(
+		$paprika_env->realpath_homedir = $px->fs()->get_relatedpath(
 			$px->get_realpath_homedir(),
 			$realpath_script
 		);
-		$config->path_controot = $px->get_path_controot();
-		$config->realpath_files = $px->fs()->get_relatedpath(
+		$paprika_env->path_controot = $px->get_path_controot();
+		$paprika_env->realpath_files = $px->fs()->get_relatedpath(
 			$px->realpath_files(),
 			$px->fs()->get_realpath($px->get_realpath_docroot().$px->get_path_controot().$this->px->req()->get_request_file_path())
 		);
@@ -87,17 +87,17 @@ class main{
 			// パブリッシュ時
 
 			// 内部パス情報の再計算
-			$config->realpath_controot_preview = $px->fs()->get_relatedpath(
+			$paprika_env->realpath_controot_preview = $px->fs()->get_relatedpath(
 				$px->get_realpath_docroot().$px->get_path_controot(),
 				$px->fs()->get_realpath($this->px->conf()->path_publish_dir.$this->px->get_path_controot().$this->px->req()->get_request_file_path())
 			);
-			$config->realpath_homedir = $px->fs()->get_relatedpath(
+			$paprika_env->realpath_homedir = $px->fs()->get_relatedpath(
 				$px->get_realpath_homedir(),
 				$px->fs()->get_realpath($this->px->conf()->path_publish_dir.$this->px->get_path_controot().$this->px->req()->get_request_file_path())
 			);
 
 			$template = file_get_contents( __DIR__.'/resources/dist_src/header.php.template' );
-			$template = str_replace( '{$paprika_config}', escapeshellarg(json_encode($config,JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE)), $template );
+			$template = str_replace( '{$paprika_env}', escapeshellarg(json_encode($paprika_env,JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE)), $template );
 			$src .= $template;
 			$src .= file_get_contents( $realpath_script );
 
@@ -123,7 +123,7 @@ class main{
 			// --------------------
 			// プレビュー時
 			chdir( dirname($realpath_script) );
-			$paprika = new paprika($config, $this->px);
+			$paprika = new paprika($paprika_env, $this->px);
 			include( $realpath_script );
 		}
 

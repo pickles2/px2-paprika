@@ -10,7 +10,7 @@ namespace tomk79\pickles2\paprikaFramework2;
 class paprika{
 
 	/** Plugin config object */
-	private $paprika_plugin_conf;
+	private $paprika_env;
 
 	/** Paprika config object */
 	private $conf;
@@ -26,13 +26,13 @@ class paprika{
 
 	/**
 	 * constructor
-	 * @param object $paprika_plugin_conf Paprika Plugin Config
+	 * @param object $paprika_env Paprika Plugin Config
 	 * @param object $px Picklesオブジェクト (プレビュー時は `$px` オブジェクト、パブリッシュ後には `false` を受け取ります)
 	 */
-	public function __construct( $paprika_plugin_conf, $px ){
-		$this->paprika_plugin_conf = $paprika_plugin_conf;
+	public function __construct( $paprika_env, $px ){
+		$this->paprika_env = $paprika_env;
 		$this->px = $px; // パブリッシュ後には `false` を受け取ります。
-		// var_dump($this->paprika_plugin_conf);
+		// var_dump($this->paprika_env);
 
 		// initialize PHP
 		if( !extension_loaded( 'mbstring' ) ){
@@ -71,25 +71,25 @@ class paprika{
 
 		// make instance $fs
 		$this->fs = new \tomk79\filesystem( json_decode( json_encode( array(
-			'file_default_permission' => @$this->paprika_plugin_conf->file_default_permission,
-			'dir_default_permission' => @$this->paprika_plugin_conf->dir_default_permission,
-			'filesystem_encoding' => @$this->paprika_plugin_conf->filesystem_encoding,
+			'file_default_permission' => @$this->paprika_env->file_default_permission,
+			'dir_default_permission' => @$this->paprika_env->dir_default_permission,
+			'filesystem_encoding' => @$this->paprika_env->filesystem_encoding,
 		) ) ) );
 
 		// パス系設定の解釈
-		$this->paprika_plugin_conf->realpath_controot = $this->fs->get_realpath($this->paprika_plugin_conf->realpath_controot);
-		$this->paprika_plugin_conf->realpath_controot_preview = $this->fs->get_realpath($this->paprika_plugin_conf->realpath_controot_preview);
-		$this->paprika_plugin_conf->realpath_homedir = $this->fs->get_realpath($this->paprika_plugin_conf->realpath_homedir);
+		$this->paprika_env->realpath_controot = $this->fs->get_realpath($this->paprika_env->realpath_controot);
+		$this->paprika_env->realpath_controot_preview = $this->fs->get_realpath($this->paprika_env->realpath_controot_preview);
+		$this->paprika_env->realpath_homedir = $this->fs->get_realpath($this->paprika_env->realpath_homedir);
 
 		// Paprika の設定を読み込む
 		$this->conf = new \stdClass;
-		if( @is_file( $this->paprika_plugin_conf->realpath_homedir.'config_paprika.php' ) ){
+		if( @is_file( $this->paprika_env->realpath_homedir.'config_paprika.php' ) ){
 			$tmp_cd = $this->fs->get_realpath('./');
-			chdir($this->paprika_plugin_conf->realpath_controot_preview);
+			chdir($this->paprika_env->realpath_controot_preview);
 				// config_paprika.php 内に設定されうる相対パスを解決するために、
 				// プレビュー環境(=パブリッシュ前)の Entry Script の起点に移動してから読み込む。
 
-			$this->conf = include( $this->paprika_plugin_conf->realpath_homedir.'config_paprika.php' );
+			$this->conf = include( $this->paprika_env->realpath_homedir.'config_paprika.php' );
 
 			// パス系設定の解釈
 			if($this->conf->database->dbms == 'sqlite' || $this->conf->database->dbms == 'sqlite2'){
@@ -102,10 +102,10 @@ class paprika{
 
 		// make instance $req
 		$this->req = new \tomk79\request( json_decode( json_encode( array(
-			'session_name' => @$this->paprika_plugin_conf->session_name,
-			'session_expire' => @$this->paprika_plugin_conf->session_expire,
-			'directory_index_primary' => @$this->paprika_plugin_conf->directory_index[0],
-			'cookie_default_path' => @$this->paprika_plugin_conf->path_controot,
+			'session_name' => @$this->paprika_env->session_name,
+			'session_expire' => @$this->paprika_env->session_expire,
+			'directory_index_primary' => @$this->paprika_env->directory_index[0],
+			'cookie_default_path' => @$this->paprika_env->path_controot,
 		) ) ) );
 	}
 
@@ -147,7 +147,7 @@ class paprika{
 	 * @return string 完成したHTML
 	 */
 	public function bind_template($contents){
-		$realpath_tpl = $this->paprika_plugin_conf->realpath_files.'paprika/template';
+		$realpath_tpl = $this->paprika_env->realpath_files.'paprika/template';
 
 		// -----------------------------------
 		// テンプレートを生成する

@@ -1,4 +1,7 @@
 <?php
+// chdir
+chdir(__DIR__);
+
 // autoload.php をロード
 $tmp_path_autoload = __DIR__;
 while(1){
