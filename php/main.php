@@ -124,6 +124,12 @@ class main{
 			// プレビュー時
 			chdir( dirname($realpath_script) );
 			$paprika = new paprika($paprika_env, $this->px);
+
+			// 環境変数を偽装
+			// ※ `$paprika` 内にもとの `$_SERVER` を記憶するため、 `$paprika` 生成後に偽装しないと壊れます。
+			$_SERVER['SCRIPT_NAME'] = $this->px->req()->get_request_file_path();
+			$_SERVER['SCRIPT_FILENAME'] = $realpath_script;
+
 			include( $realpath_script );
 		}
 

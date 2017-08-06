@@ -18,6 +18,9 @@ class paprika{
 	/** Pickles Framework 2 Object */
 	private $px;
 
+	/** $_SERVER のメモ */
+	private $SERVER_MEMO;
+
 	/**
 	 * オブジェクト
 	 * @access private
@@ -33,6 +36,8 @@ class paprika{
 		$this->paprika_env = $paprika_env;
 		$this->px = $px; // パブリッシュ後には `false` を受け取ります。
 		// var_dump($this->paprika_env);
+
+		$this->SERVER_MEMO = $_SERVER;
 
 		// initialize PHP
 		if( !extension_loaded( 'mbstring' ) ){
@@ -152,6 +157,7 @@ class paprika{
 		// -----------------------------------
 		// テンプレートを生成する
 		if( $this->px ){
+			$_SERVER = $this->SERVER_MEMO;
 			$current_page_path = $this->px->req()->get_request_file_path();
 			$tpl = $this->px->internal_sub_request(
 				$current_page_path.'?PX=paprika.publish_template',
@@ -161,6 +167,7 @@ class paprika{
 			);
 			$this->fs()->mkdir_r( dirname($realpath_tpl) );
 			$this->fs()->save_file( $realpath_tpl, $tpl );
+			$this->SERVER_MEMO = $_SERVER;
 		}
 
 		// -----------------------------------

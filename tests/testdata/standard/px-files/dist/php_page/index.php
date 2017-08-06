@@ -38,8 +38,13 @@ if( !isset($paprika) ){
 // 2. 出力するHTMLコンテンツを生成
 // あるいは、動的な処理を実装します。
 $content = '';
-$content .= '<p>テンプレート中の文字列 <code>{$main_contents}</code> を、HTMLコードに置き換えます。</p>'."\n";
-$content .= '<p>アプリケーションの動的な処理を実装することもできます。</p>'."\n";
+ob_start(); ?>
+<p>テンプレート中の文字列 <code>{$main_contents}</code> を、HTMLコードに置き換えます。</p>
+<p>アプリケーションの動的な処理を実装することもできます。</p>
+<pre><code><?= realpath( '.' ); ?></code></pre>
+<pre><code><?php var_dump( $_SERVER ); ?></code></pre>
+<?php
+$content .= ob_get_clean();
 
 // -----------------------------------
 // 3. テンプレートにバインド
