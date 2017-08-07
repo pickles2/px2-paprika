@@ -40,7 +40,7 @@ $ composer update
 
 	# ...中略...
 
-	RewriteCond %{REQUEST_URI} /(.*?\.(?:html|htm|css|js|php))?$
+	RewriteCond %{REQUEST_URI} /(.*?\.(?:html|htm|css|js|php(?:/.*)?))?$
 	RewriteRule ^(.*)$ \.px_execute\.php/$1 [L]
 
 	# ...中略...
@@ -63,7 +63,8 @@ return call_user_func( function(){
 	$conf->paths_proc_type = array(
 		// ...中略...
 
-		'*.php' => 'php' ,
+		'*.php' => 'php' , // <- add
+		'*.php/*' => 'php' , // <- add
 
 		// ...中略...
 	);
@@ -74,6 +75,7 @@ return call_user_func( function(){
 	$conf->paths_enable_sitemap = array(
 		// ...中略...
 		'*.php', // <- add
+		'*.php/*', // <- add
 	);
 
 	// before content 処理を設定

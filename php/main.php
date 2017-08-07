@@ -20,10 +20,12 @@ class main{
 	 * @param object $json プラグイン設定オブジェクト
 	 */
 	public static function exec( $px, $json ){
+		$path_req = $px->req()->get_request_file_path();
 		$proc_type = $px->get_path_proc_type();
-		if( $proc_type == 'php' ){
+		if( $proc_type == 'php' || preg_match('/\.php\//', $path_req) ){
 			$me = new self( $px );
 			$me->apply($json);
+			return;
 		}
 	}
 
@@ -40,7 +42,7 @@ class main{
 	 * @param object $json プラグイン設定
 	 * @return string 加工後の出力コード
 	 */
-	public function apply($json){
+	private function apply($json){
 		if($this->px->req()->get_param('PX') == 'paprika.publish_template'){
 			// PX=paprika.publish_template は、テンプレートソースを出力するリクエストにつけられるパラメータ。
 			// テンプレート生成時には、通常のHTMLと同様に振る舞うべきなので、処理をしない。
@@ -48,7 +50,15 @@ class main{
 		}
 
 		$px = $this->px;
-		$realpath_script = $this->px->fs()->get_realpath($this->px->get_realpath_docroot().$this->px->get_path_controot().$this->px->req()->get_request_file_path());
+		$current_page_info = array();
+		if( $px->site() ){
+			$current_page_info = $px->site()->get_current_page_info();
+		}
+		if( !strlen( @$current_page_info['content'] ) ){
+			$current_page_info['content'] = $this->px->req()->get_request_file_path();
+		}
+		$path_script = $this->px->fs()->get_realpath('/'.$this->px->get_path_controot().$current_page_info['content']);
+		$realpath_script = $this->px->fs()->get_realpath($this->px->get_realpath_docroot().$path_script);
 		// var_dump($realpath_script);
 
 		// making config object
@@ -78,7 +88,7 @@ class main{
 		$paprika_env->path_controot = $px->get_path_controot();
 		$paprika_env->realpath_files = $px->fs()->get_relatedpath(
 			$px->realpath_files(),
-			$px->fs()->get_realpath($px->get_realpath_docroot().$px->get_path_controot().$this->px->req()->get_request_file_path())
+			$realpath_script
 		);
 
 		$src = '';
@@ -89,11 +99,11 @@ class main{
 			// 内部パス情報の再計算
 			$paprika_env->realpath_controot_preview = $px->fs()->get_relatedpath(
 				$px->get_realpath_docroot().$px->get_path_controot(),
-				$px->fs()->get_realpath($this->px->conf()->path_publish_dir.$this->px->get_path_controot().$this->px->req()->get_request_file_path())
+				$px->fs()->get_realpath($this->px->conf()->path_publish_dir.$path_script)
 			);
 			$paprika_env->realpath_homedir = $px->fs()->get_relatedpath(
 				$px->get_realpath_homedir(),
-				$px->fs()->get_realpath($this->px->conf()->path_publish_dir.$this->px->get_path_controot().$this->px->req()->get_request_file_path())
+				$px->fs()->get_realpath($this->px->conf()->path_publish_dir.$path_script)
 			);
 
 			$template = file_get_contents( __DIR__.'/resources/dist_src/header.php.template' );
@@ -122,13 +132,22 @@ class main{
 		}else{
 			// --------------------
 			// プレビュー時
+			while( !is_file($realpath_script) ){
+				if( $realpath_script == dirname($realpath_script) ){
+					break;
+				}
+				$realpath_script = dirname($realpath_script);
+				// trigger_error( 'File "'.$realpath_script.'" is NOT exists.' );
+				// exit();
+			}
 			chdir( dirname($realpath_script) );
 			$paprika = new paprika($paprika_env, $this->px);
 
 			// 環境変数を偽装
 			// ※ `$paprika` 内にもとの `$_SERVER` を記憶するため、 `$paprika` 生成後に偽装しないと壊れます。
-			$_SERVER['SCRIPT_NAME'] = $this->px->req()->get_request_file_path();
+			$_SERVER['SCRIPT_NAME'] = $path_script;
 			$_SERVER['SCRIPT_FILENAME'] = $realpath_script;
+			$_SERVER['PATH_INFO'] = preg_replace('/^'.preg_quote($path_script, '/').'/', '', $_SERVER['PATH_INFO']);
 
 			include( $realpath_script );
 		}

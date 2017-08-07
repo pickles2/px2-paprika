@@ -99,7 +99,8 @@ return call_user_func( function(){
 
 		'*.html' => 'html' ,
 		'*.htm' => 'html' ,
-		'*.php' => 'php' ,
+		'*.php' => 'php' , // <= add
+		'*.php/*' => 'php' , // <= add
 		'*.css' => 'css' ,
 		'*.js' => 'js' ,
 		'*.png' => 'pass' ,
@@ -123,7 +124,8 @@ return call_user_func( function(){
 	$conf->paths_enable_sitemap = array(
 		'*.html',
 		'*.htm',
-		'*.php',
+		'*.php', // <= add
+		'*.php/*', // <= add
 	);
 
 
@@ -189,7 +191,7 @@ return call_user_func( function(){
 		'tomk79\pickles2\px2dthelper\main::register' ,
 
 		// PHPアプリケーションフレームワーク "Paprika"
-		'tomk79\pickles2\paprikaFramework2\main::exec('.json_encode( array(
+		'tomk79\pickles2\paprikaFramework2\main::exec('.json_encode( array( // <= add
 		) ).')' ,
 	);
 
@@ -255,7 +257,7 @@ return call_user_func( function(){
 		$conf->funcs->processor->html ,
 	);
 
-	$conf->funcs->processor->php = array(
+	$conf->funcs->processor->php = array( // <= add
 		// html のデフォルトの処理を追加
 		$conf->funcs->processor->html ,
 	);

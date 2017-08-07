@@ -18,7 +18,11 @@ ob_start(); ?>
 <p>テンプレート中の文字列 <code>{$main_contents}</code> を、HTMLコードに置き換えます。</p>
 <p>アプリケーションの動的な処理を実装することもできます。</p>
 <pre><code><?= realpath( '.' ); ?></code></pre>
+<pre><code><?= htmlspecialchars( @$_SERVER['PATH_INFO'] ); ?></code></pre>
 <pre><code><?php var_dump( $_SERVER ); ?></code></pre>
+<?php if(isset($px) && $px->site()){ ?>
+<pre><code><?php var_dump( $px->site()->get_current_page_info() ); ?></code></pre>
+<?php } ?>
 <?php
 $content .= ob_get_clean();
 

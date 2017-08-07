@@ -8,7 +8,7 @@
 	RewriteEngine on
 
 	RewriteCond %{REQUEST_URI} !^.*?/\.px_execute.php/
-	RewriteCond %{REQUEST_URI} /(.*?\.(?:html|htm|css|js|php))?$
+	RewriteCond %{REQUEST_URI} /(.*?\.(?:html|htm|css|js|php(?:/.*)?))?$
 	RewriteRule ^(.*)$ \.px_execute\.php/$1 [L]
 
 	RewriteCond %{REQUEST_URI} !^.*?/\.px_execute.php/
