@@ -147,6 +147,17 @@ class paprika{
 	}
 
 	/**
+	 * ルーティングする
+	 */
+	public function route($routes){
+		$result = 'TODO: Unimplemented';
+		foreach( $routes as $route ){
+
+		}
+		return $result;
+	}
+
+	/**
 	 * テンプレートにコンテンツをバインドする
 	 * @param array $contents 埋め込みキーワードをキーに、置き換えるコードを値に持つ連想配列。
 	 * @return string 完成したHTML

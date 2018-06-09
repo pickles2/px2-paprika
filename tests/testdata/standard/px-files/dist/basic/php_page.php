@@ -19,7 +19,7 @@ while(1){
 }
 unset($tmp_path_autoload);
 
-$paprika = new \tomk79\pickles2\paprikaFramework2\paprika(json_decode('{"file_default_permission":"775","dir_default_permission":"775","filesystem_encoding":"UTF-8","session_name":"PXSID","session_expire":1800,"directory_index":["index.html"],"realpath_controot":"../","realpath_controot_preview":"../../../","realpath_homedir":"../../","path_controot":"/","realpath_files":"./index_files/"}'), false);
+$paprika = new \tomk79\pickles2\paprikaFramework2\paprika(json_decode('{"file_default_permission":"775","dir_default_permission":"775","filesystem_encoding":"UTF-8","session_name":"PXSID","session_expire":1800,"directory_index":["index.html"],"realpath_controot":"../","realpath_controot_preview":"../../../","realpath_homedir":"../../","path_controot":"/","realpath_files":"./php_page_files/"}'), false);
 
 ?>
 <?php
@@ -39,8 +39,13 @@ if( !isset($paprika) ){
 // あるいは、動的な処理を実装します。
 $content = '';
 ob_start(); ?>
-<p>テンプレート中の文字列 <code>{$main_contents}</code> を、HTMLコードに置き換えます。</p>
-<p>アプリケーションの動的な処理を実装することもできます。</p>
+<p>この方法は、 コンテンツ自体を動的なPHPプログラムとして実装し、パブリッシュ後の環境でも同様に動作する仕組みです。</p>
+<p>プレビュー環境では、動的に処理されたコンテンツを動的にテーマに包んで出力します。パブリッシュ後には、テーマを含んだテンプレートが別途出力され、これに動的な成果物をバインドして画面に出力するように振る舞います。</p>
+<p>プログラマーは、コンテンツの処理の最初と最後に規定の処理を埋め込む必要がありますが、それ以外は直感的なPHPプログラムでウェブアプリケーションを実装できます。</p>
+<p>グローバル空間に <code>$paprika</code> が自動的にロードされます。</p>
+
+<p>次の例は、動的に環境変数を出力するサンプルです。</p>
+
 <pre><code><?= realpath( '.' ); ?></code></pre>
 <pre><code><?= htmlspecialchars( @$_SERVER['PATH_INFO'] ); ?></code></pre>
 <pre><code><?php var_dump( $_SERVER ); ?></code></pre>
