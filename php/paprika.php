@@ -148,13 +148,12 @@ class paprika{
 
 	/**
 	 * ルーティングする
+	 * @param array $routes ルーティングルール
+	 * @return string HTMLコード
 	 */
 	public function route($routes){
-		$result = 'TODO: Unimplemented';
-		foreach( $routes as $route ){
-
-		}
-		return $result;
+		$router = new router($this);
+		return $router->route($routes);
 	}
 
 	/**

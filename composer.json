@@ -36,7 +36,8 @@
     "autoload": {
         "files": [
             "php/main.php",
-            "php/paprika.php"
+            "php/paprika.php",
+            "php/router.php"
         ]
     }
 }
