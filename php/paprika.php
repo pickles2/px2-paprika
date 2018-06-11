@@ -178,6 +178,13 @@ class paprika{
 			$this->fs()->mkdir_r( dirname($realpath_tpl) );
 			$this->fs()->save_file( $realpath_tpl, $tpl );
 			$this->SERVER_MEMO = $_SERVER;
+
+			// $pxにテンプレートファイルのパスを通知する
+			$path_tpl = $this->fs()->get_realpath(
+				$realpath_tpl,
+				dirname( $this->px->get_path_content() )
+			);
+			$this->px->add_relatedlink($path_tpl);
 		}
 
 		// -----------------------------------

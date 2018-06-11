@@ -50,14 +50,15 @@ class main{
 		}
 
 		$px = $this->px;
-		$current_page_info = array();
+		$current_page_info = null;
 		if( $px->site() ){
 			$current_page_info = $px->site()->get_current_page_info();
 		}
-		if( !strlen( @$current_page_info['content'] ) ){
-			$current_page_info['content'] = $this->px->req()->get_request_file_path();
+		$current_content_path = $this->px->req()->get_request_file_path();
+		if( $current_page_info && strlen(@$current_page_info['content']) ){
+			$current_content_path = $current_page_info['content'];
 		}
-		$path_script = $this->px->fs()->get_realpath('/'.$this->px->get_path_controot().$current_page_info['content']);
+		$path_script = $this->px->fs()->get_realpath('/'.$this->px->get_path_controot().$current_content_path);
 		$realpath_script = $this->px->fs()->get_realpath($this->px->get_realpath_docroot().$path_script);
 		// var_dump($realpath_script);
 
@@ -95,6 +96,21 @@ class main{
 		if( $this->px->is_publish_tool() ){
 			// --------------------
 			// パブリッシュ時
+
+			// 一度実行して、テンプレートを生成させる
+			if( $current_page_info ){
+				$this->px->internal_sub_request(
+					$path_script,
+					array(
+						'output'=>'json',
+						'user_agent'=>'Mozilla/1.0'
+					)
+				);
+				// テンプレートが存在するなら、パブリッシュ先に加える
+				if(is_file($this->px->realpath_files('/paprika/template'))){
+					$this->px->add_relatedlink( $this->px->path_files('/paprika/template') );
+				}
+			}
 
 			// 内部パス情報の再計算
 			$paprika_env->realpath_controot_preview = $px->fs()->get_relatedpath(
@@ -147,7 +163,9 @@ class main{
 			// ※ `$paprika` 内にもとの `$_SERVER` を記憶するため、 `$paprika` 生成後に偽装しないと壊れます。
 			$_SERVER['SCRIPT_NAME'] = $path_script;
 			$_SERVER['SCRIPT_FILENAME'] = $realpath_script;
-			$_SERVER['PATH_INFO'] = preg_replace('/^'.preg_quote($path_script, '/').'/', '', $_SERVER['PATH_INFO']);
+			if( is_string(@$_SERVER['PATH_INFO']) ){
+				$_SERVER['PATH_INFO'] = preg_replace('/^'.preg_quote($path_script, '/').'/', '', $_SERVER['PATH_INFO']);
+			}
 
 			include( $realpath_script );
 		}

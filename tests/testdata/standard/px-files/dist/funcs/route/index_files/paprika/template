@@ -48,6 +48,7 @@
 							<p><a href="/funcs/">機能</a></p>
 <ul>
 <li><a href="/funcs/route/index.php" class="current">ルーティング</a></li>
+<li><a href="/funcs/form/index.php">フォーム</a></li>
 </ul>
 						</nav>
 					</div>
@@ -66,6 +67,7 @@
 </li>
 <li><a href="/funcs/" class="current">機能</a><ul>
 <li><a href="/funcs/route/index.php" class="current">ルーティング</a></li>
+<li><a href="/funcs/form/index.php">フォーム</a></li>
 </ul>
 </li>
 </ul>
