@@ -40,6 +40,11 @@ $content = $form->form([
 			"min"=>4,
 			"max"=>12,
 		],
+		"email"=> [
+			"type"=> "email",
+			"label"=> "メールアドレス",
+			"required"=>true,
+		],
 		"comment"=> [
 			"type"=> "textarea",
 			"label"=> "コメント",
