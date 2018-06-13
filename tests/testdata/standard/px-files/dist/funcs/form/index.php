@@ -53,8 +53,12 @@ $content = $form->form([
 ], [
 	"name" => "漬物 太郎",
 	"comment" => "ノーコメントです。"
-], function($input){
-	return $input;
+], function($paprika, $user_input_values){
+	// 成功したら true を返します。
+	// 失敗時には、 失敗画面に表示するHTMLを返してください。
+	// var_dump($user_input_values);
+	// return '<p style="color: #f00;">失敗しました。</p>';
+	return true;
 }, [
 	"cancel" => "",
 	"next" => "",

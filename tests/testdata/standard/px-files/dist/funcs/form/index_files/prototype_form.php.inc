@@ -79,7 +79,7 @@ class form{
 		if( $progress == 'e' && !count($user_input_errors) ){
 			// --------------------------------------
 			// 実行
-			return $this->execute($action);
+			return $this->execute($action, $user_input_values);
 		}
 
 		if( ($progress == 'c' || $progress == 'e') && count($user_input_errors) ){
@@ -150,9 +150,13 @@ class form{
 	/**
 	 * フォーム処理を実行する
 	 */
-	private function execute($action){
+	private function execute($action, $user_input_values){
 		if( is_callable($action) ){
-			$result = $action( array() );
+			$result = $action( $this->paprika, $user_input_values );
+			if( $result !== true ){
+				// フォーム処理に失敗
+				return $result;
+			}
 		}
 		@header("Location: ?P=t");
 		exit;
