@@ -17,6 +17,7 @@ class form{
 	public function form($form_structure, $preset, $action, $options = array()){
 		$max_input_page_count = count($form_structure);
 		$progress = $this->paprika->req()->get_param('P');
+		$progres_input_page_indexes = array();
 		$user_input_values = array();
 		$user_input_errors = array();
 		if(!strlen($progress)){
@@ -32,13 +33,15 @@ class form{
 			foreach($form_structure as $idx=>$form){
 				foreach($form as $name=>$form_element){
 					$user_input_values[$name] = $this->paprika->req()->get_param($name);
+					if(!is_null($user_input_values[$name])){
+						$progres_input_page_indexes[$idx] = true;
+					}
 				}
 			}
-
-			// Validator で入力エラーチェック
-			$user_input_errors = $this->validate($form_structure, $user_input_values);
 		}
 
+		// Validator で入力エラーチェック
+		$user_input_errors = $this->validate($form_structure, $user_input_values);
 
 		if( $progress == 't' ){
 			// --------------------------------------
@@ -97,6 +100,11 @@ class form{
 			// 入力画面 (複数ステップに分かれている場合があります)
 			$input_page_index = intval($matched[1]);
 
+			if( !@$progres_input_page_indexes[$input_page_index-1] ){
+				// 入力前のページなら、エラー表示を消去する
+				$user_input_errors = array();
+			}
+
 			$html_hidden = '';
 			$html_form_contents = '';
 			foreach($form_structure as $idx=>$form){
@@ -118,6 +126,10 @@ class form{
 				}else{
 					// 他の入力ページの項目
 					foreach($form as $name=>$form_element){
+						if( is_null( $this->paprika->req()->get_param($name) ) ){
+							// 入力前の値は引き継がない
+							continue;
+						}
 						$html_hidden .= '<input type="hidden" name="'.htmlspecialchars($name).'" value="'.htmlspecialchars($preset[$name]).'" />';
 					}
 				}
