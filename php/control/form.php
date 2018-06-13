@@ -1,5 +1,13 @@
 <?php
-class form{
+/**
+ * Pickles 2 - Paprika Framework
+ */
+namespace tomk79\pickles2\paprikaFramework2;
+
+/**
+ * Form control
+ */
+class control_form{
 
 	/** Paprika Object */
 	private $paprika;
@@ -170,7 +178,7 @@ class form{
 		$rtn = array();
 		foreach($form_structure as $idx=>$form){
 			foreach($form as $name=>$form_element){
-				$validator_realpath = __DIR__.'/form_elements/'.urlencode($form_element['type']).'/validate.php.inc';
+				$validator_realpath = __DIR__.'/../../form_elements/'.urlencode($form_element['type']).'/validate.php';
 				if(is_file( $validator_realpath )){
 					$validator = include( $validator_realpath );
 					$result = $validator($this->paprika, $form_element, $user_input_values[$name]);
@@ -190,7 +198,7 @@ class form{
 	 * Twigテンプレートを処理する
 	 */
 	private function bind_template( $template, $data ){
-		$loader = new \Twig_Loader_Filesystem(__DIR__.'/twig/');
+		$loader = new \Twig_Loader_Filesystem(__DIR__.'/../../templates/form/');
 		$twig = new \Twig_Environment($loader, array('debug'=>true));
 		$twig->addExtension(new \Twig_Extension_Debug());
 		$fin = $twig->render($template.'.twig', $data);
@@ -201,7 +209,7 @@ class form{
 	 * フォーム要素をテンプレート処理する
 	 */
 	private function bind_form_element( $type, $progress, $data ){
-		$loader = new \Twig_Loader_Filesystem(__DIR__.'/form_elements/');
+		$loader = new \Twig_Loader_Filesystem(__DIR__.'/../../form_elements/');
 		$twig = new \Twig_Environment($loader, array('debug'=>true));
 		$twig->addExtension(new \Twig_Extension_Debug());
 		$fin = $twig->render(urlencode($type).'/'.urlencode($progress).'.twig', $data);

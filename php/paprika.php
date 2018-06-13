@@ -157,6 +157,13 @@ class paprika{
 	}
 
 	/**
+	 * フォームコントロールを生成する
+	 */
+	public function form(){
+		return new control_form($this);
+	}
+
+	/**
 	 * テンプレートにコンテンツをバインドする
 	 * @param array $contents 埋め込みキーワードをキーに、置き換えるコードを値に持つ連想配列。
 	 * @return string 完成したHTML

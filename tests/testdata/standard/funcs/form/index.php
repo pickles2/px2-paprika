@@ -4,8 +4,7 @@ if( !isset($paprika) ){
 	return;
 }
 
-require_once(__DIR__.'/index_files/prototype_form.php.inc');
-$form = new form($paprika);
+$form = $paprika->form();
 $content = $form->form([
 	[
 		"name"=> [
