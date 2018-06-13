@@ -25,7 +25,7 @@ class paprika{
 	 * オブジェクト
 	 * @access private
 	 */
-	private $fs, $req;
+	private $fs, $req, $exdb;
 
 	/**
 	 * constructor
@@ -100,6 +100,8 @@ class paprika{
 			if($this->conf->database->dbms == 'sqlite' || $this->conf->database->dbms == 'sqlite2'){
 				$this->conf->database->host = $this->fs->get_realpath($this->conf->database->host);
 			}
+			$this->conf->exdb->path_definition_file = $this->fs->get_realpath($this->conf->exdb->path_definition_file);
+			$this->conf->exdb->path_cache_dir = $this->fs->get_realpath($this->conf->exdb->path_cache_dir);
 			chdir($tmp_cd);
 			unset($tmp_cd);
 		}
@@ -161,6 +163,31 @@ class paprika{
 	 */
 	public function form(){
 		return new control_form($this);
+	}
+
+	/**
+	 * Excellent DB オブジェクトを生成する
+	 * @return object $exdb オブジェクト
+	 */
+	public function exdb(){
+		if( is_object($this->exdb) ){
+			// すでに生成済みならそれを返す
+			return $this->exdb;
+		}
+
+		// Database Access
+		$pdo = new \PDO(
+			$this->conf->database->dbms.':'.$this->conf->database->host,
+			null, null
+		);
+
+		// Excellent DB
+		$this->exdb = new \excellent_db\create(
+			$pdo,
+			json_decode(json_encode($this->conf->exdb), true)
+		);
+
+		return $this->exdb;
 	}
 
 	/**
