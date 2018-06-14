@@ -22,7 +22,7 @@ return call_user_func( function(){
 	$conf_paprika->exdb = new stdClass;
 	$conf_paprika->exdb->prefix = 'paprika';
 	$conf_paprika->exdb->path_definition_file = './px-files/db/db.xlsx';
-	$conf_paprika->exdb->path_cache_dir = './px-files/_sys/ram/caches/exdb/';
+	$conf_paprika->exdb->path_cache_dir = './px-files/db/exdb_caches/';
 	@mkdir('./px-files/_sys/ram/caches/exdb/');
 
 	return $conf_paprika;

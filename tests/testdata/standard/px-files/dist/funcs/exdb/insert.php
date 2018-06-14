@@ -19,7 +19,7 @@ while(1){
 }
 unset($tmp_path_autoload);
 
-$paprika = new \tomk79\pickles2\paprikaFramework2\paprika(json_decode('{"file_default_permission":"775","dir_default_permission":"775","filesystem_encoding":"UTF-8","session_name":"PXSID","session_expire":1800,"directory_index":["index.html"],"realpath_controot":"../../","realpath_controot_preview":"../../../../","realpath_homedir":"../../../","path_controot":"/","realpath_files":"./index_files/"}'), false);
+$paprika = new \tomk79\pickles2\paprikaFramework2\paprika(json_decode('{"file_default_permission":"775","dir_default_permission":"775","filesystem_encoding":"UTF-8","session_name":"PXSID","session_expire":1800,"directory_index":["index.html"],"realpath_controot":"../../","realpath_controot_preview":"../../../../","realpath_homedir":"../../../","path_controot":"/","realpath_files":"./insert_files/"}'), false);
 
 ?>
 <?php
@@ -31,32 +31,34 @@ if( !isset($paprika) ){
 $form = $paprika->form();
 $content = $form->form([
 	[
-		"name"=> [
+		"title"=> [
 			"type"=> "text",
-			"label"=> "名前",
-			"description"=>"お名前を入力してください。",
+			"label"=> "タイトル",
+			"description"=>"タイトルを入力してください。",
 			"required"=>true,
 			"min"=>4,
-			"max"=>12,
+			"max"=>18,
 		],
-		"email"=> [
-			"type"=> "email",
-			"label"=> "メールアドレス",
-			"required"=>true,
-		],
-		"comment"=> [
+		"description"=> [
 			"type"=> "textarea",
-			"label"=> "コメント",
+			"label"=> "説明",
 		],
 	],
-], [
-	"name" => "漬物 太郎",
-	"comment" => "ノーコメントです。"
-], function($paprika, $user_input_values){
+], null, function($paprika, $user_input_values){
 	// 成功したら true を返します。
 	// 失敗時には、 失敗画面に表示するHTMLを返してください。
 	// var_dump($user_input_values);
 	// return '<p style="color: #f00;">失敗しました。</p>';
+	$exdb = $paprika->exdb();
+	$result = $exdb->insert('insert_test', [
+		'record_title'=>$user_input_values['title'],
+		'description'=>$user_input_values['description'],
+	]);
+
+	if(!$result){
+		return '<p style="color: #f00;">失敗しました。</p>';
+	}
+
 	return true;
 }, [
 ]);

@@ -7,32 +7,34 @@ if( !isset($paprika) ){
 $form = $paprika->form();
 $content = $form->form([
 	[
-		"name"=> [
+		"title"=> [
 			"type"=> "text",
-			"label"=> "名前",
-			"description"=>"お名前を入力してください。",
+			"label"=> "タイトル",
+			"description"=>"タイトルを入力してください。",
 			"required"=>true,
 			"min"=>4,
-			"max"=>12,
+			"max"=>18,
 		],
-		"email"=> [
-			"type"=> "email",
-			"label"=> "メールアドレス",
-			"required"=>true,
-		],
-		"comment"=> [
+		"description"=> [
 			"type"=> "textarea",
-			"label"=> "コメント",
+			"label"=> "説明",
 		],
 	],
-], [
-	"name" => "漬物 太郎",
-	"comment" => "ノーコメントです。"
-], function($paprika, $user_input_values){
+], null, function($paprika, $user_input_values){
 	// 成功したら true を返します。
 	// 失敗時には、 失敗画面に表示するHTMLを返してください。
 	// var_dump($user_input_values);
 	// return '<p style="color: #f00;">失敗しました。</p>';
+	$exdb = $paprika->exdb();
+	$result = $exdb->insert('insert_test', [
+		'record_title'=>$user_input_values['title'],
+		'description'=>$user_input_values['description'],
+	]);
+
+	if(!$result){
+		return '<p style="color: #f00;">失敗しました。</p>';
+	}
+
 	return true;
 }, [
 ]);

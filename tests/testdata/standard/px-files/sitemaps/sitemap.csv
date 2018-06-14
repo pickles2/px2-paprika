@@ -7,3 +7,5 @@
 "/funcs/index.html",,,"機能",,,,,,1,,,,,1,,
 "/funcs/route/index.php{*}",,,"ルーティング",,,,,"/funcs/",1,,,,,,,
 "/funcs/form/index.php{*}",,,"フォーム",,,,,"/funcs/",1,,,,,,,
+"/funcs/exdb/index.php{*}",,,"Excellent DB",,,,,"/funcs/",1,,,,,,,
+"/funcs/exdb/insert.php{*}",,,"Insert Test",,,,,"/funcs/>/funcs/exdb/index.php{*}",1,,,,,,,

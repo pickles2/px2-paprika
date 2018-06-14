@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8" />
-		<title>2. PHPで実行する | Paprika Framework 2</title>
+		<title>Insert Test | Paprika Framework 2</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="keywords" content="" />
 		<meta name="description" content="" />
@@ -28,7 +28,7 @@
 				<div class="theme_shouldernavi">
 <ul></ul>				</div>
 				<div class="theme_globalnavi">
-<ul><li><a href="/basic/" class="current">基本</a></li><li><a href="/funcs/">機能</a></li></ul>
+<ul><li><a href="/basic/">基本</a></li><li><a href="/funcs/" class="current">機能</a></li></ul>
 				</div>
 			</div>
 		</header>
@@ -36,20 +36,23 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-sm-9">
-						<div class="theme_breadcrumb"><ul><li><a href="/">HOME</a></li><li><a href="/basic/">基本</a></li><li><span>2. PHPで実行する</span></li></ul></div>
-						<h1>2. PHPで実行する</h1>
+						<div class="theme_breadcrumb"><ul><li><a href="/">HOME</a></li><li><a href="/funcs/">機能</a></li><li><a href="/funcs/exdb/index.php">Excellent DB</a></li><li><span>Insert Test</span></li></ul></div>
+						<h1>Insert Test</h1>
 						<div class="contents">
 {$main_contents}
 						</div>
-						<div class="theme_breadcrumb"><ul><li><a href="/">HOME</a></li><li><a href="/basic/">基本</a></li><li><span>2. PHPで実行する</span></li></ul></div>
+						<div class="theme_breadcrumb"><ul><li><a href="/">HOME</a></li><li><a href="/funcs/">機能</a></li><li><a href="/funcs/exdb/index.php">Excellent DB</a></li><li><span>Insert Test</span></li></ul></div>
 					</div>
 					<div class="col-sm-3">
 						<nav class="theme_common_navi">
-							<p><a href="/basic/">基本</a></p>
+							<p><a href="/funcs/">機能</a></p>
 <ul>
-<li><a href="/basic/php_api-ajax.html">1. PHPによるAPIにAJAX通信する</a></li>
-<li><a href="/basic/php_page.php" class="current">2. PHPで実行する</a></li>
-<li><a href="/basic/php_preview.html">3. プレビュー環境で動的に実行する</a></li>
+<li><a href="/funcs/route/index.php">ルーティング</a></li>
+<li><a href="/funcs/form/index.php">フォーム</a></li>
+<li><a href="/funcs/exdb/index.php" class="current">Excellent DB</a><ul>
+<li><a href="/funcs/exdb/insert.php" class="current">Insert Test</a></li>
+</ul>
+</li>
 </ul>
 						</nav>
 					</div>
@@ -60,16 +63,16 @@
 			<div class="container">
 				<nav class="theme_megafooter_navi">
 <ul>
-<li><a href="/basic/" class="current">基本</a><ul>
+<li><a href="/basic/">基本</a><ul>
 <li><a href="/basic/php_api-ajax.html">1. PHPによるAPIにAJAX通信する</a></li>
-<li><a href="/basic/php_page.php" class="current">2. PHPで実行する</a></li>
+<li><a href="/basic/php_page.php">2. PHPで実行する</a></li>
 <li><a href="/basic/php_preview.html">3. プレビュー環境で動的に実行する</a></li>
 </ul>
 </li>
-<li><a href="/funcs/">機能</a><ul>
+<li><a href="/funcs/" class="current">機能</a><ul>
 <li><a href="/funcs/route/index.php">ルーティング</a></li>
 <li><a href="/funcs/form/index.php">フォーム</a></li>
-<li><a href="/funcs/exdb/index.php">Excellent DB</a></li>
+<li><a href="/funcs/exdb/index.php" class="current">Excellent DB</a></li>
 </ul>
 </li>
 </ul>

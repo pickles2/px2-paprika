@@ -49,6 +49,7 @@
 <ul>
 <li><a href="/funcs/route/index.php" class="current">ルーティング</a></li>
 <li><a href="/funcs/form/index.php">フォーム</a></li>
+<li><a href="/funcs/exdb/index.php">Excellent DB</a></li>
 </ul>
 						</nav>
 					</div>
@@ -68,6 +69,7 @@
 <li><a href="/funcs/" class="current">機能</a><ul>
 <li><a href="/funcs/route/index.php" class="current">ルーティング</a></li>
 <li><a href="/funcs/form/index.php">フォーム</a></li>
+<li><a href="/funcs/exdb/index.php">Excellent DB</a></li>
 </ul>
 </li>
 </ul>
