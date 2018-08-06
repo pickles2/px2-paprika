@@ -176,10 +176,13 @@ class paprika{
 		}
 
 		// Database Access
-		$pdo = new \PDO(
-			$this->conf->database->dbms.':'.$this->conf->database->host,
-			null, null
-		);
+		$pdo = null;
+		if( is_object(@$this->conf->database) && strlen(@$this->conf->database->dbms) ){
+			$pdo = new \PDO(
+				$this->conf->database->dbms.':'.$this->conf->database->host,
+				null, null
+			);
+		}
 
 		// Excellent DB
 		$this->exdb = new \excellent_db\create(
