@@ -149,16 +149,6 @@ class paprika{
 	}
 
 	/**
-	 * ルーティングする
-	 * @param array $routes ルーティングルール
-	 * @return string HTMLコード
-	 */
-	public function route($routes){
-		$router = new router($this);
-		return $router->route($routes);
-	}
-
-	/**
 	 * フォームコントロールを生成する
 	 */
 	public function form(){

@@ -39,7 +39,6 @@
         "files": [
             "php/main.php",
             "php/paprika.php",
-            "php/router.php",
             "php/control/form.php"
         ]
     }

@@ -5,7 +5,6 @@
 "/basic/php_page.php{*}",,,"2. PHPで実行する",,,,,"/basic/",1,,,,,,,
 "/basic/php_preview.html",,,"3. プレビュー環境で動的に実行する",,,,,"/basic/",1,,,,,,,
 "/funcs/index.html",,,"機能",,,,,,1,,,,,1,,
-"/funcs/route/index.php{*}",,,"ルーティング",,,,,"/funcs/",1,,,,,,,
 "/funcs/form/index.php{*}",,,"フォーム",,,,,"/funcs/",1,,,,,,,
 "/funcs/exdb/index.php{*}",,,"Excellent DB",,,,,"/funcs/",1,,,,,,,
 "/funcs/exdb/insert.php{*}",,,"Insert Test",,,,,"/funcs/>/funcs/exdb/index.php{*}",1,,,,,,,

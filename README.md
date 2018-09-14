@@ -8,7 +8,7 @@ Publishing Web Application with "Pickles 2".
 
 ### 1. `composer.json` に、パッケージ情報を追加
 
-```
+```json
 {
     "repositories": [
         {
@@ -50,6 +50,10 @@ $ composer update
 
 ### 4. `px-files/config.php` を開き、プラグインを設定
 
+#### `paths_proc_type` を設定
+
+`*.php` と `*.php/*` を追加する。
+
 ```php
 <?php
 /**
@@ -68,25 +72,33 @@ return call_user_func( function(){
 
 		// ...中略...
 	);
+```
 
-	// ...中略...
+#### `paths_enable_sitemap` を設定
 
+`*.php` と `*.php/*` を追加する。
+
+```php
 	// 拡張子 `*.php` で、サイトマップを有効化
 	$conf->paths_enable_sitemap = array(
 		// ...中略...
-		'*.php', // <- add
-		'*.php/*', // <- add
+
+		'*.php', // <- add (for Paprika)
+		'*.php/*', // <- add (for Paprika)
+
 	);
+```
 
-	// before content 処理を設定
+#### `funcs->before_content` を設定
 
+```php
 	/**
 	 * funcs: Before content
 	 */
 	$conf->funcs->before_content = array(
 		// ...中略...
 
-		// PHPアプリケーションフレームワーク
+		// Paprika - PHPアプリケーションフレームワーク
 		'tomk79\pickles2\paprikaFramework2\main::exec()' ,
 
 		// ...中略...
@@ -94,6 +106,11 @@ return call_user_func( function(){
 
 	// php 用のプロセッサを追加
 
+```
+
+#### `funcs->processor->php` 設定を追加
+
+```php
 	/**
 	 * processor
 	 */
@@ -101,7 +118,6 @@ return call_user_func( function(){
 		// html のデフォルトの処理を追加
 		$conf->funcs->processor->html ,
 	);
-
 ```
 
 ### 5. `px-files/config_paprika.php` を作成し、 Paprika Framework 2 を設定

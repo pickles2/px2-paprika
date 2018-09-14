@@ -47,7 +47,6 @@
 						<nav class="theme_common_navi">
 							<p><a href="/funcs/">機能</a></p>
 <ul>
-<li><a href="/funcs/route/index.php">ルーティング</a></li>
 <li><a href="/funcs/form/index.php">フォーム</a></li>
 <li><a href="/funcs/exdb/index.php" class="current">Excellent DB</a><ul>
 <li><a href="/funcs/exdb/insert.php">Insert Test</a></li>
@@ -70,7 +69,6 @@
 </ul>
 </li>
 <li><a href="/funcs/" class="current">機能</a><ul>
-<li><a href="/funcs/route/index.php">ルーティング</a></li>
 <li><a href="/funcs/form/index.php">フォーム</a></li>
 <li><a href="/funcs/exdb/index.php" class="current">Excellent DB</a></li>
 </ul>
