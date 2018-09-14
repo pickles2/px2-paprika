@@ -201,6 +201,6 @@ class paprika{
 	 * ユーザー定義のメソッドを呼び出す
 	 */
 	public function __call( $name, array $args ){
-		return call_user_func_array( $this->custom_methods[$name]->bindTo($this, get_class($this)), $args );
+		return call_user_func_array( $this->custom_methods[$name], $args );
 	}
 }

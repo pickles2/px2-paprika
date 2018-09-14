@@ -30,34 +30,35 @@ $paprika->set_conf('exdb', $conf_exdb);
  * 機能拡張: フォームコントロールを生成する
  */
 require_once(__DIR__.'/control/form.php');
-$paprika->add_custom_method('form', function(){
-	return new \tomk79\pickles2\paprikaFramework2\control_form($this);
+$paprika->add_custom_method('form', function() use ($paprika){
+	return new \tomk79\pickles2\paprikaFramework2\control_form($paprika);
 });
 
 /**
  * 機能拡張: Excellent DB オブジェクトを生成する
  * @return object $exdb オブジェクト
  */
-$paprika->add_custom_method('exdb', function(){
-	if( property_exists($this, 'exdb') && is_object($this->exdb) ){
+$paprika->add_custom_method('exdb', function() use ($paprika){
+	static $exdb;
+	if( is_object($exdb) ){
 		// すでに生成済みならそれを返す
-		return $this->exdb;
+		return $exdb;
 	}
 
 	// Database Access
 	$pdo = null;
-	if( is_object(@$this->conf('database')) && strlen(@$this->conf('database')->dbms) ){
+	if( is_object(@$paprika->conf('database')) && strlen(@$paprika->conf('database')->dbms) ){
 		$pdo = new \PDO(
-			$this->conf('database')->dbms.':'.$this->conf('database')->host,
+			$paprika->conf('database')->dbms.':'.$paprika->conf('database')->host,
 			null, null
 		);
 	}
 
 	// Excellent DB
-	$this->exdb = new \excellent_db\create(
+	$exdb = new \excellent_db\create(
 		$pdo,
-		json_decode(json_encode($this->conf('exdb')), true)
+		json_decode(json_encode($paprika->conf('exdb')), true)
 	);
 
-	return $this->exdb;
+	return $exdb;
 });
