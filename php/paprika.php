@@ -24,6 +24,9 @@ class paprika{
 	/** ユーザー定義メソッド */
 	private $custom_methods = array();
 
+	/** 初期化メソッド */
+	private $initialize_methods = array();
+
 	/**
 	 * オブジェクト
 	 * @access private
@@ -203,4 +206,23 @@ class paprika{
 	public function __call( $name, array $args ){
 		return call_user_func_array( $this->custom_methods[$name], $args );
 	}
+
+	/**
+	 * 初期化メソッドを追加する
+	 */
+	public function add_initialize_method( $callback ){
+		array_push( $this->initialize_methods, $callback );
+		return;
+	}
+
+	/**
+	 * 初期化メソッドを実行する
+	 */
+	public function execute_initialize_methods(){
+		foreach( $this->initialize_methods as $callback ){
+			$callback();
+		}
+		return;
+	}
+
 }

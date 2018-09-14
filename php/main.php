@@ -120,7 +120,13 @@ class main{
 		echo 'Initialize Paprika...'."\n";
 		$paprika = $this->paprika();
 
-		// TODO: 初期化の処理を外部から注入できるようにする。
+		// 共通の prepend スクリプトを実行
+		if(is_file($paprika->env()->realpath_homedir.'prepend.php')){
+			include($paprika->env()->realpath_homedir.'prepend.php');
+		}
+
+		// 外部より注入された初期化メソッドを実行する
+		$paprika->execute_initialize_methods();
 
 		echo 'done!'."\n";
 		exit;

@@ -26,6 +26,16 @@ $conf_exdb->path_cache_dir = $paprika->fs()->get_realpath($conf_exdb->path_cache
 $paprika->set_conf('exdb', $conf_exdb);
 
 
+// 初期化処理を追加
+$paprika->add_initialize_method(function() use ($paprika){
+	$exdb = $paprika->exdb();
+
+	// データベーステーブルを初期化
+	echo 'Migrate Database tables...'."\n";
+	$exdb->migrate_init_tables();
+});
+
+
 /**
  * 機能拡張: フォームコントロールを生成する
  */
