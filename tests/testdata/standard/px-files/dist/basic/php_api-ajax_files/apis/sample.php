@@ -32,7 +32,7 @@ if(is_file($paprika->env()->realpath_homedir.'prepend.php')){
 
 
 $pdo = new PDO(
-    $paprika->conf()->database->dbms.':'.$paprika->conf()->database->host,
+    $paprika->conf('database')->dbms.':'.$paprika->conf('database')->host,
     null,
     null,
     array(\PDO::ATTR_PERSISTENT => false)
@@ -41,7 +41,10 @@ $pdo = new PDO(
 $obj = array();
 $obj['_SERVER'] = $_SERVER;
 $obj['paprika'] = $paprika;
-$obj['paprikaConf'] = $paprika->conf();
+$obj['paprikaConf'] = array(
+    'database'=>$paprika->conf('database'),
+    'exdb'=>$paprika->conf('exdb'),
+);
 $obj['realpath_current_dir'] = $paprika->fs()->get_realpath('./');
 echo json_encode( $obj );
 exit;
