@@ -102,7 +102,14 @@ class main{
 	 * $paprika を生成する
 	 */
 	private function paprika(){
+		$proc_types = array_keys( get_object_vars( $this->px->conf()->funcs->processor ) );
 		while( !is_file($this->realpath_script) ){
+			foreach($proc_types as $proc_type){
+				if( is_file($this->realpath_script.'.'.$proc_type) ){
+					$this->realpath_script = $this->realpath_script.'.'.$proc_type;
+					break 2;
+				}
+			}
 			if( $this->realpath_script == dirname($this->realpath_script) ){
 				break;
 			}
