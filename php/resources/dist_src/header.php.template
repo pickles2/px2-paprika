@@ -21,4 +21,8 @@ unset($tmp_path_autoload);
 
 $paprika = new \tomk79\pickles2\paprikaFramework2\paprika(json_decode({$paprika_env}), false);
 
+// 共通の prepend スクリプトを実行
+if(is_file($paprika->env()->realpath_homedir.'prepend.php')){
+    include($paprika->env()->realpath_homedir.'prepend.php');
+}
 ?>

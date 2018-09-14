@@ -42,7 +42,7 @@ class main{
 		$proc_type = $px->get_path_proc_type();
 		if( $proc_type == 'php' || preg_match('/\.php\//', $path_req) ){
 			$me = new self( $px );
-			$me->apply($json);
+			$me->execute_php_contents($json);
 			return;
 		}
 	}
@@ -119,22 +119,19 @@ class main{
 	private function init(){
 		echo 'Initialize Paprika...'."\n";
 		$paprika = $this->paprika();
-		$exdb = $paprika->exdb();
 
-		// データベーステーブルを初期化
-		echo 'Migrate Database tables...'."\n";
-		$exdb->migrate_init_tables();
+		// TODO: 初期化の処理を外部から注入できるようにする。
 
 		echo 'done!'."\n";
 		exit;
 	}
 
 	/**
-	 * apply output filter
+	 * Execute PHP Contents
 	 * @param object $json プラグイン設定
 	 * @return string 加工後の出力コード
 	 */
-	private function apply($json){
+	private function execute_php_contents($json){
 		if($this->px->req()->get_param('PX') == 'paprika.publish_template'){
 			// PX=paprika.publish_template は、テンプレートソースを出力するリクエストにつけられるパラメータ。
 			// テンプレート生成時には、通常のHTMLと同様に振る舞うべきなので、処理をしない。
@@ -209,6 +206,12 @@ class main{
 				$_SERVER['PATH_INFO'] = preg_replace('/^'.preg_quote($this->path_script, '/').'/', '', $_SERVER['PATH_INFO']);
 			}
 
+			// 共通の prepend スクリプトを実行
+			if(is_file($paprika->env()->realpath_homedir.'prepend.php')){
+				include($paprika->env()->realpath_homedir.'prepend.php');
+			}
+
+			// コンテンツを実行
 			include( $this->realpath_script );
 		}
 

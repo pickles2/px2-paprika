@@ -38,8 +38,7 @@
     "autoload": {
         "files": [
             "php/main.php",
-            "php/paprika.php",
-            "php/control/form.php"
+            "php/paprika.php"
         ]
     }
 }

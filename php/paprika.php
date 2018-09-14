@@ -13,7 +13,7 @@ class paprika{
 	private $paprika_env;
 
 	/** Paprika config object */
-	private $conf;
+	private $conf = array();
 
 	/** Pickles Framework 2 Object */
 	private $px;
@@ -21,11 +21,14 @@ class paprika{
 	/** $_SERVER のメモ */
 	private $SERVER_MEMO;
 
+	/** ユーザー定義メソッド */
+	private $custom_methods = array();
+
 	/**
 	 * オブジェクト
 	 * @access private
 	 */
-	private $fs, $req, $exdb;
+	private $fs, $req;
 
 	/**
 	 * constructor
@@ -86,27 +89,6 @@ class paprika{
 		$this->paprika_env->realpath_controot_preview = $this->fs->get_realpath($this->paprika_env->realpath_controot_preview);
 		$this->paprika_env->realpath_homedir = $this->fs->get_realpath($this->paprika_env->realpath_homedir);
 
-		// Paprika の設定を読み込む
-		$this->conf = new \stdClass;
-		if( @is_file( $this->paprika_env->realpath_homedir.'config_paprika.php' ) ){
-			$tmp_cd = $this->fs->get_realpath('./');
-			chdir($this->paprika_env->realpath_controot_preview);
-				// config_paprika.php 内に設定されうる相対パスを解決するために、
-				// プレビュー環境(=パブリッシュ前)の Entry Script の起点に移動してから読み込む。
-
-			$this->conf = include( $this->paprika_env->realpath_homedir.'config_paprika.php' );
-
-			// パス系設定の解釈
-			if($this->conf->database->dbms == 'sqlite' || $this->conf->database->dbms == 'sqlite2'){
-				$this->conf->database->host = $this->fs->get_realpath($this->conf->database->host);
-			}
-			$this->conf->exdb->path_definition_file = $this->fs->get_realpath($this->conf->exdb->path_definition_file);
-			$this->conf->exdb->path_cache_dir = $this->fs->get_realpath($this->conf->exdb->path_cache_dir);
-			chdir($tmp_cd);
-			unset($tmp_cd);
-		}
-
-
 		// make instance $req
 		$this->req = new \tomk79\request( json_decode( json_encode( array(
 			'session_name' => @$this->paprika_env->session_name,
@@ -120,8 +102,23 @@ class paprika{
 	 * 設定を取得する
 	 * @return object 設定オブジェクト
 	 */
-	public function conf(){
-		return $this->conf;
+	public function conf( $name ){
+		return $this->conf[$name];
+	}
+
+	/**
+	 * 設定をセットする
+	 * @return object 設定オブジェクト
+	 */
+	public function set_conf( $name, $val ){
+		return $this->conf[$name] = $val;
+	}
+
+	/**
+	 * Paprika の環境情報を取得する
+	 */
+	public function env(){
+		return $this->paprika_env;
 	}
 
 	/**
@@ -146,41 +143,6 @@ class paprika{
 	 */
 	public function req(){
 		return $this->req;
-	}
-
-	/**
-	 * フォームコントロールを生成する
-	 */
-	public function form(){
-		return new control_form($this);
-	}
-
-	/**
-	 * Excellent DB オブジェクトを生成する
-	 * @return object $exdb オブジェクト
-	 */
-	public function exdb(){
-		if( is_object($this->exdb) ){
-			// すでに生成済みならそれを返す
-			return $this->exdb;
-		}
-
-		// Database Access
-		$pdo = null;
-		if( is_object(@$this->conf->database) && strlen(@$this->conf->database->dbms) ){
-			$pdo = new \PDO(
-				$this->conf->database->dbms.':'.$this->conf->database->host,
-				null, null
-			);
-		}
-
-		// Excellent DB
-		$this->exdb = new \excellent_db\create(
-			$pdo,
-			json_decode(json_encode($this->conf->exdb), true)
-		);
-
-		return $this->exdb;
 	}
 
 	/**
@@ -227,4 +189,18 @@ class paprika{
 		return $tpl;
 	}
 
+
+	/**
+	 * ユーザー定義のメソッドを追加する
+	 */
+	public function add_custom_method( $name, \Closure $callback ){
+		$this->custom_methods[$name] = $callback;
+	}
+
+	/**
+	 * ユーザー定義のメソッドを呼び出す
+	 */
+	public function __call( $name, array $args ){
+		return call_user_func_array( $this->custom_methods[$name]->bindTo($this, get_class($this)), $args );
+	}
 }

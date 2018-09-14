@@ -178,7 +178,7 @@ class control_form{
 		$rtn = array();
 		foreach($form_structure as $idx=>$form){
 			foreach($form as $name=>$form_element){
-				$validator_realpath = __DIR__.'/../../form_elements/'.urlencode($form_element['type']).'/validate.php';
+				$validator_realpath = __DIR__.'/../form_elements/'.urlencode($form_element['type']).'/validate.php';
 				if(is_file( $validator_realpath )){
 					$validator = include( $validator_realpath );
 					$result = $validator($this->paprika, $form_element, $user_input_values[$name]);
@@ -198,7 +198,7 @@ class control_form{
 	 * Twigテンプレートを処理する
 	 */
 	private function bind_template( $template, $data ){
-		$loader = new \Twig_Loader_Filesystem(__DIR__.'/../../templates/form/');
+		$loader = new \Twig_Loader_Filesystem(__DIR__.'/../templates/form/');
 		$twig = new \Twig_Environment($loader, array('debug'=>true));
 		$twig->addExtension(new \Twig_Extension_Debug());
 		$fin = $twig->render($template.'.twig', $data);
@@ -209,7 +209,7 @@ class control_form{
 	 * フォーム要素をテンプレート処理する
 	 */
 	private function bind_form_element( $type, $progress, $data ){
-		$loader = new \Twig_Loader_Filesystem(__DIR__.'/../../form_elements/');
+		$loader = new \Twig_Loader_Filesystem(__DIR__.'/../form_elements/');
 		$twig = new \Twig_Environment($loader, array('debug'=>true));
 		$twig->addExtension(new \Twig_Extension_Debug());
 		$fin = $twig->render(urlencode($type).'/'.urlencode($progress).'.twig', $data);
