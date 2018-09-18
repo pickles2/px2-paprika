@@ -189,10 +189,15 @@ class main{
 				$px->fs()->get_realpath($this->px->conf()->path_publish_dir.$this->path_script)
 			);
 
-			$template = file_get_contents( __DIR__.'/resources/dist_src/header.php.template' );
-			$template = str_replace( '{$paprika_env}', escapeshellarg(json_encode($this->paprika_env,JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE)), $template );
-			$src .= $template;
+			$header_template = file_get_contents( __DIR__.'/resources/dist_src/header.php.template' );
+			$header_template = str_replace( '{$paprika_env}', escapeshellarg(json_encode($this->paprika_env,JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE)), $header_template );
+			$src .= $header_template;
 			$src .= file_get_contents( $this->realpath_script );
+			$footer_template = file_get_contents( __DIR__.'/resources/dist_src/footer.php.template' );
+			if( !$this->is_php_closed($src) ){
+				$src .= '?'.'>';
+			}
+			$src .= $footer_template;
 
 			// 最終出力
 			// (`pickles.php` からコピー)
@@ -231,10 +236,31 @@ class main{
 			}
 
 			// コンテンツを実行
+			ob_start();
 			include( $this->realpath_script );
+			$content = ob_get_clean();
+			if(strlen($content)){
+				$paprika->bowl()->put($content);
+			}
+
+			echo $paprika->bowl()->bind_template();
+			exit;
 		}
 
 		exit();
 	}
 
+	/**
+	 * PHPコードブロックが閉じられているか確認する
+	 * @return boolean 閉じられている場合に `true` 閉じられていない場合に `false`。
+	 */
+	private function is_php_closed( $php ){
+		preg_match_all( '/\<\?(?:php|\=)?|\?\>/s', $php, $matches );
+		if( count($matches) && count($matches[0]) ){
+			if( $matches[0][(count($matches[0])-1)] != '?>' ){
+				return false;
+			}
+		}
+		return true;
+	}
 }

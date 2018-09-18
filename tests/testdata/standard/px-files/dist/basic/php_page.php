@@ -25,6 +25,9 @@ $paprika = new \tomk79\pickles2\paprikaFramework2\paprika(json_decode('{"file_de
 if(is_file($paprika->env()->realpath_homedir.'prepend.php')){
     include($paprika->env()->realpath_homedir.'prepend.php');
 }
+
+// コンテンツが標準出力する場合があるので、それを拾う準備
+ob_start();
 ?>
 <?php
 // -----------------------------------
@@ -74,9 +77,13 @@ $content .= ob_get_clean();
 // 3. テンプレートにバインド
 // テンプレート生成時に埋め込んだキーワード `{$main}` を、
 // 生成したコンテンツのHTMLコードに置き換えます。
+// echo $content;
 $paprika->bowl()->put($content);
-
-// -----------------------------------
-// 4. 出力して終了
+?><?php
+$content = ob_get_clean();
+if(strlen($content)){
+    $paprika->bowl()->put($content);
+}
 echo $paprika->bowl()->bind_template();
-exit();
+exit;
+?>

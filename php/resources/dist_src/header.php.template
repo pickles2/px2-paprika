@@ -25,4 +25,7 @@ $paprika = new \tomk79\pickles2\paprikaFramework2\paprika(json_decode({$paprika_
 if(is_file($paprika->env()->realpath_homedir.'prepend.php')){
     include($paprika->env()->realpath_homedir.'prepend.php');
 }
+
+// コンテンツが標準出力する場合があるので、それを拾う準備
+ob_start();
 ?>
