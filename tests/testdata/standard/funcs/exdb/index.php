@@ -13,6 +13,3 @@ echo '</code></pre>';
 $content = ob_get_clean();
 
 $paprika->bowl()->put($content);
-
-echo $paprika->bowl()->bind_template();
-exit();

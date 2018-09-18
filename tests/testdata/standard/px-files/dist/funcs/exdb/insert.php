@@ -70,9 +70,6 @@ $content = $form->form([
 ]);
 
 $paprika->bowl()->put($content);
-
-echo $paprika->bowl()->bind_template();
-exit();
 ?><?php
 $content = ob_get_clean();
 if(strlen($content)){

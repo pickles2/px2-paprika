@@ -212,12 +212,17 @@ class bowl{
 		if( $this->px ){
 			$_SERVER = $this->SERVER_MEMO;
 			$current_page_path = $this->px->req()->get_request_file_path();
-			$tpl = $this->px->internal_sub_request(
+			$output_json = $this->px->internal_sub_request(
 				$current_page_path.'?PX=paprika.publish_template',
 				array(
-					'user_agent'=>'PicklesCrawler'
+					'user_agent'=>'PicklesCrawler',
+					'output'=>'json'
 				)
 			);
+			foreach($output_json->relatedlinks as $url){
+				$this->px->add_relatedlink($url);
+			}
+			$tpl = base64_decode($output_json->body_base64);
 			$this->paprika->fs()->mkdir_r( dirname($realpath_tpl) );
 			$this->paprika->fs()->save_file( $realpath_tpl, $tpl );
 			$this->SERVER_MEMO = $_SERVER;

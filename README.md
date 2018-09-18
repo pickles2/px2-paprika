@@ -99,16 +99,13 @@ return call_user_func( function(){
 		// ...中略...
 
 		// Paprika - PHPアプリケーションフレームワーク
-		'tomk79\pickles2\paprikaFramework2\main::exec('.json_encode( array(
+		'tomk79\pickles2\paprikaFramework2\main::before_content('.json_encode( array(
 			// アプリケーションが動的に生成したコンテンツエリアの名称
 			'bowls'=>array('custom_area_1', 'custom_area_2', ),
 		) ).')' ,
 
 		// ...中略...
 	);
-
-	// php 用のプロセッサを追加
-
 ```
 
 #### `funcs->processor->php` 設定を追加
@@ -118,6 +115,9 @@ return call_user_func( function(){
 	 * processor
 	 */
 	$conf->funcs->processor->php = array(
+		// Paprika - PHPアプリケーションフレームワーク
+		'tomk79\pickles2\paprikaFramework2\main::processor' ,
+
 		// html のデフォルトの処理を追加
 		$conf->funcs->processor->html ,
 	);

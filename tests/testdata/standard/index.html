@@ -1,5 +1,6 @@
 <p>Welcome to Pickles 2.</p>
 
+<?php if(isset($px)){ ?>
 <ul><?php
 $children = $px->site()->get_children();
 foreach($children as $pid){
@@ -7,3 +8,4 @@ foreach($children as $pid){
 }
 
 ?></ul>
+<?php } ?>

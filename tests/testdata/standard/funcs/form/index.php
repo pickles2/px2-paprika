@@ -37,6 +37,3 @@ $content = $form->form([
 ]);
 
 $paprika->bowl()->put($content);
-
-echo $paprika->bowl()->bind_template();
-exit();

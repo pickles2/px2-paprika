@@ -24,11 +24,11 @@ class main{
 	private $current_page_info;
 
 	/**
-	 * Starting function
+	 * plugin - before content
 	 * @param object $px Picklesオブジェクト
 	 * @param object $conf プラグイン設定オブジェクト
 	 */
-	public static function exec( $px, $conf ){
+	public static function before_content( $px, $conf ){
 		$px->pxcmd()->register('paprika', function($px){
 			$pxcmd = $px->get_px_command();
 			if( $pxcmd[1] == 'init' ){
@@ -40,10 +40,24 @@ class main{
 
 		$path_req = $px->req()->get_request_file_path();
 		$proc_type = $px->get_path_proc_type();
-		if( $proc_type == 'php' || preg_match('/\.php\//', $path_req) ){
+		if( $proc_type == 'php' || preg_match('/\.(?:php)\//', $path_req) ){
 			$me = new self( $px );
 			$me->execute_php_contents($conf);
 			return;
+		}
+	}
+
+	/**
+	 * plugin - contents processor
+	 * @param object $px Picklesオブジェクト
+	 * @param object $conf プラグイン設定オブジェクト
+	 */
+	public static function processor( $px, $conf ){
+		$pxcmd = $px->get_px_command();
+		if( $pxcmd[1] == 'publish_template' ){
+			foreach( $px->bowl()->get_keys() as $key ){
+				$px->bowl()->replace( '{$'.$key.'}', $key );
+			}
 		}
 	}
 
@@ -63,6 +77,15 @@ class main{
 		}
 		$this->path_script = $this->px->fs()->get_realpath('/'.$this->px->get_path_controot().$current_content_path);
 		$this->realpath_script = $this->px->fs()->get_realpath($this->px->get_realpath_docroot().$this->path_script);
+		if( !is_file($this->realpath_script) ){
+			$proc_types = array_keys( get_object_vars( $this->px->conf()->funcs->processor ) );
+			foreach($proc_types as $proc_type){
+				if( is_file($this->realpath_script.'.'.$proc_type) ){
+					$this->realpath_script = $this->realpath_script.'.'.$proc_type;
+					break;
+				}
+			}
+		}
 		// var_dump($this->realpath_script);
 
 		// making config object
@@ -81,22 +104,22 @@ class main{
 		// 内部パス情報
 		$paprika_env->realpath_controot = $px->fs()->get_relatedpath(
 			$px->get_realpath_docroot().$px->get_path_controot(),
-			$this->realpath_script
+			dirname($this->realpath_script)
 		);
 		$paprika_env->realpath_controot_preview = $paprika_env->realpath_controot;
 			// ↑プレビュー環境(パブリッシュ前)の controot を格納する。
 		$paprika_env->realpath_homedir = $px->fs()->get_relatedpath(
 			$px->get_realpath_homedir(),
-			$this->realpath_script
+			dirname($this->realpath_script)
 		);
 		$paprika_env->path_controot = $px->get_path_controot();
 		$paprika_env->realpath_files = $px->fs()->get_relatedpath(
 			$px->realpath_files(),
-			$this->realpath_script
+			dirname($this->realpath_script)
 		);
 		$paprika_env->realpath_files_cache = $px->fs()->get_relatedpath(
 			$px->realpath_files_cache(),
-			$this->realpath_script
+			dirname($this->realpath_script)
 		);
 		$px->fs()->mkdir_r($px->realpath_files_cache()); // ←これをしないと、ページを持たないPHP(リソースフォルダ内など) でリンク切れが起きる。
 
@@ -155,10 +178,10 @@ class main{
 		if($this->px->req()->get_param('PX') == 'paprika.publish_template'){
 			// PX=paprika.publish_template は、テンプレートソースを出力するリクエストにつけられるパラメータ。
 			// テンプレート生成時には、通常のHTMLと同様に振る舞うべきなので、処理をしない。
-			$this->px->bowl()->put('{$main}', 'main');
+			$this->px->bowl()->replace('{$main}', 'main');
 			if( property_exists($conf, 'bowls') && is_array($conf->bowls) ){
 				foreach($conf->bowls as $bowl_name){
-					$this->px->bowl()->put('{$'.$bowl_name.'}', $bowl_name);
+					$this->px->bowl()->replace('{$'.$bowl_name.'}', $bowl_name);
 				}
 			}
 			return;
@@ -173,13 +196,17 @@ class main{
 
 			// 一度実行して、テンプレートを生成させる
 			if( $this->current_page_info ){
-				$this->px->internal_sub_request(
+				$output_json = $this->px->internal_sub_request(
 					$this->path_script,
 					array(
 						'output'=>'json',
 						'user_agent'=>'Mozilla/1.0'
 					)
 				);
+				foreach($output_json->relatedlinks as $url){
+					$this->px->add_relatedlink($url);
+				}
+
 				// テンプレートが存在するなら、パブリッシュ先に加える
 				if(is_file($this->px->realpath_files_cache('/paprika/template'))){
 					$this->px->add_relatedlink( $this->px->path_files_cache('/paprika/template') );
@@ -212,24 +239,6 @@ class main{
 			}
 			$src .= $footer_template;
 
-			// 最終出力
-			// (`pickles.php` からコピー)
-			switch( $px->req()->get_cli_option('-o') ){
-				case 'json':
-					$json = new \stdClass;
-					$json->status = $px->get_status();
-					$json->message = $px->get_status_message();
-					$json->relatedlinks = $px->get_relatedlinks();
-					$json->errors = $px->get_errors();
-					$json->body_base64 = base64_encode($src);
-					$json->header = $px->header_list();
-					print json_encode($json);
-					break;
-				default:
-					print $src;
-					break;
-			}
-
 		}else{
 			// --------------------
 			// プレビュー時
@@ -256,8 +265,25 @@ class main{
 				$paprika->bowl()->put($content);
 			}
 
-			echo $paprika->bowl()->bind_template();
-			exit;
+			$src = $paprika->bowl()->bind_template();
+		}
+
+		// 最終出力
+		// (`pickles.php` からコピー)
+		switch( $px->req()->get_cli_option('-o') ){
+			case 'json':
+				$json = new \stdClass;
+				$json->status = $px->get_status();
+				$json->message = $px->get_status_message();
+				$json->relatedlinks = $px->get_relatedlinks();
+				$json->errors = $px->get_errors();
+				$json->body_base64 = base64_encode($src);
+				$json->header = $px->header_list();
+				print json_encode($json);
+				break;
+			default:
+				print $src;
+				break;
 		}
 
 		exit();
@@ -270,7 +296,7 @@ class main{
 	private function is_php_closed( $php ){
 		preg_match_all( '/\<\?(?:php|\=)?|\?\>/s', $php, $matches );
 		if( count($matches) && count($matches[0]) ){
-			if( $matches[0][(count($matches[0])-1)] != '?>' ){
+			if( $matches[0][(count($matches[0])-1)] != '?'.'>' ){
 				return false;
 			}
 		}
