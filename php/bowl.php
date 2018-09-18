@@ -205,7 +205,7 @@ class bowl{
 	 * @return string 完成したHTML
 	 */
 	public function bind_template(){
-		$realpath_tpl = $this->paprika->env()->realpath_files.'paprika/template';
+		$realpath_tpl = $this->paprika->env()->realpath_files_cache.'paprika/template';
 
 		// -----------------------------------
 		// テンプレートを生成する

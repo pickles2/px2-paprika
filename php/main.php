@@ -94,6 +94,11 @@ class main{
 			$px->realpath_files(),
 			$this->realpath_script
 		);
+		$paprika_env->realpath_files_cache = $px->fs()->get_relatedpath(
+			$px->realpath_files_cache(),
+			$this->realpath_script
+		);
+		$paprika_env->realpath_files_private_cache = $px->realpath_files_private_cache();
 		$this->paprika_env = $paprika_env;
 	}
 
@@ -174,19 +179,25 @@ class main{
 					)
 				);
 				// テンプレートが存在するなら、パブリッシュ先に加える
-				if(is_file($this->px->realpath_files('/paprika/template'))){
-					$this->px->add_relatedlink( $this->px->path_files('/paprika/template') );
+				if(is_file($this->px->realpath_files_cache('/paprika/template'))){
+					$this->px->add_relatedlink( $this->px->path_files_cache('/paprika/template') );
 				}
 			}
 
 			// 内部パス情報の再計算
+			// 相対パスで捉え直す。
+			$tmp_realpath_script = dirname($px->fs()->get_realpath($this->px->conf()->path_publish_dir.$this->path_script));
 			$this->paprika_env->realpath_controot_preview = $px->fs()->get_relatedpath(
 				$px->get_realpath_docroot().$px->get_path_controot(),
-				$px->fs()->get_realpath($this->px->conf()->path_publish_dir.$this->path_script)
+				$tmp_realpath_script
 			);
 			$this->paprika_env->realpath_homedir = $px->fs()->get_relatedpath(
 				$px->get_realpath_homedir(),
-				$px->fs()->get_realpath($this->px->conf()->path_publish_dir.$this->path_script)
+				$tmp_realpath_script
+			);
+			$this->paprika_env->realpath_files_private_cache = $px->fs()->get_relatedpath(
+				$px->realpath_files_private_cache(),
+				$tmp_realpath_script
 			);
 
 			$header_template = file_get_contents( __DIR__.'/resources/dist_src/header.php.template' );

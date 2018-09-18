@@ -12,3 +12,4 @@ px-files/_sys/ram/
 !px-files/_sys/ram/publish/.gitkeep
 caches/
 !caches/.gitkeep
+!px-files/dist/*
