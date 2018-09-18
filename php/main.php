@@ -98,6 +98,8 @@ class main{
 			$px->realpath_files_cache(),
 			$this->realpath_script
 		);
+		$px->fs()->mkdir_r($px->realpath_files_cache()); // ←これをしないと、ページを持たないPHP(リソースフォルダ内など) でリンク切れが起きる。
+
 		$paprika_env->realpath_files_private_cache = $px->realpath_files_private_cache();
 		$this->paprika_env = $paprika_env;
 	}
