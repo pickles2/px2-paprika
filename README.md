@@ -99,7 +99,10 @@ return call_user_func( function(){
 		// ...中略...
 
 		// Paprika - PHPアプリケーションフレームワーク
-		'tomk79\pickles2\paprikaFramework2\main::exec()' ,
+		'tomk79\pickles2\paprikaFramework2\main::exec('.json_encode( array(
+			// アプリケーションが動的に生成したコンテンツエリアの名称
+			'bowls'=>array('custom_area_1', 'custom_area_2', ),
+		) ).')' ,
 
 		// ...中略...
 	);
@@ -130,6 +133,7 @@ return call_user_func( function(){
 ## PXコマンド - PX Commands
 
 - `paprika.init` - データベースを初期化する。
+- `paprika.publish_template` - アプリケーションのためのテンプレートファイルを生成する。(フレームワークの内部で暗黙的にコールされます)
 
 ## ライセンス - License
 

@@ -39,8 +39,7 @@
 						<div class="theme_breadcrumb"><ul><li><a href="/">HOME</a></li><li><a href="/basic/">基本</a></li><li><span>2. PHPで実行する</span></li></ul></div>
 						<h1>2. PHPで実行する</h1>
 						<div class="contents">
-{$main_contents}
-						</div>
+{$main}						</div>
 						<div class="theme_breadcrumb"><ul><li><a href="/">HOME</a></li><li><a href="/basic/">基本</a></li><li><span>2. PHPで実行する</span></li></ul></div>
 					</div>
 					<div class="col-sm-3">
@@ -76,6 +75,8 @@
 			</div>
 			<div class="container theme_footer_shouldernavi">
 <ul><li><a href="/">HOME</a></li></ul>			</div>
+			<div class="theme-login-user">
+{$login_user}			</div>
 			<div class="container">
 				<p style="text-align:center;">&copy;Tomoya Koyanagi.</p>
 			</div>

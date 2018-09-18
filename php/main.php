@@ -26,9 +26,9 @@ class main{
 	/**
 	 * Starting function
 	 * @param object $px Picklesオブジェクト
-	 * @param object $json プラグイン設定オブジェクト
+	 * @param object $conf プラグイン設定オブジェクト
 	 */
-	public static function exec( $px, $json ){
+	public static function exec( $px, $conf ){
 		$px->pxcmd()->register('paprika', function($px){
 			$pxcmd = $px->get_px_command();
 			if( $pxcmd[1] == 'init' ){
@@ -42,7 +42,7 @@ class main{
 		$proc_type = $px->get_path_proc_type();
 		if( $proc_type == 'php' || preg_match('/\.php\//', $path_req) ){
 			$me = new self( $px );
-			$me->execute_php_contents($json);
+			$me->execute_php_contents($conf);
 			return;
 		}
 	}
@@ -53,7 +53,6 @@ class main{
 	 */
 	public function __construct( $px ){
 		$this->px = $px;
-
 		$this->current_page_info = null;
 		if( $px->site() ){
 			$this->current_page_info = $px->site()->get_current_page_info();
@@ -121,7 +120,8 @@ class main{
 	}
 
 	/**
-	 * Paprika を初期化する
+	 * アプリケーションを初期化する
+	 * 初期セットアップ時に1回だけ実行します。
 	 */
 	private function init(){
 		echo 'Initialize Paprika...'."\n";
@@ -141,13 +141,19 @@ class main{
 
 	/**
 	 * Execute PHP Contents
-	 * @param object $json プラグイン設定
+	 * @param object $conf プラグイン設定
 	 * @return string 加工後の出力コード
 	 */
-	private function execute_php_contents($json){
+	private function execute_php_contents($conf){
 		if($this->px->req()->get_param('PX') == 'paprika.publish_template'){
 			// PX=paprika.publish_template は、テンプレートソースを出力するリクエストにつけられるパラメータ。
 			// テンプレート生成時には、通常のHTMLと同様に振る舞うべきなので、処理をしない。
+			$this->px->bowl()->put('{$main}', 'main');
+			if( property_exists($conf, 'bowls') && is_array($conf->bowls) ){
+				foreach($conf->bowls as $bowl_name){
+					$this->px->bowl()->put('{$'.$bowl_name.'}', $bowl_name);
+				}
+			}
 			return;
 		}
 

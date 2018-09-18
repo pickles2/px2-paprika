@@ -37,6 +37,12 @@ $paprika->add_initialize_method(function() use ($paprika){
 
 
 /**
+ * ログインユーザー情報欄にソースを出力する
+ */
+$paprika->bowl()->put('<p>Login User: test</p>', 'login_user');
+
+
+/**
  * 機能拡張: フォームコントロールを生成する
  */
 require_once(__DIR__.'/control/form.php');

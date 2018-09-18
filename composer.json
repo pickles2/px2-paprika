@@ -38,6 +38,7 @@
     "autoload": {
         "files": [
             "php/main.php",
+            "php/bowl.php",
             "php/paprika.php"
         ]
     }

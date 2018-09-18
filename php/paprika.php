@@ -18,6 +18,11 @@ class paprika{
 	/** Pickles Framework 2 Object */
 	private $px;
 
+	/**
+	 * $bowl object
+	 */
+	private $bowl;
+
 	/** $_SERVER のメモ */
 	private $SERVER_MEMO;
 
@@ -99,6 +104,9 @@ class paprika{
 			'directory_index_primary' => @$this->paprika_env->directory_index[0],
 			'cookie_default_path' => @$this->paprika_env->path_controot,
 		) ) ) );
+
+		// make instance $bowl
+		$this->bowl = new bowl( $this, $this->px, $this->SERVER_MEMO );
 	}
 
 	/**
@@ -149,49 +157,13 @@ class paprika{
 	}
 
 	/**
-	 * テンプレートにコンテンツをバインドする
-	 * @param array $contents 埋め込みキーワードをキーに、置き換えるコードを値に持つ連想配列。
-	 * @return string 完成したHTML
+	 * `$bowl` オブジェクトを取得する。
+	 *
+	 * @return object $bowl オブジェクト
 	 */
-	public function bind_template($contents){
-		$realpath_tpl = $this->paprika_env->realpath_files.'paprika/template';
-
-		// -----------------------------------
-		// テンプレートを生成する
-		if( $this->px ){
-			$_SERVER = $this->SERVER_MEMO;
-			$current_page_path = $this->px->req()->get_request_file_path();
-			$tpl = $this->px->internal_sub_request(
-				$current_page_path.'?PX=paprika.publish_template',
-				array(
-					'user_agent'=>'PicklesCrawler'
-				)
-			);
-			$this->fs()->mkdir_r( dirname($realpath_tpl) );
-			$this->fs()->save_file( $realpath_tpl, $tpl );
-			$this->SERVER_MEMO = $_SERVER;
-
-			// $pxにテンプレートファイルのパスを通知する
-			$path_tpl = $this->fs()->get_realpath(
-				$realpath_tpl,
-				dirname( $this->px->get_path_content() )
-			);
-			$this->px->add_relatedlink($path_tpl);
-		}
-
-		// -----------------------------------
-		// テンプレートを取得する
-		$tpl = $this->fs()->read_file( $realpath_tpl );
-
-		// -----------------------------------
-		// テンプレートにHTMLをバインドする
-		foreach($contents as $search=>$content){
-			$tpl = str_replace( $search, $content, $tpl );
-		}
-
-		return $tpl;
+	public function bowl(){
+		return $this->bowl;
 	}
-
 
 	/**
 	 * ユーザー定義のメソッドを追加する

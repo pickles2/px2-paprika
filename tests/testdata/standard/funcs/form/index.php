@@ -1,6 +1,5 @@
 <?php
 if( !isset($paprika) ){
-	echo '{$main_contents}'."\n";
 	return;
 }
 
@@ -37,8 +36,7 @@ $content = $form->form([
 }, [
 ]);
 
-$tpl = $paprika->bind_template(
-	array('{$main_contents}'=>$content)
-);
-echo $tpl;
+$paprika->bowl()->put($content);
+
+echo $paprika->bowl()->bind_template();
 exit();
