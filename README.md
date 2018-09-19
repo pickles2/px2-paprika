@@ -125,7 +125,7 @@ return call_user_func( function(){
 	);
 ```
 
-### 5. `px-files/prepend.php` を作成し、 Paprika Framework 2 を拡張
+### 5. `px-files/paprika_prepend.php` を作成し、 Paprika Framework 2 を拡張
 
 ```php
 <?php

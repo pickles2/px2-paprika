@@ -166,8 +166,8 @@ class main{
 		$paprika = $this->paprika();
 
 		// 共通の prepend スクリプトを実行
-		if(is_file($paprika->env()->realpath_homedir.'prepend.php')){
-			include($paprika->env()->realpath_homedir.'prepend.php');
+		if(is_file($paprika->env()->realpath_homedir.'paprika_prepend.php')){
+			include($paprika->env()->realpath_homedir.'paprika_prepend.php');
 		}
 
 		// 外部より注入された初期化メソッドを実行する
@@ -261,8 +261,8 @@ class main{
 			}
 
 			// 共通の prepend スクリプトを実行
-			if(is_file($paprika->env()->realpath_homedir.'prepend.php')){
-				include($paprika->env()->realpath_homedir.'prepend.php');
+			if(is_file($paprika->env()->realpath_homedir.'paprika_prepend.php')){
+				include($paprika->env()->realpath_homedir.'paprika_prepend.php');
 			}
 
 			// コンテンツを実行
