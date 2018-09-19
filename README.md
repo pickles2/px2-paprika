@@ -132,6 +132,21 @@ return call_user_func( function(){
 // 任意の拡張式を記述します。
 ```
 
+### 6. データベースを初期化する。
+
+このコマンドははじめに一度だけ実行します。
+
+```
+$ php path/to/.px_execute.php /?PX=paprika.init
+```
+
+
+## Paprika を `.html` 拡張子のページにも適用するには
+
+1. `exts` オプションに `html` を追加します。
+2. `$conf->funcs->processor->html` の先頭にも `tomk79\pickles2\paprikaFramework2\main::processor` を追加します。
+3. パブリッシュ先のディレクトリに、 `.html` 拡張子でも PHPが実行されるよう設定します。 `.htaccess` で 設定する場合、 `AddHandler application/x-httpd-php .php .html` のように書きます。
+
 ## PXコマンド - PX Commands
 
 - `paprika.init` - データベースを初期化する。
