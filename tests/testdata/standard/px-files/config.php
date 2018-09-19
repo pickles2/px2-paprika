@@ -100,7 +100,7 @@ return call_user_func( function(){
 		'*.html' => 'html' ,
 		'*.htm' => 'html' ,
 		'*.php' => 'php' , // <= for Paprika
-		'*.php/*' => 'php' , // <= for Paprika
+
 		'*.css' => 'css' ,
 		'*.js' => 'js' ,
 		'*.png' => 'pass' ,
@@ -125,7 +125,6 @@ return call_user_func( function(){
 		'*.html',
 		'*.htm',
 		'*.php', // <= for Paprika
-		'*.php/*', // <= for Paprika
 	);
 
 
@@ -192,7 +191,8 @@ return call_user_func( function(){
 
 		// PHPアプリケーションフレームワーク "Paprika"
 		'tomk79\pickles2\paprikaFramework2\main::before_content('.json_encode( array(
-			'bowls' => array('login_user'),
+			'bowls' => array('login_user'), // 動的に生成するコンテンツエリア名の一覧
+			'exts' => array('php'), // Paprika を適用する拡張子の一覧
 		) ).')' ,
 	);
 

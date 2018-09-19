@@ -68,7 +68,6 @@ return call_user_func( function(){
 		// ...中略...
 
 		'*.php' => 'php' , // <- add
-		'*.php/*' => 'php' , // <- add
 
 		// ...中略...
 	);
@@ -84,8 +83,8 @@ return call_user_func( function(){
 		// ...中略...
 
 		'*.php', // <- add (for Paprika)
-		'*.php/*', // <- add (for Paprika)
 
+		// ...中略...
 	);
 ```
 
@@ -96,12 +95,15 @@ return call_user_func( function(){
 	 * funcs: Before content
 	 */
 	$conf->funcs->before_content = array(
-		// ...中略...
 
 		// Paprika - PHPアプリケーションフレームワーク
+		// before_content の先頭に設定してください。
 		'tomk79\pickles2\paprikaFramework2\main::before_content('.json_encode( array(
 			// アプリケーションが動的に生成したコンテンツエリアの名称
 			'bowls'=>array('custom_area_1', 'custom_area_2', ),
+
+			// Paprika を適用する拡張子の一覧
+			'exts' => array('php'),
 		) ).')' ,
 
 		// ...中略...

@@ -38,12 +38,18 @@ class main{
 			}
 		});
 
+		$exts = array('php'); // Paprika を適用する拡張子の一覧
+		if( is_object($conf) && property_exists($conf, 'exts') && is_array($conf->exts) ){
+			$exts = $conf->exts;
+		}
 		$path_req = $px->req()->get_request_file_path();
 		$proc_type = $px->get_path_proc_type();
-		if( $proc_type == 'php' || preg_match('/\.(?:php)\//', $path_req) ){
-			$me = new self( $px );
-			$me->execute_php_contents($conf);
-			return;
+		foreach($exts as $ext){
+			if( $proc_type == $ext || preg_match('/\.(?:'.preg_quote($ext, '/').')\//', $path_req) ){
+				$me = new self( $px );
+				$me->execute_php_contents($conf);
+				return;
+			}
 		}
 	}
 
@@ -80,6 +86,7 @@ class main{
 		if( !is_file($this->realpath_script) ){
 			$proc_types = array_keys( get_object_vars( $this->px->conf()->funcs->processor ) );
 			foreach($proc_types as $proc_type){
+				// 2重拡張子の場合に、実際のコンテンツファイルの名前を検索する
 				if( is_file($this->realpath_script.'.'.$proc_type) ){
 					$this->realpath_script = $this->realpath_script.'.'.$proc_type;
 					break;
@@ -134,6 +141,7 @@ class main{
 		$proc_types = array_keys( get_object_vars( $this->px->conf()->funcs->processor ) );
 		while( !is_file($this->realpath_script) ){
 			foreach($proc_types as $proc_type){
+				// 2重拡張子の場合に、実際のコンテンツファイルの名前を検索する
 				if( is_file($this->realpath_script.'.'.$proc_type) ){
 					$this->realpath_script = $this->realpath_script.'.'.$proc_type;
 					break 2;
