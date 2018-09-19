@@ -10,14 +10,8 @@ Publishing Web Application with "Pickles 2".
 
 ```json
 {
-    "repositories": [
-        {
-            "type": "git",
-            "url": "https://github.com/tomk79/px2-paprika-fw-2.x.git"
-        }
-    ],
     "require": {
-        "tomk79/px2-paprika-fw-2.x": "dev-master"
+        "tomk79/px2-paprika": "^0.0"
     }
 }
 ```
@@ -151,6 +145,12 @@ $ php path/to/.px_execute.php /?PX=paprika.init
 
 - `paprika.init` - データベースを初期化する。
 - `paprika.publish_template` - アプリケーションのためのテンプレートファイルを生成する。(フレームワークの内部で暗黙的にコールされます)
+
+## 変更履歴 - Change Log
+
+### tomk79/px2-paprika v0.0.1 (2018-09-19)
+
+- Initial Release.
 
 ## ライセンス - License
 
