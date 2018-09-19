@@ -1,4 +1,6 @@
 <?php
+};
+$execute_php_content();
 $content = ob_get_clean();
 if(strlen($content)){
     $paprika->bowl()->put($content);

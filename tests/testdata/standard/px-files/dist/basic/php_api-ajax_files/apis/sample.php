@@ -28,6 +28,10 @@ if(is_file($paprika->env()->realpath_homedir.'paprika_prepend.php')){
 
 // コンテンツが標準出力する場合があるので、それを拾う準備
 ob_start();
+
+// コンテンツを実行する
+// クロージャーの中で実行
+$execute_php_content = function()use($paprika){
 ?>
 <?php
 // AJAX API の実装サンプル
@@ -52,6 +56,8 @@ $obj['realpath_current_dir'] = $paprika->fs()->get_realpath('./');
 echo json_encode( $obj );
 exit;
 ?><?php
+};
+$execute_php_content();
 $content = ob_get_clean();
 if(strlen($content)){
     $paprika->bowl()->put($content);

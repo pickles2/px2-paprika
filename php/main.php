@@ -211,8 +211,10 @@ class main{
 						'user_agent'=>'Mozilla/1.0'
 					)
 				);
-				foreach($output_json->relatedlinks as $url){
-					$this->px->add_relatedlink($url);
+				if(is_object($output_json) && property_exists($output_json, 'relatedlinks') && is_array($output_json->relatedlinks)){
+					foreach($output_json->relatedlinks as $url){
+						$this->px->add_relatedlink($url);
+					}
 				}
 
 				// テンプレートが存在するなら、パブリッシュ先に加える
