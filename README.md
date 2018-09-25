@@ -11,7 +11,7 @@ Publishing Web Application with "Pickles 2".
 ```json
 {
     "require": {
-        "pickles2/px2-paprika": "^0.0"
+        "pickles2/px2-paprika": "^0.1"
     }
 }
 ```
