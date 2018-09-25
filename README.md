@@ -11,7 +11,7 @@ Publishing Web Application with "Pickles 2".
 ```json
 {
     "require": {
-        "tomk79/px2-paprika": "^0.0"
+        "pickles2/px2-paprika": "^0.0"
     }
 }
 ```
@@ -46,7 +46,7 @@ $ composer update
 
 #### `paths_proc_type` を設定
 
-`*.php` と `*.php/*` を追加する。
+`*.php` を追加する。
 
 ```php
 <?php
@@ -69,7 +69,7 @@ return call_user_func( function(){
 
 #### `paths_enable_sitemap` を設定
 
-`*.php` と `*.php/*` を追加する。
+`*.php` を追加する。
 
 ```php
 	// 拡張子 `*.php` で、サイトマップを有効化
@@ -123,12 +123,14 @@ return call_user_func( function(){
 
 ```php
 <?php
+// px-files/paprika_prepend.php
 // 任意の拡張式を記述します。
 ```
 
-### 6. データベースを初期化する。
+### 6. アプリケーションを初期化する。
 
 このコマンドははじめに一度だけ実行します。
+データベースなどが初期構築されます。
 
 ```
 $ php path/to/.px_execute.php /?PX=paprika.init
@@ -141,12 +143,18 @@ $ php path/to/.px_execute.php /?PX=paprika.init
 2. `$conf->funcs->processor->html` の先頭にも `tomk79\pickles2\paprikaFramework2\main::processor` を追加します。
 3. パブリッシュ先のディレクトリに、 `.html` 拡張子でも PHPが実行されるよう設定します。 `.htaccess` で 設定する場合、 `AddHandler application/x-httpd-php .php .html` のように書きます。
 
+
 ## PXコマンド - PX Commands
 
 - `paprika.init` - データベースを初期化する。
 - `paprika.publish_template` - アプリケーションのためのテンプレートファイルを生成する。(フレームワークの内部で暗黙的にコールされます)
 
+
 ## 変更履歴 - Change Log
+
+### pickles2/px2-paprika v0.1.0 (2018-09-25)
+
+- Pickles 2 グループへ移管した。
 
 ### tomk79/px2-paprika v0.0.1 (2018-09-19)
 
