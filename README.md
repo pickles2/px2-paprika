@@ -152,7 +152,7 @@ $ php path/to/.px_execute.php /?PX=paprika.init
 
 ## 変更履歴 - Change Log
 
-### pickles2/px2-paprika v0.1.1 (リリース日未定)
+### pickles2/px2-paprika v0.1.1 (2019年11月17日)
 
 - Windows + PHP7 の環境で、CSV ファイルを正しく読み込めない問題に対応した。
 
