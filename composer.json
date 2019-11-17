@@ -30,6 +30,7 @@
         "pickles2/px2-px2dthelper": "dev-develop",
         "pickles2/px2-remove-attr": "2.0.*",
         "pickles2/px2-sitemapexcel": "2.0.*",
+        "pickles2/px2-publish-ex": "dev-develop",
         "phpunit/phpunit": "^4.1.0",
         "phpdocumentor/phpdocumentor": "^2.7.0",
         "tomk79/excellent-db": "dev-develop",

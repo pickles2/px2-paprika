@@ -1,10 +1,10 @@
-# Paprika Framework 2 for Pickles 2
+# Paprika Framework for Pickles 2
 Publishing Web Application with "Pickles 2".
 
 
 ## Setup - セットアップ手順
 
-### [Pickles 2 プロジェクト](http://pickles2.pxt.jp/) をセットアップ
+### [Pickles 2 プロジェクト](https://pickles2.pxt.jp/) をセットアップ
 
 ### 1. `composer.json` に、パッケージ情報を追加
 
@@ -61,7 +61,7 @@ return call_user_func( function(){
 	$conf->paths_proc_type = array(
 		// ...中略...
 
-		'*.php' => 'php' , // <- add
+		'*.php' => 'php', // <- for Paprika Framework
 
 		// ...中略...
 	);
@@ -76,7 +76,7 @@ return call_user_func( function(){
 	$conf->paths_enable_sitemap = array(
 		// ...中略...
 
-		'*.php', // <- add (for Paprika)
+		'*.php', // <- for Paprika Framework
 
 		// ...中略...
 	);
@@ -156,11 +156,11 @@ $ php path/to/.px_execute.php /?PX=paprika.init
 
 - Windows + PHP7 の環境で、CSV ファイルを正しく読み込めない問題に対応した。
 
-### pickles2/px2-paprika v0.1.0 (2018-09-25)
+### pickles2/px2-paprika v0.1.0 (2018年9月25日)
 
 - Pickles 2 グループへ移管した。
 
-### tomk79/px2-paprika v0.0.1 (2018-09-19)
+### tomk79/px2-paprika v0.0.1 (2018年9月19日)
 
 - Initial Release.
 
@@ -172,5 +172,5 @@ MIT License
 ## 作者 - Author
 
 - (C)Tomoya Koyanagi <tomk79@gmail.com>
-- website: <http://www.pxt.jp/>
-- Twitter: @tomk79 <http://twitter.com/tomk79/>
+- website: <https://www.pxt.jp/>
+- Twitter: @tomk79 <https://twitter.com/tomk79/>

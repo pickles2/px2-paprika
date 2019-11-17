@@ -183,8 +183,10 @@ return call_user_func( function(){
 		// PX=api
 		'picklesFramework2\commands\api::register' ,
 
-		// PX=publish
-		'picklesFramework2\commands\publish::register' ,
+		// PX=publish (px2-publish-ex)
+		'tomk79\pickles2\publishEx\publish::register('.json_encode( array(
+			'publish_vendor_dir' => false,
+		) ).')' ,
 
 		// PX=px2dthelper
 		'tomk79\pickles2\px2dthelper\main::register' ,
