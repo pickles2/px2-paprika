@@ -115,7 +115,7 @@ class main{
 		);
 
 		$paprika_env->realpath_homedir = $px->fs()->get_relatedpath(
-			$px->get_realpath_homedir(),
+			$paprika_env->realpath_controot.'/paprika-files/',
 			dirname($this->realpath_script)
 		);
 		$paprika_env->path_controot = $px->get_path_controot();
@@ -219,10 +219,6 @@ class main{
 			// 内部パス情報の再計算
 			// 相対パスで捉え直す。
 			$tmp_realpath_script = dirname($px->fs()->get_realpath($this->px->conf()->path_publish_dir.$this->path_script));
-			$this->paprika_env->realpath_homedir = $px->fs()->get_relatedpath(
-				$px->get_realpath_homedir(),
-				$tmp_realpath_script
-			);
 
 			$header_template = file_get_contents( __DIR__.'/resources/dist_src/header.php.template' );
 			$header_template = str_replace( '{$paprika_env}', escapeshellarg(json_encode($this->paprika_env,JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE)), $header_template );

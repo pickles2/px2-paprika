@@ -101,7 +101,6 @@ class paprika{
 
 		// パス系設定の解釈
 		$this->paprika_env->realpath_controot = $this->fs->get_realpath($this->paprika_env->realpath_controot);
-		$this->paprika_env->realpath_controot_preview = $this->fs->get_realpath($this->paprika_env->realpath_controot_preview);
 		$this->paprika_env->realpath_homedir = $this->fs->get_realpath($this->paprika_env->realpath_homedir);
 
 		// make instance $req
