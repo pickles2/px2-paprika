@@ -113,8 +113,7 @@ class main{
 			$px->get_realpath_docroot().$px->get_path_controot(),
 			dirname($this->realpath_script)
 		);
-		$paprika_env->realpath_controot_preview = $paprika_env->realpath_controot;
-			// ↑プレビュー環境(パブリッシュ前)の controot を格納する。
+
 		$paprika_env->realpath_homedir = $px->fs()->get_relatedpath(
 			$px->get_realpath_homedir(),
 			dirname($this->realpath_script)
@@ -130,7 +129,6 @@ class main{
 		);
 		$px->fs()->mkdir_r($px->realpath_files_cache()); // ←これをしないと、ページを持たないPHP(リソースフォルダ内など) でリンク切れが起きる。
 
-		$paprika_env->realpath_files_private_cache = $px->realpath_files_private_cache();
 		$this->paprika_env = $paprika_env;
 	}
 
@@ -221,16 +219,8 @@ class main{
 			// 内部パス情報の再計算
 			// 相対パスで捉え直す。
 			$tmp_realpath_script = dirname($px->fs()->get_realpath($this->px->conf()->path_publish_dir.$this->path_script));
-			$this->paprika_env->realpath_controot_preview = $px->fs()->get_relatedpath(
-				$px->get_realpath_docroot().$px->get_path_controot(),
-				$tmp_realpath_script
-			);
 			$this->paprika_env->realpath_homedir = $px->fs()->get_relatedpath(
 				$px->get_realpath_homedir(),
-				$tmp_realpath_script
-			);
-			$this->paprika_env->realpath_files_private_cache = $px->fs()->get_relatedpath(
-				$px->realpath_files_private_cache(),
 				$tmp_realpath_script
 			);
 

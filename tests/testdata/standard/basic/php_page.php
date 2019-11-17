@@ -39,6 +39,9 @@ ob_start(); ?>
 <pre><code>$px が存在しません。</code></pre>
 <?php } ?>
 
+<h2>$paprika->env()</h2>
+<pre><code><?php var_dump( $paprika->env() ); ?></code></pre>
+
 <?php
 $content .= ob_get_clean();
 

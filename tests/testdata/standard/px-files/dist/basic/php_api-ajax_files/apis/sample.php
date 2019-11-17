@@ -19,7 +19,7 @@ while(1){
 }
 unset($tmp_path_autoload);
 
-$paprika = new \tomk79\pickles2\paprikaFramework2\paprika(json_decode('{"file_default_permission":"775","dir_default_permission":"775","filesystem_encoding":"UTF-8","session_name":"PXSID","session_expire":1800,"directory_index":["index.html"],"realpath_controot":"../../../","realpath_controot_preview":"../../../../../","realpath_homedir":"../../../../","path_controot":"/","realpath_files":"./sample_files/","realpath_files_cache":"../../../caches/c/basic/php_api-ajax_files/apis/sample_files/","realpath_files_private_cache":"../../../../_sys/ram/caches/c/basic/php_api-ajax_files/apis/sample_files/"}'), false);
+$paprika = new \tomk79\pickles2\paprikaFramework2\paprika(json_decode('{"file_default_permission":"775","dir_default_permission":"775","filesystem_encoding":"UTF-8","session_name":"PXSID","session_expire":1800,"directory_index":["index.html"],"realpath_controot":"../../../","realpath_homedir":"../../../../","path_controot":"/","realpath_files":"./sample_files/","realpath_files_cache":"../../../caches/c/basic/php_api-ajax_files/apis/sample_files/"}'), false);
 
 // コンテンツが標準出力する場合があるので、それを拾う準備
 ob_start();

@@ -147,6 +147,7 @@ $ php path/to/.px_execute.php /?PX=paprika.init
 ### pickles2/px2-paprika v0.2.0 (リリース日未定)
 
 - `paprika_prepend.php` の仕組みを廃止。
+- Paprika環境変数から、 `realpath_controot_preview`、`realpath_files_private_cache` を削除。
 
 ### pickles2/px2-paprika v0.1.1 (2019年11月17日)
 
