@@ -21,11 +21,6 @@ unset($tmp_path_autoload);
 
 $paprika = new \tomk79\pickles2\paprikaFramework2\paprika(json_decode('{"file_default_permission":"775","dir_default_permission":"775","filesystem_encoding":"UTF-8","session_name":"PXSID","session_expire":1800,"directory_index":["index.html"],"realpath_controot":"../","realpath_controot_preview":"../../../","realpath_homedir":"../../","path_controot":"/","realpath_files":"./php_page_files/","realpath_files_cache":"../caches/c/basic/php_page_files/","realpath_files_private_cache":"../../_sys/ram/caches/c/basic/php_page_files/"}'), false);
 
-// 共通の prepend スクリプトを実行
-if(is_file($paprika->env()->realpath_homedir.'paprika_prepend.php')){
-    include($paprika->env()->realpath_homedir.'paprika_prepend.php');
-}
-
 // コンテンツが標準出力する場合があるので、それを拾う準備
 ob_start();
 

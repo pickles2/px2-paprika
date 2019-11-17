@@ -165,11 +165,6 @@ class main{
 		echo 'Initialize Paprika...'."\n";
 		$paprika = $this->paprika();
 
-		// 共通の prepend スクリプトを実行
-		if(is_file($paprika->env()->realpath_homedir.'paprika_prepend.php')){
-			include($paprika->env()->realpath_homedir.'paprika_prepend.php');
-		}
-
 		// 外部より注入された初期化メソッドを実行する
 		$paprika->execute_initialize_methods();
 
@@ -260,11 +255,6 @@ class main{
 			$_SERVER['SCRIPT_FILENAME'] = $this->realpath_script;
 			if( is_string(@$_SERVER['PATH_INFO']) ){
 				$_SERVER['PATH_INFO'] = preg_replace('/^'.preg_quote($this->path_script, '/').'/', '', $_SERVER['PATH_INFO']);
-			}
-
-			// 共通の prepend スクリプトを実行
-			if(is_file($paprika->env()->realpath_homedir.'paprika_prepend.php')){
-				include($paprika->env()->realpath_homedir.'paprika_prepend.php');
 			}
 
 			// コンテンツを実行

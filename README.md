@@ -119,15 +119,7 @@ return call_user_func( function(){
 	);
 ```
 
-### 5. `px-files/paprika_prepend.php` を作成し、 Paprika Framework 2 を拡張
-
-```php
-<?php
-// px-files/paprika_prepend.php
-// 任意の拡張式を記述します。
-```
-
-### 6. アプリケーションを初期化する。
+### 5. アプリケーションを初期化する。
 
 このコマンドははじめに一度だけ実行します。
 データベースなどが初期構築されます。
@@ -151,6 +143,10 @@ $ php path/to/.px_execute.php /?PX=paprika.init
 
 
 ## 変更履歴 - Change Log
+
+### pickles2/px2-paprika v0.2.0 (リリース日未定)
+
+- `paprika_prepend.php` の仕組みを廃止。
 
 ### pickles2/px2-paprika v0.1.1 (2019年11月17日)
 
