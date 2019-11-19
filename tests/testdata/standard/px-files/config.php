@@ -192,7 +192,7 @@ return call_user_func( function(){
 		'tomk79\pickles2\px2dthelper\main::register' ,
 
 		// PHPアプリケーションフレームワーク "Paprika"
-		'tomk79\pickles2\paprikaFramework2\main::before_content('.json_encode( array(
+		'picklesFramework2\paprikaFramework\main::before_content('.json_encode( array(
 			'bowls' => array('login_user'), // 動的に生成するコンテンツエリア名の一覧
 			'exts' => array('php'), // Paprika を適用する拡張子の一覧
 		) ).')' ,
@@ -212,7 +212,7 @@ return call_user_func( function(){
 
 	$conf->funcs->processor->html = array(
 		// Paprika - PHPアプリケーションフレームワーク
-		// 'tomk79\pickles2\paprikaFramework2\main::processor' , // <- *.html でも Paprika の処理を動作させたい場合に有効にする
+		// 'picklesFramework2\paprikaFramework\main::processor' , // <- *.html でも Paprika の処理を動作させたい場合に有効にする
 
 		// ページ内目次を自動生成する
 		'picklesFramework2\processors\autoindex\autoindex::exec' ,
@@ -265,7 +265,7 @@ return call_user_func( function(){
 
 	$conf->funcs->processor->php = array( // <= for Paprika
 		// Paprika - PHPアプリケーションフレームワーク
-		'tomk79\pickles2\paprikaFramework2\main::processor' ,
+		'picklesFramework2\paprikaFramework\main::processor' ,
 
 		// html のデフォルトの処理を追加
 		$conf->funcs->processor->html ,

@@ -2,7 +2,7 @@
 /**
  * px2-paprika-fw-2.x
  */
-namespace tomk79\pickles2\paprikaFramework2;
+namespace picklesFramework2\paprikaFramework;
 
 /**
  * main.php

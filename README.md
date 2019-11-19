@@ -92,7 +92,7 @@ return call_user_func( function(){
 
 		// Paprika - PHPアプリケーションフレームワーク
 		// before_content の先頭に設定してください。
-		'tomk79\pickles2\paprikaFramework2\main::before_content('.json_encode( array(
+		'picklesFramework2\paprikaFramework\main::before_content('.json_encode( array(
 			// アプリケーションが動的に生成したコンテンツエリアの名称
 			'bowls'=>array('custom_area_1', 'custom_area_2', ),
 
@@ -112,7 +112,7 @@ return call_user_func( function(){
 	 */
 	$conf->funcs->processor->php = array(
 		// Paprika - PHPアプリケーションフレームワーク
-		'tomk79\pickles2\paprikaFramework2\main::processor' ,
+		'picklesFramework2\paprikaFramework\main::processor' ,
 
 		// html のデフォルトの処理を追加
 		$conf->funcs->processor->html ,
@@ -132,7 +132,7 @@ $ php path/to/.px_execute.php /?PX=paprika.init
 ## Paprika を `.html` 拡張子のページにも適用するには
 
 1. `exts` オプションに `html` を追加します。
-2. `$conf->funcs->processor->html` の先頭にも `tomk79\pickles2\paprikaFramework2\main::processor` を追加します。
+2. `$conf->funcs->processor->html` の先頭にも `picklesFramework2\paprikaFramework\main::processor` を追加します。
 3. パブリッシュ先のディレクトリに、 `.html` 拡張子でも PHPが実行されるよう設定します。 `.htaccess` で 設定する場合、 `AddHandler application/x-httpd-php .php .html` のように書きます。
 
 
@@ -149,6 +149,7 @@ $ php path/to/.px_execute.php /?PX=paprika.init
 - `paprika_prepend.php` の仕組みを廃止。
 - Paprika環境変数から、 `realpath_controot_preview`、`realpath_files_private_cache` を削除。
 - Paprika環境変数 `realpath_homedir` は、Pickles 2 のホームディレクトリではなく、 Paprika のホームディレクトリを返すようになった。
+- 空間名を `tomk79\pickles2\paprikaFramework2` から `picklesFramework2\paprikaFramework` に変更。
 
 ### pickles2/px2-paprika v0.1.1 (2019年11月17日)
 
