@@ -151,7 +151,7 @@ class main{
 			$this->realpath_script = dirname($this->realpath_script);
 		}
 		chdir( dirname($this->realpath_script) );
-		$paprika = new paprika($this->paprika_env, $this->px);
+		$paprika = new fw\paprika($this->paprika_env, $this->px);
 		return $paprika;
 	}
 

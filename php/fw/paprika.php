@@ -2,7 +2,7 @@
 /**
  * Pickles 2 - Paprika Framework
  */
-namespace tomk79\pickles2\paprikaFramework2;
+namespace tomk79\pickles2\paprikaFramework2\fw;
 
 /**
  * paprika.php
@@ -120,6 +120,9 @@ class paprika{
 	 * @return object 設定オブジェクト
 	 */
 	public function conf( $name ){
+		if( !array_key_exists( $name, $this->conf ) ){
+			return null;
+		}
 		return $this->conf[$name];
 	}
 

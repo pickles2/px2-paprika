@@ -6,7 +6,7 @@
  *
  * @author Tomoya Koyanagi <tomk79@gmail.com>
  */
-namespace tomk79\pickles2\paprikaFramework2;
+namespace tomk79\pickles2\paprikaFramework2\fw;
 
 /**
  * Bowl
