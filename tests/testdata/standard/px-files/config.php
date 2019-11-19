@@ -99,6 +99,7 @@ return call_user_func( function(){
 
 		'*.html' => 'html' ,
 		'*.htm' => 'html' ,
+		'/paprika-files/*' => 'pass' , // <= for Paprika
 		'*.php' => 'php' , // <= for Paprika
 
 		'*.css' => 'css' ,

@@ -103,6 +103,20 @@ class paprika{
 		$this->paprika_env->realpath_controot = $this->fs->get_realpath($this->paprika_env->realpath_controot);
 		$this->paprika_env->realpath_homedir = $this->fs->get_realpath($this->paprika_env->realpath_homedir);
 
+
+		// config をロード
+		$conf = null;
+		if( is_file( $this->paprika_env->realpath_homedir.'/config.php' ) ){
+			$conf = include( $this->paprika_env->realpath_homedir.'/config.php' );
+		}
+		$conf_local = null;
+		if( is_file( $this->paprika_env->realpath_homedir.'/config_local.php' ) ){
+			$conf_local = include( $this->paprika_env->realpath_homedir.'/config_local.php' );
+		}
+		$this->conf = (object) array_merge((array) $conf, (array) $conf_local);
+		unset($conf, $conf_local);
+
+
 		// make instance $req
 		$this->req = new \tomk79\request( json_decode( json_encode( array(
 			'session_name' => @$this->paprika_env->session_name,
@@ -120,10 +134,16 @@ class paprika{
 	 * @return object 設定オブジェクト
 	 */
 	public function conf( $name ){
-		if( !array_key_exists( $name, $this->conf ) ){
+		if( is_array( $this->conf ) ){
+			if( !array_key_exists( $name, $this->conf ) ){
+				return null;
+			}
+			return $this->conf[$name];
+		}
+		if( !property_exists( $this->conf, $name ) ){
 			return null;
 		}
-		return $this->conf[$name];
+		return $this->conf->{$name};
 	}
 
 	/**
@@ -131,7 +151,10 @@ class paprika{
 	 * @return object 設定オブジェクト
 	 */
 	public function set_conf( $name, $val ){
-		return $this->conf[$name] = $val;
+		if( is_array( $this->conf ) ){
+			return $this->conf[$name] = $val;
+		}
+		return $this->conf->{$name} = $val;
 	}
 
 	/**

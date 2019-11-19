@@ -61,6 +61,7 @@ return call_user_func( function(){
 	$conf->paths_proc_type = array(
 		// ...中略...
 
+		'/paprika-files/*' => 'pass', // <- for Paprika Framework
 		'*.php' => 'php', // <- for Paprika Framework
 
 		// ...中略...
@@ -147,6 +148,7 @@ $ php path/to/.px_execute.php /?PX=paprika.init
 ### pickles2/px2-paprika v0.2.0 (リリース日未定)
 
 - `paprika_prepend.php` の仕組みを廃止。
+- Paprika Framework の config ファイルの仕組みを追加。
 - Paprika環境変数から、 `realpath_controot_preview`、`realpath_files_private_cache` を削除。
 - Paprika環境変数 `realpath_homedir` は、Pickles 2 のホームディレクトリではなく、 Paprika のホームディレクトリを返すようになった。
 - 空間名を `tomk79\pickles2\paprikaFramework2` から `picklesFramework2\paprikaFramework` に変更。
