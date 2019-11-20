@@ -113,20 +113,29 @@ class main{
 			$px->get_realpath_docroot().$px->get_path_controot(),
 			dirname($this->realpath_script)
 		);
+		$paprika_env->realpath_controot = $px->fs()->normalize_path($paprika_env->realpath_controot);
 
 		$paprika_env->realpath_homedir = $px->fs()->get_relatedpath(
 			$paprika_env->realpath_controot.'/paprika-files/',
 			dirname($this->realpath_script)
 		);
+		$paprika_env->realpath_homedir = $px->fs()->normalize_path($paprika_env->realpath_homedir);
+
 		$paprika_env->path_controot = $px->get_path_controot();
+		$paprika_env->path_controot = $px->fs()->normalize_path($paprika_env->path_controot);
+
 		$paprika_env->realpath_files = $px->fs()->get_relatedpath(
 			$px->realpath_files(),
 			dirname($this->realpath_script)
 		);
+		$paprika_env->realpath_files = $px->fs()->normalize_path($paprika_env->realpath_files);
+
 		$paprika_env->realpath_files_cache = $px->fs()->get_relatedpath(
 			$px->realpath_files_cache(),
 			dirname($this->realpath_script)
 		);
+		$paprika_env->realpath_files_cache = $px->fs()->normalize_path($paprika_env->realpath_files_cache);
+
 		$px->fs()->mkdir_r($px->realpath_files_cache()); // ←これをしないと、ページを持たないPHP(リソースフォルダ内など) でリンク切れが起きる。
 
 		$this->paprika_env = $paprika_env;
@@ -221,7 +230,7 @@ class main{
 			$tmp_realpath_script = dirname($px->fs()->get_realpath($this->px->conf()->path_publish_dir.$this->path_script));
 
 			$header_template = file_get_contents( __DIR__.'/resources/dist_src/header.php.template' );
-			$header_template = str_replace( '{$paprika_env}', escapeshellarg(json_encode($this->paprika_env,JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE)), $header_template );
+			$header_template = str_replace( '{$paprika_env}', var_export(json_encode($this->paprika_env,JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE),true), $header_template );
 			$src .= $header_template;
 			$src .= file_get_contents( $this->realpath_script );
 			$footer_template = file_get_contents( __DIR__.'/resources/dist_src/footer.php.template' );
