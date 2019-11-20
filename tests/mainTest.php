@@ -25,6 +25,7 @@ class mainTest extends PHPUnit_Framework_TestCase{
 			'/index.html' ,
 		] );
 		// var_dump($indexHtml);
+		$this->assertTrue( !!preg_match('/\<h1\>HOME\<\/h1\>/si', $indexHtml) );
 
 
 		// 後始末

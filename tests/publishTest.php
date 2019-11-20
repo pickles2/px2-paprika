@@ -29,6 +29,37 @@ class publishTest extends PHPUnit_Framework_TestCase{
 		$indexHtml = $this->fs->read_file( __DIR__.'/testdata/standard/px-files/dist/index.html' );
 		// var_dump($indexHtml);
 
+		// 出力された sample.php を実行
+		$output = $this->passthru( [
+			'php',
+			__DIR__.'/testdata/standard/px-files/dist/basic/php_api-ajax_files/apis/sample.php'
+		] );
+		// var_dump($output);
+		$json = json_decode($output);
+		// var_dump($json);
+		$this->assertTrue( is_null($json->paprikaConf->undefined) );
+		$this->assertEquals( $json->paprikaConf->sample1, 'config_local.php' );
+		$this->assertFalse( property_exists($json->paprikaConf->sample2, 'prop1') );
+		$this->assertEquals( $json->paprikaConf->sample2->prop2, 'config_local.php' );
+		$this->assertEquals( $json->paprikaConf->sample3, 'config.php' );
+
+
+
+		// php_page.php のソースコードを検査
+		$indexHtml = $this->fs->read_file( __DIR__.'/testdata/standard/px-files/dist/basic/php_page.php' );
+		// var_dump($indexHtml);
+		$this->assertFalse( !!preg_match('/\!doctype/si', $indexHtml) );
+
+		// 出力された php_page.php を実行
+		$output = $this->passthru( [
+			'php',
+			__DIR__.'/testdata/standard/px-files/dist/basic/php_page.php'
+		] );
+		// var_dump($output);
+		$this->assertTrue( !!preg_match('/\!doctype/si', $output) );
+
+
+
 		// 後始末
 		$output = $this->passthru( [
 			'php',
