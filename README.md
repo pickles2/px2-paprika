@@ -145,7 +145,7 @@ $ php path/to/.px_execute.php /?PX=paprika.init
 
 ## 変更履歴 - Change Log
 
-### pickles2/px2-paprika v0.2.0 (リリース日未定)
+### pickles2/px2-paprika v0.2.0 (2019年11月21日)
 
 - `paprika_prepend.php` の仕組みを廃止。
 - Paprika Framework の config ファイルの仕組みを追加。
