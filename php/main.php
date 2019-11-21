@@ -82,7 +82,9 @@ class main{
 			$current_content_path = $this->current_page_info['content'];
 		}
 		$this->path_script = $this->px->fs()->get_realpath('/'.$this->px->get_path_controot().$current_content_path);
+		$this->path_script = $this->px->fs()->normalize_path($this->path_script);
 		$this->realpath_script = $this->px->fs()->get_realpath($this->px->get_realpath_docroot().$this->path_script);
+		$this->realpath_script = $this->px->fs()->normalize_path($this->realpath_script);
 		if( !is_file($this->realpath_script) ){
 			$proc_types = array_keys( get_object_vars( $this->px->conf()->funcs->processor ) );
 			foreach($proc_types as $proc_type){
