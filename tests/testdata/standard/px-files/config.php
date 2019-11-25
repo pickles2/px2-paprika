@@ -97,11 +97,12 @@ return call_user_func( function(){
 		'*/.git/*' => 'ignore' ,
 		'*/.gitignore' => 'ignore' ,
 
-		'*.html' => 'html' ,
-		'*.htm' => 'html' ,
+		'/paprika-files/bin/*.php' => 'php' , // <= for Paprika
 		'/paprika-files/*' => 'pass' , // <= for Paprika
 		'*.php' => 'php' , // <= for Paprika
 
+		'*.html' => 'html' ,
+		'*.htm' => 'html' ,
 		'*.css' => 'css' ,
 		'*.js' => 'js' ,
 		'*.png' => 'pass' ,

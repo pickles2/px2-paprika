@@ -29,14 +29,6 @@ class main{
 	 * @param object $conf プラグイン設定オブジェクト
 	 */
 	public static function before_content( $px, $conf ){
-		$px->pxcmd()->register('paprika', function($px){
-			$pxcmd = $px->get_px_command();
-			if( $pxcmd[1] == 'init' ){
-				$me = new self( $px );
-				$me->init();
-				exit;
-			}
-		});
 
 		$exts = array('php'); // Paprika を適用する拡張子の一覧
 		if( is_object($conf) && property_exists($conf, 'exts') && is_array($conf->exts) ){
@@ -164,21 +156,6 @@ class main{
 		chdir( dirname($this->realpath_script) );
 		$paprika = new fw\paprika($this->paprika_env, $this->px);
 		return $paprika;
-	}
-
-	/**
-	 * アプリケーションを初期化する
-	 * 初期セットアップ時に1回だけ実行します。
-	 */
-	private function init(){
-		echo 'Initialize Paprika...'."\n";
-		$paprika = $this->paprika();
-
-		// 外部より注入された初期化メソッドを実行する
-		$paprika->execute_initialize_methods();
-
-		echo 'done!'."\n";
-		exit;
 	}
 
 	/**

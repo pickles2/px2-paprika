@@ -61,6 +61,7 @@ return call_user_func( function(){
 	$conf->paths_proc_type = array(
 		// ...中略...
 
+		'/paprika-files/bin/*.php' => 'php', // <- for Paprika Framework
 		'/paprika-files/*' => 'pass', // <- for Paprika Framework
 		'*.php' => 'php', // <- for Paprika Framework
 
@@ -139,11 +140,14 @@ $ php path/to/.px_execute.php /?PX=paprika.init
 
 ## PXコマンド - PX Commands
 
-- `paprika.init` - データベースを初期化する。
 - `paprika.publish_template` - アプリケーションのためのテンプレートファイルを生成する。(フレームワークの内部で暗黙的にコールされます)
 
 
 ## 変更履歴 - Change Log
+
+### pickles2/px2-paprika v0.3.0 (リリース日未定)
+
+- PXコマンド `PX=paprika.init` を廃止。
 
 ### pickles2/px2-paprika v0.2.0 (2019年11月21日)
 
