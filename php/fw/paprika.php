@@ -124,6 +124,12 @@ class paprika{
 
 		// make instance $bowl
 		$this->bowl = new bowl( $this, $this->px, $this->SERVER_MEMO );
+
+		// prepend functions
+		$prepend_fncs = $this->conf('prepend');
+		if( is_array( $prepend_fncs ) ){
+			$this->fnc_call_plugin_funcs( $prepend_fncs, $this );
+		}
 	}
 
 	/**
@@ -206,6 +212,31 @@ class paprika{
 	 */
 	public function __call( $name, array $args ){
 		return call_user_func_array( $this->custom_methods[$name], $args );
+	}
+
+	/**
+	 * call plugin functions
+	 *
+	 * @param mixed $func_list List of plugins function
+	 * @return bool 成功時 `true`、失敗時 `false`
+	 */
+	private function fnc_call_plugin_funcs( $func_list ){
+		if( is_null($func_list) ){ return false; }
+		$param_arr = func_get_args();
+		array_shift($param_arr);
+
+		if( @!empty( $func_list ) ){
+			// functions
+			if( is_array($func_list) ){
+				foreach( $func_list as $fnc_id=>$fnc_name ){
+					if( is_callable($fnc_name) ){
+						call_user_func_array( $fnc_name, $param_arr);
+					}
+				}
+			}
+			unset($fnc_name);
+		}
+		return true;
 	}
 
 }

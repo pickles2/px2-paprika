@@ -10,7 +10,30 @@ return call_user_func( function(){
 	$conf = new stdClass;
 
 
-	// Database Connection
+	// Plugins
+	$conf->prepend = [
+		function($paprika){
+			$paprika->set_conf('prepend1', 1);
+		},
+		function($paprika){
+			$paprika->set_conf('prepend2', 'no-value');
+		},
+		function($paprika){
+			$paprika->set_conf('prepend2', 2);
+		},
+		function($paprika){
+			$paprika->add_custom_method('custom_function_a', function() use ($paprika){
+				$paprika->set_conf('custom_func_a', 'called');
+			});
+		},
+	];
+
+
+	// -------- Project Custom Setting --------
+	// プロジェクトが固有に定義する設定を行います。
+	$conf->extra = new stdClass;
+
+
 
 	/** サンプル1 */
 	$conf->sample1 = 'config.php';
