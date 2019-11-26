@@ -114,6 +114,10 @@ class paprika{
 		unset($conf, $conf_local);
 
 
+		// make instance $log
+		$this->log = new log( $this );
+
+
 		// make instance $req
 		$this->req = new \tomk79\request( json_decode( json_encode( array(
 			'session_name' => @$this->paprika_env->session_name,
@@ -198,6 +202,15 @@ class paprika{
 	 */
 	public function bowl(){
 		return $this->bowl;
+	}
+
+	/**
+	 * `$log` オブジェクトを取得する。
+	 *
+	 * @return object $log オブジェクト
+	 */
+	public function log(){
+		return $this->log;
 	}
 
 	/**

@@ -13,3 +13,6 @@ px-files/_sys/ram/
 caches/
 !caches/.gitkeep
 !px-files/dist/*
+
+paprika-files/logs/
+px-files/dist/paprika-files/logs/

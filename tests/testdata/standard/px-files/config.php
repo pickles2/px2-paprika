@@ -98,6 +98,7 @@ return call_user_func( function(){
 		'*/.gitignore' => 'ignore' ,
 
 		'/paprika-files/bin/*.php' => 'php' , // <= for Paprika
+		'/paprika-files/logs/*' => 'ignore' , // <= for Paprika
 		'/paprika-files/*' => 'pass' , // <= for Paprika
 		'*.php' => 'php' , // <= for Paprika
 

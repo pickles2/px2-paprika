@@ -50,6 +50,7 @@ return call_user_func( function(){
 		// ...中略...
 
 		'/paprika-files/bin/*.php' => 'php', // <- for Paprika Framework
+		'/paprika-files/logs/*' => 'ignore' , // <= for Paprika
 		'/paprika-files/*' => 'pass', // <- for Paprika Framework
 		'*.php' => 'php', // <- for Paprika Framework
 
@@ -128,6 +129,7 @@ return call_user_func( function(){
 
 - PXコマンド `PX=paprika.init` を廃止。
 - `$conf->prepend` を追加。
+- `$paprika->log()` を追加。
 
 ### pickles2/px2-paprika v0.2.0 (2019年11月21日)
 

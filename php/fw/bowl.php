@@ -2,7 +2,7 @@
 /**
  * class bowl
  *
- * Paprika Framework 2 のコアオブジェクトの1つ `$bowl` のオブジェクトクラスを定義します。
+ * Paprika Framework のコアオブジェクトの1つ `$bowl` のオブジェクトクラスを定義します。
  *
  * @author Tomoya Koyanagi <tomk79@gmail.com>
  */
@@ -11,8 +11,8 @@ namespace picklesFramework2\paprikaFramework\fw;
 /**
  * Bowl
  *
- * Paprika Framework 2 のコアオブジェクトの1つ `$bowl` のオブジェクトクラスです。
- * このオブジェクトは、Paprika Framework 2 の初期化処理の中で自動的に生成され、`$paprika` の内部に格納されます。
+ * Paprika Framework のコアオブジェクトの1つ `$bowl` のオブジェクトクラスです。
+ * このオブジェクトは、Paprika Framework の初期化処理の中で自動的に生成され、`$paprika` の内部に格納されます。
  *
  * メソッド `$paprika->bowl()` を通じてアクセスします。
  *
