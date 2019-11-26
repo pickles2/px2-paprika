@@ -25,6 +25,11 @@ class log{
 	 */
 	private $paprika;
 
+	/**
+	 * ログイベントハンドラ
+	 */
+	private $log_event_handler;
+
 
 	/**
 	 * Constructor
@@ -118,6 +123,17 @@ class log{
 	}
 
 	/**
+	 * ログ書き込みイベントハンドラをセットする
+	 */
+	public function set_log_handler( $func ){
+		if( !is_callable($func) ){
+			return false;
+		}
+		$this->log_event_handler = $func;
+		return true;
+	}
+
+	/**
 	 * ログを保存する
 	 */
 	private function save_log( $message, $file, $line, $level ){
@@ -140,6 +156,10 @@ class log{
 			case 'warn':
 				error_log( $log."\n", 3, $realpath_logs.'warn-'.date('Y-m-d').'.log' );
 				break;
+		}
+
+		if( is_callable($this->log_event_handler) ){
+			call_user_func_array( $this->log_event_handler, func_get_args());
 		}
 	}
 

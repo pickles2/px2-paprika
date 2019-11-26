@@ -26,6 +26,11 @@ return call_user_func( function(){
 				$paprika->set_conf('custom_func_a', 'called');
 			});
 		},
+		function($paprika){
+			$paprika->log()->set_log_handler(function($message, $file, $line, $level){
+				var_dump(array($message, $file, $line, $level));
+			});
+		},
 	];
 
 
