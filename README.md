@@ -8,24 +8,12 @@ Publishing Web Application with "Pickles 2".
 
 ### 1. `composer.json` に、パッケージ情報を追加
 
-```json
-{
-    "require": {
-        "pickles2/px2-paprika": "^0.1"
-    }
-}
 ```
-
-### 2. `composer update` を実行
-
-更新したパッケージ情報を反映します。
-
-```
-$ composer update
+$ composer require pickles2/px2-paprika
 ```
 
 
-### 3. `.htaccess` を開き、 `RewriteCond` の条件に 拡張子 `.php` を追加
+### 2. `.htaccess` を開き、 `RewriteCond` の条件に 拡張子 `.php` を追加
 
 ```
 #-------------------------
@@ -42,7 +30,7 @@ $ composer update
 </IfModule>
 ```
 
-### 4. `px-files/config.php` を開き、プラグインを設定
+### 3. `px-files/config.php` を開き、プラグインを設定
 
 #### `paths_proc_type` を設定
 
@@ -119,15 +107,6 @@ return call_user_func( function(){
 		// html のデフォルトの処理を追加
 		$conf->funcs->processor->html ,
 	);
-```
-
-### 5. アプリケーションを初期化する。
-
-このコマンドははじめに一度だけ実行します。
-データベースなどが初期構築されます。
-
-```
-$ php path/to/.px_execute.php /?PX=paprika.init
 ```
 
 
