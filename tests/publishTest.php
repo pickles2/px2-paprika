@@ -42,6 +42,9 @@ class publishTest extends PHPUnit_Framework_TestCase{
 		$this->assertFalse( property_exists($json->paprikaConf->sample2, 'prop1') );
 		$this->assertEquals( $json->paprikaConf->sample2->prop2, 'config_local.php' );
 		$this->assertEquals( $json->paprikaConf->sample3, 'config.php' );
+		$this->assertEquals( $json->paprikaConf->prepend1, 1 );
+		$this->assertEquals( $json->paprikaConf->prepend2, 2 );
+		$this->assertEquals( $json->paprikaConf->custom_func_a, 'called' );
 
 
 
