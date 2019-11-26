@@ -1,11 +1,14 @@
 {
     "name": "pickles2/px2-paprika",
-    "description": "Publishing Web Application with \"Pickles 2\".",
+    "description": "Publishing Lightweight Web Application with \"Pickles 2\".",
     "keywords": ["pickles2"],
     "license": "MIT",
     "scripts":{
         "test": [
             "php ./vendor/phpunit/phpunit/phpunit"
+        ],
+        "documentation": [
+            "php ./vendor/phpdocumentor/phpdocumentor/bin/phpdoc --title \"Paprika Framework 0.3.0-alpha.1+dev API Document\" -d \"./php/\" -t \"./docs/phpdoc/\""
         ]
     } ,
     "authors": [
@@ -30,7 +33,8 @@
         "pickles2/px2-sitemapexcel": "2.0.*",
         "pickles2/px2-publish-ex": "dev-develop",
         "phpunit/phpunit": "^4.1.0",
-        "phpdocumentor/phpdocumentor": "^2.7.0"
+        "phpdocumentor/phpdocumentor": "^2.9.0",
+        "jms/serializer": "~1.7"
     },
     "autoload": {
         "files": [
