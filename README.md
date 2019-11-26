@@ -127,6 +127,7 @@ return call_user_func( function(){
 ### pickles2/px2-paprika v0.3.0 (リリース日未定)
 
 - PXコマンド `PX=paprika.init` を廃止。
+- `$conf->prepend` を追加。
 
 ### pickles2/px2-paprika v0.2.0 (2019年11月21日)
 
