@@ -28,7 +28,7 @@ class mainTest extends PHPUnit_Framework_TestCase{
 		$this->assertTrue( !!preg_match('/\<h1\>HOME\<\/h1\>/si', $indexHtml) );
 
 
-		// 出力された sample.php を実行
+		// sample.php を実行
 		$output = $this->passthru( [
 			'php',
 			__DIR__.'/testdata/standard/.px_execute.php' ,
@@ -46,6 +46,17 @@ class mainTest extends PHPUnit_Framework_TestCase{
 		$this->assertEquals( $json->paprikaConf->prepend1, 1 );
 		$this->assertEquals( $json->paprikaConf->prepend2, 2 );
 		$this->assertEquals( $json->paprikaConf->custom_func_a, 'called' );
+
+		// sample.php を実行
+		$output = $this->passthru( [
+			'php',
+			__DIR__.'/testdata/standard/.px_execute.php' ,
+			'-u', 'Mozilla/0.5',
+			'/paprika-files/bin/test.php'
+		] );
+		// var_dump($output);
+		$json = json_decode($output);
+		// var_dump($json);
 
 
 		// 後始末
