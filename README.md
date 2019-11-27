@@ -130,6 +130,7 @@ return call_user_func( function(){
 - PXコマンド `PX=paprika.init` を廃止。
 - `$conf->prepend` を追加。
 - `$paprika->log()` を追加。
+- `$conf->realpath_log_dir` を追加。
 
 ### pickles2/px2-paprika v0.2.0 (2019年11月21日)
 

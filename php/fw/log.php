@@ -42,10 +42,16 @@ class log{
 	 * エラー出力先ディレクトリのパスを取得する
 	 */
 	private function get_realpath_logdir(){
-		$realpath_logs = $this->paprika->env()->realpath_homedir.'logs/';
-		if( !is_dir($realpath_logs) ){
-			mkdir($realpath_logs);
+		$realpath_logs = $this->paprika->conf('realpath_log_dir');
+		if( !is_dir($realpath_logs) || !is_writable($realpath_logs) ){
+			$realpath_logs = $this->paprika->env()->realpath_homedir.'logs/';
+			if( !is_dir($realpath_logs) ){
+				mkdir($realpath_logs);
+			}
 		}
+
+		$realpath_logs = $this->paprika->fs()->get_realpath( $realpath_logs.'/' );
+
 		if( !is_writable($realpath_logs) ){
 			// ログディレクトリに書き込みができない場合の臨時処置
 			trigger_error('Log directory is NOT exists, or NOT writable.', E_USER_ERROR );

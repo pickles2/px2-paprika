@@ -9,6 +9,8 @@ return call_user_func( function(){
 	/** コンフィグオブジェクト */
 	$conf = new stdClass;
 
+	// ログ関連
+	$conf->realpath_log_dir = __DIR__.'/logs';
 
 	// Plugins
 	$conf->prepend = [
