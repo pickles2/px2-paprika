@@ -147,6 +147,7 @@ class log{
 		$level = strtolower($level);
 		$log = '';
 		$log .= date('c');
+		$log .= '	'.getmypid();
 		$log .= '	'.ucfirst($level);
 		$log .= '	'.$message;
 		$log .= '	'.$file.' on line '.$line;
