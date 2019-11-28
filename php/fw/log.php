@@ -128,6 +128,8 @@ class log{
 		$this->save_log($message, $file, $line, 'trace');
 	}
 
+
+
 	/**
 	 * ログ書き込みイベントハンドラをセットする
 	 */
@@ -139,10 +141,59 @@ class log{
 		return true;
 	}
 
+
+	/**
+	 * ログレベルを数値化する
+	 */
+	private function log_level_to_number($str_loglevel){
+		switch( strtolower($str_loglevel) ){
+			case 'none':
+				return 100;
+				break;
+			case 'fatal':
+				return 90;
+				break;
+			case 'error':
+				return 80;
+				break;
+			case 'warn':
+				return 70;
+				break;
+			case 'info':
+				return 60;
+				break;
+			case 'debug':
+				return 50;
+				break;
+			case 'trace':
+				return 40;
+				break;
+			case 'all':
+				return 0;
+				break;
+		}
+		return 0;
+	}
+
 	/**
 	 * ログを保存する
+	 * 
+	 * @param string $message ログに記録するメッセージ
+	 * @param string $file 発生したファイル
+	 * @param integer $line 発生した行番号
+	 * @param string $level ログレベル (`fatal`, `error`, `warn`, `info`, `debug`, `trace` のいずれか)
+	 * @return boolean 常に `true` を返します。
 	 */
 	private function save_log( $message, $file, $line, $level ){
+		$conf_log_reporting = $this->paprika->conf('log_reporting');
+		if( !strlen($conf_log_reporting) ){
+			$conf_log_reporting = 'all';
+		}
+		if( $this->log_level_to_number($level) < $this->log_level_to_number($conf_log_reporting) ){
+			// 設定されたログレベルに満たないレベルのメッセージは記録しない。
+			return true;
+		}
+
 		$realpath_logs = $this->get_realpath_logdir();
 		$level = strtolower($level);
 		$log = '';
@@ -151,8 +202,11 @@ class log{
 		$log .= '	'.ucfirst($level);
 		$log .= '	'.$message;
 		$log .= '	'.$file.' on line '.$line;
+
+		// 出力
 		error_log( $log."\n", 3, $realpath_logs.date('Y-m-d').'-all.log' );
 
+		// ハイレベルのメッセージはそれぞれの専用のファイルにも出力
 		switch( $level ){
 			case 'fatal':
 				error_log( $log."\n", 3, $realpath_logs.'FATAL-'.date('Y-m-d').'.log' );
@@ -168,6 +222,7 @@ class log{
 		if( is_callable($this->log_event_handler) ){
 			call_user_func_array( $this->log_event_handler, func_get_args());
 		}
+		return true;
 	}
 
 }
