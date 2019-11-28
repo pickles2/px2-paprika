@@ -130,6 +130,55 @@ class main{
 		);
 		$paprika_env->realpath_files_cache = $px->fs()->normalize_path($paprika_env->realpath_files_cache);
 
+		// pageinfo
+		$paprika_env->href = null;
+		$paprika_env->page_info = $this->current_page_info;
+		$paprika_env->parent = null;
+		$paprika_env->breadcrumb = null;
+		$paprika_env->bros = null;
+		$paprika_env->children = null;
+
+		if( $px->site() && !is_null($paprika_env->page_info) ){
+			$paprika_env->href = $px->href($paprika_env->page_info['path']);
+
+			if( is_string($px->site()->get_parent()) ){
+				$parent = $px->site()->get_page_info( $px->site()->get_parent() );
+				$paprika_env->parent = array(
+					'title' => $parent['title'],
+					'title_label' => $parent['title_label'],
+					'href' => $px->href($parent['path']),
+				);
+			}
+
+			$paprika_env->breadcrumb = array();
+			foreach($px->site()->get_breadcrumb_array() as $pid){
+				$page_info = $px->site()->get_page_info( $pid );
+				array_push($paprika_env->breadcrumb, array(
+					'title' => $page_info['title'],
+					'title_label' => $page_info['title_label'],
+					'href' => $px->href($page_info['path']),
+				));
+			}
+			$paprika_env->bros = array();
+			foreach($px->site()->get_bros() as $pid){
+				$page_info = $px->site()->get_page_info( $pid );
+				array_push($paprika_env->bros, array(
+					'title' => $page_info['title'],
+					'title_label' => $page_info['title_label'],
+					'href' => $px->href($page_info['path']),
+				));
+			}
+			$paprika_env->children = array();
+			foreach($px->site()->get_children() as $pid){
+				$page_info = $px->site()->get_page_info( $pid );
+				array_push($paprika_env->children, array(
+					'title' => $page_info['title'],
+					'title_label' => $page_info['title_label'],
+					'href' => $px->href($page_info['path']),
+				));
+			}
+		}
+
 		$px->fs()->mkdir_r($px->realpath_files_cache()); // ←これをしないと、ページを持たないPHP(リソースフォルダ内など) でリンク切れが起きる。
 
 		$this->paprika_env = $paprika_env;
@@ -209,7 +258,7 @@ class main{
 			$tmp_realpath_script = dirname($px->fs()->get_realpath($this->px->conf()->path_publish_dir.$this->path_script));
 
 			$header_template = file_get_contents( __DIR__.'/resources/dist_src/header.php.template' );
-			$header_template = str_replace( '{$paprika_env}', var_export(json_encode($this->paprika_env,JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE),true), $header_template );
+			$header_template = str_replace( '{$paprika_env}', var_export(json_encode($this->paprika_env, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE), true), $header_template );
 			$src .= $header_template;
 			$src .= file_get_contents( $this->realpath_script );
 			$footer_template = file_get_contents( __DIR__.'/resources/dist_src/footer.php.template' );
@@ -227,7 +276,7 @@ class main{
 			// ※ `$paprika` 内にもとの `$_SERVER` を記憶するため、 `$paprika` 生成後に偽装しないと壊れます。
 			$_SERVER['SCRIPT_NAME'] = $this->path_script;
 			$_SERVER['SCRIPT_FILENAME'] = $this->realpath_script;
-			if( is_string(@$_SERVER['PATH_INFO']) ){
+			if( array_key_exists('PATH_INFO', $_SERVER) && is_string($_SERVER['PATH_INFO']) ){
 				$_SERVER['PATH_INFO'] = preg_replace('/^'.preg_quote($this->path_script, '/').'/', '', $_SERVER['PATH_INFO']);
 			}
 

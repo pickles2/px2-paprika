@@ -134,6 +134,12 @@ return call_user_func( function(){
 - `$conf->log_reporting` を追加。
 - `$paprika->pdo()` を追加。
 - `$conf->db` を追加。
+- `$paprika->env()->href` を追加。
+- `$paprika->env()->page_info` を追加。
+- `$paprika->env()->breadcrumb` を追加。
+- `$paprika->env()->parent` を追加。
+- `$paprika->env()->bros` を追加。
+- `$paprika->env()->children` を追加。
 
 ### pickles2/px2-paprika v0.2.0 (2019年11月21日)
 
