@@ -141,6 +141,7 @@ class paprika{
 
 	/**
 	 * 設定を取得する
+	 * @param string $name 設定名
 	 * @return object 設定オブジェクト
 	 */
 	public function conf( $name ){
@@ -158,6 +159,8 @@ class paprika{
 
 	/**
 	 * 設定をセットする
+	 * @param string $name 設定名
+	 * @param mixed $val 設定値
 	 * @return object 設定オブジェクト
 	 */
 	public function set_conf( $name, $val ){
@@ -169,6 +172,7 @@ class paprika{
 
 	/**
 	 * Paprika の環境情報を取得する
+	 * @return object 環境情報
 	 */
 	public function env(){
 		return $this->paprika_env;
@@ -293,6 +297,8 @@ class paprika{
 
 	/**
 	 * ユーザー定義のメソッドを追加する
+	 * @param string $name メソッド名
+	 * @param callback $callback メソッド
 	 */
 	public function add_custom_method( $name, \Closure $callback ){
 		$this->custom_methods[$name] = $callback;
@@ -300,6 +306,9 @@ class paprika{
 
 	/**
 	 * ユーザー定義のメソッドを呼び出す
+	 * @param string $name メソッド名
+	 * @param array $args 引数のリスト
+	 * @return mixed 実行結果
 	 */
 	public function __call( $name, array $args ){
 		return call_user_func_array( $this->custom_methods[$name], $args );

@@ -33,6 +33,7 @@ class log{
 
 	/**
 	 * Constructor
+	 * @param object $paprika Paprikaオブジェクト
 	 */
 	public function __construct( $paprika ){
 		$this->paprika = $paprika;
@@ -40,6 +41,7 @@ class log{
 
 	/**
 	 * エラー出力先ディレクトリのパスを取得する
+	 * @return string エラー出力先ディレクトリのパス
 	 */
 	private function get_realpath_logdir(){
 		$realpath_logs = $this->paprika->conf('realpath_log_dir');
@@ -70,6 +72,7 @@ class log{
 
 	/**
 	 * Fatal Errorレベルのログを保存する
+	 * @param string $message ログメッセージ
 	 */
 	public function fatal( $message = null ){
 		$backtrace = debug_backtrace();
@@ -80,6 +83,7 @@ class log{
 
 	/**
 	 * Errorレベルのログを保存する
+	 * @param string $message ログメッセージ
 	 */
 	public function error( $message = null ){
 		$backtrace = debug_backtrace();
@@ -90,6 +94,7 @@ class log{
 
 	/**
 	 * Warningレベルのログを保存する
+	 * @param string $message ログメッセージ
 	 */
 	public function warn( $message = null ){
 		$backtrace = debug_backtrace();
@@ -100,6 +105,7 @@ class log{
 
 	/**
 	 * Infoレベルのログを保存する
+	 * @param string $message ログメッセージ
 	 */
 	public function info( $message = null ){
 		$backtrace = debug_backtrace();
@@ -110,6 +116,7 @@ class log{
 
 	/**
 	 * Debugレベルのログを保存する
+	 * @param string $message ログメッセージ
 	 */
 	public function debug( $message = null ){
 		$backtrace = debug_backtrace();
@@ -120,6 +127,7 @@ class log{
 
 	/**
 	 * Traceレベルのログを保存する
+	 * @param string $message ログメッセージ
 	 */
 	public function trace( $message = null ){
 		$backtrace = debug_backtrace();
@@ -132,6 +140,8 @@ class log{
 
 	/**
 	 * ログ書き込みイベントハンドラをセットする
+	 * @param callback $func イベントハンドラ
+	 * @return boolean 成功時に `true`、 失敗時に `false`
 	 */
 	public function set_log_handler( $func ){
 		if( !is_callable($func) ){
@@ -144,6 +154,8 @@ class log{
 
 	/**
 	 * ログレベルを数値化する
+	 * @param string $str_loglevel ログレベル名
+	 * @return integer 数値化されたログレベル
 	 */
 	private function log_level_to_number($str_loglevel){
 		switch( strtolower($str_loglevel) ){

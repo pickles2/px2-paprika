@@ -47,6 +47,9 @@ class bowl{
 
 	/**
 	 * Constructor
+	 * @param object $paprika Paprikaオブジェクト
+	 * @param object $px Picklesオブジェクト
+	 * @param object $SERVER_MEMO `$_SERVER` の写し
 	 */
 	public function __construct( $paprika, $px, $SERVER_MEMO ){
 		$this->paprika = $paprika;

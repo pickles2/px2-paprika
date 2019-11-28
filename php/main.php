@@ -314,10 +314,11 @@ class main{
 
 	/**
 	 * PHPコードブロックが閉じられているか確認する
+	 * @param string $src_php 検査対象となるPHPソースコード
 	 * @return boolean 閉じられている場合に `true` 閉じられていない場合に `false`。
 	 */
-	private function is_php_closed( $php ){
-		preg_match_all( '/\<\?(?:php|\=)?|\?\>/s', $php, $matches );
+	private function is_php_closed( $src_php ){
+		preg_match_all( '/\<\?(?:php|\=)?|\?\>/s', $src_php, $matches );
 		if( count($matches) && count($matches[0]) ){
 			if( $matches[0][(count($matches[0])-1)] != '?'.'>' ){
 				return false;

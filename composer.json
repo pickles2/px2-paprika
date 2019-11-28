@@ -8,7 +8,7 @@
             "php ./vendor/phpunit/phpunit/phpunit"
         ],
         "documentation": [
-            "php ./vendor/phpdocumentor/phpdocumentor/bin/phpdoc --title \"Paprika Framework 0.3.0-alpha.1+dev API Document\" -d \"./php/\" -t \"./docs/phpdoc/\""
+            "php ./vendor/phpdocumentor/phpdocumentor/bin/phpdoc --title \"Paprika Framework 0.3.0 API Document\" -d \"./php/\" -t \"./docs/phpdoc/\""
         ]
     } ,
     "authors": [
