@@ -1,6 +1,6 @@
 <?php
 /**
- * Test for pickles2/px2-webapp-fw-2.x
+ * Test for pickles2/px2-paprika
  */
 
 class publishTest extends PHPUnit_Framework_TestCase{
@@ -78,6 +78,22 @@ class publishTest extends PHPUnit_Framework_TestCase{
 		] );
 
 	}//testPublish()
+
+	/**
+	 * PDO接続テスト
+	 */
+	public function testPdo(){
+
+		// migrate.php を実行
+		$output = $this->passthru( [
+			'php',
+			__DIR__.'/testdata/standard/px-files/dist/paprika-files/bin/migrate.php'
+		] );
+		// var_dump($output);
+
+		$this->assertTrue( is_file(__DIR__.'/testdata/standard/px-files/dist/paprika-files/_database.sqlite') );
+
+	}//testPdo()
 
 
 

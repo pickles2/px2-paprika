@@ -16,3 +16,5 @@ caches/
 
 paprika-files/logs/
 px-files/dist/paprika-files/logs/
+paprika-files/_database.sqlite
+px-files/dist/paprika-files/_database.sqlite

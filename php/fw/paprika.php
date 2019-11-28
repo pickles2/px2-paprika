@@ -18,6 +18,9 @@ class paprika{
 	/** Pickles Framework 2 Object */
 	private $px;
 
+	/** PDO */
+	private $pdo;
+
 	/**
 	 * $bowl object
 	 */
@@ -211,6 +214,81 @@ class paprika{
 	 */
 	public function log(){
 		return $this->log;
+	}
+
+	/**
+	 * `$pdo` オブジェクトを生成して取得する。
+	 *
+	 * @return object $pdo オブジェクト
+	 */
+	public function pdo(){
+		if( $this->pdo ){
+			// 既にPDOが生成済みならそれを返す
+			return $this->pdo;
+		}
+
+		// 設定を整理
+		$db = (object) $this->conf('db');
+		if( !is_object($db) ){
+			return false;
+		}
+		if( !property_exists($db, 'connection') || !strlen($db->connection) ){
+			return false;
+		}
+		if( !property_exists($db, 'dsn') ){
+			$db->dsn = null;
+		}
+		if( !property_exists($db, 'host') ){
+			$db->host = null;
+		}
+		if( !property_exists($db, 'port') ){
+			$db->port = null;
+		}
+		if( !property_exists($db, 'username') ){
+			$db->username = null;
+		}
+		if( !property_exists($db, 'password') ){
+			$db->password = null;
+		}
+
+		// PDOオプションを生成
+		$dsn = $db->dsn;
+		$options = array();
+		if( !strlen($dsn) ){
+			switch( $db->connection ){
+				case 'sqlite':
+					$dsn = $db->connection.':'.$db->database;
+					break;
+				case 'mysql':
+					$dsn = $db->connection.':host='.$db->host.';port='.$db->port.';dbname='.$db->database;
+					break;
+				case 'pgsql':
+					$dsn = $db->connection.':host='.$db->host.';port='.$db->port.';dbname='.$db->database.';user='.$db->username.';password='.$db->password;
+					break;
+				case 'oci':
+					$dbname = '';
+					if( strlen($db->host) ){
+						$dbname .= '//'.$db->host;
+						if( strlen($db->port) ){
+							$dbname .= ':'.$db->port;
+						}
+						$dbname .= '/';
+					}
+					$dbname .= $db->database;
+					$dsn = $db->connection.':dbname='.$dbname;
+					break;
+			}
+		}
+
+		// 接続
+		$this->pdo = new \PDO(
+			$dsn,
+			$db->username,
+			$db->password,
+			$options
+		);
+
+		return $this->pdo;
 	}
 
 	/**

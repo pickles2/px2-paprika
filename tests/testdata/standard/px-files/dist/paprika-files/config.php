@@ -20,7 +20,19 @@ return call_user_func( function(){
 	 * none, fatal, error, warn, info, debug, trace, all のいずれかを指定できます。
 	 * デフォルトは all レベルです。
 	 */
-	// $conf->log_reporting = 'warn';
+	$conf->log_reporting = 'warn';
+
+
+	// データベース接続関連
+	$conf->db = new stdClass;
+	$conf->db->connection = 'sqlite';
+	$conf->db->host = null;
+	$conf->db->port = null;
+	$conf->db->database = __DIR__.'/_database.sqlite';
+	$conf->db->username = null;
+	$conf->db->password = null;
+	$conf->db->prefix = null;
+
 
 	// Plugins
 	$conf->prepend = [

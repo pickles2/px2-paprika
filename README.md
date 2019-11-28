@@ -132,6 +132,8 @@ return call_user_func( function(){
 - `$paprika->log()` を追加。
 - `$conf->realpath_log_dir` を追加。
 - `$conf->log_reporting` を追加。
+- `$paprika->pdo()` を追加。
+- `$conf->db` を追加。
 
 ### pickles2/px2-paprika v0.2.0 (2019年11月21日)
 
