@@ -295,6 +295,110 @@ class paprika{
 		return $this->pdo;
 	}
 
+
+	/**
+	 * リダイレクトする
+	 * 
+	 * このメソッドは、`Location` HTTPヘッダーを出力します。
+	 * リダイレクトヘッダーを出力したあと、`exit`を発行してスクリプトを終了します。
+	 * 
+	 * @param string $redirect_to リダイレクト先のURL
+	 * @return void このメソッドは、 `exit` を発行してスクリプトを終了します。
+	 */
+	public function redirect( $redirect_to ){
+		while( ob_end_clean() );
+
+		header( 'Content-type: text/html; charset=UTF-8');
+		header( 'Location: '.$redirect_to );
+		$fin = '';
+		$fin .= '<!doctype html>'."\n";
+		$fin .= '<html>'."\n";
+		$fin .= '<head>'."\n";
+		$fin .= '<meta charset="UTF-8" />'."\n";
+		$fin .= '<title>Redirect...</title>'."\n";
+		$fin .= '<meta http-equiv="refresh" content="0;url='.htmlspecialchars( $redirect_to ).'" />'."\n";
+		$fin .= '</head>'."\n";
+		$fin .= '<body>'."\n";
+		$fin .= '<h1>Redirect...</h1>'."\n";
+		$fin .= '<p>'."\n";
+		$fin .= 'If the screen does not change, click the following link:<br />'."\n";
+		$fin .= '<a href="'.htmlspecialchars( $redirect_to ).'">Click to next</a><br />'."\n";
+		$fin .= '</p>'."\n";
+		$fin .= '</body>'."\n";
+		$fin .= '</html>'."\n";
+		print $fin;
+		exit;
+	}
+
+
+	/**
+	 * ダウンロードファイルを出力する
+	 * 
+	 * ファイル出力後、`exit` を発行してスクリプトを終了します。
+	 * 
+	 * `Content-type` は `$options` で変更できます。
+	 * デフォルトはファイルの種類や拡張子に関わらず `application/octet-stream` が出力されます。
+	 * 
+	 * @param string $content ダウンロードするコンテンツ
+	 * @param array $options オプション
+	 * @return void このメソッドは、 `exit` を発行してスクリプトを終了します。
+	 */
+	public function download( $content, $options = array() ){
+		if( is_null( $content ) ){
+			$content = '';
+			$this->log()->warn( 'Download content is null value.' );
+		}elseif( is_bool( $content ) ){
+			$content = 'bool( '.json_encode( $content ).' )';
+			$this->log()->warn( 'Download content is a boolean type value; '.json_encode( $content ) );
+		}elseif( is_resource( $content ) ){
+			$content = 'A Resource.';
+			$this->log()->warn( 'Download content is a resource type value.' );
+		}elseif( is_array( $content ) ){
+			$content = json_encode( $content );
+			$this->log()->warn( 'Download content is an array; '.json_encode( $content ) );
+		}elseif( is_object( $content ) ){
+			$content = json_encode( $content );
+			$this->log()->warn( 'Download content is an object; '.json_encode( $content ) );
+		}
+		if( !strlen( $content ) ){ $content = ''; }
+
+		// 出力バッファをすべてクリア
+		while( ob_end_clean() );
+
+		if( strpos( $_SERVER['HTTP_USER_AGENT'] , 'MSIE' ) ){
+			// MSIE対策
+			// →こんな問題 http://support.microsoft.com/kb/323308/ja
+			header( 'Cache-Control: public' );
+			header( 'Pragma: public' );
+		}
+
+		$contenttype = null;
+		if( array_key_exists('content-type', $options) && strlen( $options['content-type'] ) ){
+			$contenttype = $options['content-type'];
+		}else{
+			$contenttype = 'application/octet-stream';
+		}
+		if( strlen( $contenttype ) ){
+			if( array_key_exists('charset', $options) && strlen( $options['charset'] ) ){
+				$contenttype .= '; charset='.$options['charset'];
+			}
+			header( 'Content-type: '.$contenttype );
+		}
+
+		if( strlen( $content ) ){
+			// ダウンロードの容量
+			header( 'Content-Length: '.strlen( $content ) );
+		}
+
+		if( array_key_exists('filename', $options) && strlen( $options['filename'] ) ){
+			// ダウンロードファイル名
+			header( 'Content-Disposition: attachment; filename='.$options['filename'] );
+		}
+
+		print $content;
+		exit;
+	}
+
 	/**
 	 * ユーザー定義のメソッドを追加する
 	 * @param string $name メソッド名
