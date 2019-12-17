@@ -306,7 +306,7 @@ class paprika{
 	 * @return void このメソッドは、 `exit` を発行してスクリプトを終了します。
 	 */
 	public function redirect( $redirect_to ){
-		while( ob_end_clean() );
+		while( @ob_end_clean() );
 
 		header( 'Content-type: text/html; charset=UTF-8');
 		header( 'Location: '.$redirect_to );
@@ -363,7 +363,7 @@ class paprika{
 		if( !strlen( $content ) ){ $content = ''; }
 
 		// 出力バッファをすべてクリア
-		while( ob_end_clean() );
+		while( @ob_end_clean() );
 
 		if( strpos( $_SERVER['HTTP_USER_AGENT'] , 'MSIE' ) ){
 			// MSIE対策
