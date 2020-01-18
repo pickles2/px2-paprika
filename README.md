@@ -125,7 +125,7 @@ return call_user_func( function(){
 
 ## 変更履歴 - Change Log
 
-### pickles2/px2-paprika v0.3.1 (リリース日未定)
+### pickles2/px2-paprika v0.3.1 (2020年1月18日)
 
 - `$paprika->redirect()` を追加。
 - `$paprika->download()` を追加。
