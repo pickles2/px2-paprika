@@ -1,4 +1,5 @@
 # Paprika Framework for Pickles 2
+
 Publishing Web Application with "Pickles 2".
 
 
@@ -124,6 +125,10 @@ return call_user_func( function(){
 
 
 ## 変更履歴 - Change Log
+
+### pickles2/px2-paprika v0.3.2 (リリース日未定)
+
+- 内部コードの細かい修正。
 
 ### pickles2/px2-paprika v0.3.1 (2020年1月18日)
 
