@@ -225,12 +225,12 @@ class bowl{
 			if( !is_object($output_json) ){
 				$output_json = json_decode('{}');
 			}
-			if( property_exists($output_json, 'relatedlinks') ){
+			if( strlen($output_json->relatedlinks ?? '') ){
 				foreach($output_json->relatedlinks as $url){
 					$this->px->add_relatedlink($url);
 				}
 			}
-			if( property_exists($output_json, 'body_base64') ){
+			if( strlen($output_json->body_base64 ?? '') ){
 				$tpl = base64_decode($output_json->body_base64);
 				$this->paprika->fs()->mkdir_r( dirname($realpath_tpl) );
 				$this->paprika->fs()->save_file( $realpath_tpl, $tpl );

@@ -158,7 +158,7 @@ class log{
 	 * @return integer 数値化されたログレベル
 	 */
 	private function log_level_to_number($str_loglevel){
-		switch( strtolower($str_loglevel) ){
+		switch( strtolower($str_loglevel ?? '') ){
 			case 'none':
 				return 100;
 				break;
@@ -207,7 +207,7 @@ class log{
 		}
 
 		$realpath_logs = $this->get_realpath_logdir();
-		$level = strtolower($level);
+		$level = strtolower($level ?? '');
 		$log = '';
 		$log .= date('c');
 		$log .= '	'.getmypid();

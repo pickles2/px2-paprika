@@ -26,7 +26,7 @@ ob_start(); ?>
 <pre><code><?= realpath( '.' ); ?></code></pre>
 
 <h2>$_SERVER['PATH_INFO']</h2>
-<pre><code><?= htmlspecialchars( @$_SERVER['PATH_INFO'] ); ?></code></pre>
+<pre><code><?= htmlspecialchars( $_SERVER['PATH_INFO'] ?? '' ); ?></code></pre>
 
 <h2>$_SERVER</h2>
 <pre><code><?php var_dump( $_SERVER ); ?></code></pre>

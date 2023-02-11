@@ -1,6 +1,6 @@
 <?php
 /**
- * px2-paprika-fw-2.x
+ * px2-paprika
  */
 namespace picklesFramework2\paprikaFramework;
 

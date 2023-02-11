@@ -264,7 +264,7 @@ th {
   font-family: 'Glyphicons Halflings';
 
   src: url("/common/styles/bootstrap/fonts/glyphicons-halflings-regular.eot");
-  src: url("/common/styles/bootstrap/fonts/glyphicons-halflings-regular.eot#iefix") format('embedded-opentype'), url("/common/styles/bootstrap/fonts/glyphicons-halflings-regular.woff") format('woff'), url("/common/styles/bootstrap/fonts/glyphicons-halflings-regular.ttf") format('truetype'), url("/common/styles/bootstrap/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular") format('svg');
+  src: url("/common/styles/bootstrap/fonts/glyphicons-halflings-regular.eot?#iefix") format('embedded-opentype'), url("/common/styles/bootstrap/fonts/glyphicons-halflings-regular.woff") format('woff'), url("/common/styles/bootstrap/fonts/glyphicons-halflings-regular.ttf") format('truetype'), url("/common/styles/bootstrap/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular") format('svg');
 }
 .glyphicon {
   position: relative;

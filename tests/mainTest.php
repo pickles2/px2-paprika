@@ -3,12 +3,13 @@
  * Test for pickles2/px2-paprika
  */
 
-class mainTest extends PHPUnit_Framework_TestCase{
+class mainTest extends PHPUnit\Framework\TestCase {
+	private $fs;
 
 	/**
 	 * setup
 	 */
-	public function setup(){
+	public function setUp() : void{
 		$this->fs = new \tomk79\filesystem();
 	}
 

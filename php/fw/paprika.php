@@ -22,6 +22,11 @@ class paprika{
 	private $pdo;
 
 	/**
+	 * $log object
+	 */
+	private $log;
+
+	/**
 	 * $bowl object
 	 */
 	private $bowl;
@@ -51,19 +56,15 @@ class paprika{
 		$this->SERVER_MEMO = $_SERVER;
 
 		// initialize PHP
-		if( !extension_loaded( 'mbstring' ) ){
-			trigger_error('mbstring not loaded.');
-		}
+		@ini_set( 'default_charset' , 'UTF-8' );
+		@ini_set( 'internal_encoding' , 'UTF-8' );
+		@ini_set( 'input_encoding' , 'UTF-8' );
+		@ini_set( 'output_encoding' , 'UTF-8' );
 		if( is_callable('mb_internal_encoding') ){
 			mb_internal_encoding('UTF-8');
-			@ini_set( 'mbstring.internal_encoding' , 'UTF-8' );
-			@ini_set( 'mbstring.http_input' , 'UTF-8' );
-			@ini_set( 'mbstring.http_output' , 'UTF-8' );
 		}
-		@ini_set( 'default_charset' , 'UTF-8' );
 		if( is_callable('mb_detect_order') ){
-			@ini_set( 'mbstring.detect_order' , 'UTF-8,SJIS-win,eucJP-win,SJIS,EUC-JP,JIS,ASCII' );
-			mb_detect_order( 'UTF-8,SJIS-win,eucJP-win,SJIS,EUC-JP,JIS,ASCII' );
+			mb_detect_order( 'UTF-8,SJIS-win,cp932,eucJP-win,SJIS,EUC-JP,JIS,ASCII' );
 		}
 		@header_remove('X-Powered-By');
 
@@ -94,9 +95,9 @@ class paprika{
 
 		// make instance $fs
 		$this->fs = new \tomk79\filesystem( json_decode( json_encode( array(
-			'file_default_permission' => @$this->paprika_env->file_default_permission,
-			'dir_default_permission' => @$this->paprika_env->dir_default_permission,
-			'filesystem_encoding' => @$this->paprika_env->filesystem_encoding,
+			'file_default_permission' => $this->paprika_env->file_default_permission ?? null,
+			'dir_default_permission' => $this->paprika_env->dir_default_permission ?? null,
+			'filesystem_encoding' => $this->paprika_env->filesystem_encoding ?? null,
 		) ) ) );
 
 		// パス系設定の解釈
@@ -123,10 +124,10 @@ class paprika{
 
 		// make instance $req
 		$this->req = new \tomk79\request( json_decode( json_encode( array(
-			'session_name' => @$this->paprika_env->session_name,
-			'session_expire' => @$this->paprika_env->session_expire,
-			'directory_index_primary' => @$this->paprika_env->directory_index[0],
-			'cookie_default_path' => @$this->paprika_env->path_controot,
+			'session_name' => $this->paprika_env->session_name ?? null,
+			'session_expire' => $this->paprika_env->session_expire ?? null,
+			'directory_index_primary' => $this->paprika_env->directory_index[0] ?? 'index.html',
+			'cookie_default_path' => $this->paprika_env->path_controot ?? null,
 		) ) ) );
 
 		// make instance $bowl
@@ -258,7 +259,7 @@ class paprika{
 		// PDOオプションを生成
 		$dsn = $db->dsn;
 		$options = array();
-		if( !strlen($dsn) ){
+		if( !strlen($dsn ?? '') ){
 			switch( $db->connection ){
 				case 'sqlite':
 					$dsn = $db->connection.':'.$db->database;
@@ -373,24 +374,24 @@ class paprika{
 		}
 
 		$contenttype = null;
-		if( array_key_exists('content-type', $options) && strlen( $options['content-type'] ) ){
+		if( strlen( $options['content-type'] ?? '' ) ){
 			$contenttype = $options['content-type'];
 		}else{
 			$contenttype = 'application/octet-stream';
 		}
-		if( strlen( $contenttype ) ){
-			if( array_key_exists('charset', $options) && strlen( $options['charset'] ) ){
+		if( strlen( $contenttype ?? '' ) ){
+			if( strlen( $options['charset'] ?? '' ) ){
 				$contenttype .= '; charset='.$options['charset'];
 			}
 			header( 'Content-type: '.$contenttype );
 		}
 
-		if( strlen( $content ) ){
+		if( strlen( $content ?? '' ) ){
 			// ダウンロードの容量
 			header( 'Content-Length: '.strlen( $content ) );
 		}
 
-		if( array_key_exists('filename', $options) && strlen( $options['filename'] ) ){
+		if( strlen( $options['filename'] ?? '' ) ){
 			// ダウンロードファイル名
 			header( 'Content-Disposition: attachment; filename='.$options['filename'] );
 		}

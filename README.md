@@ -126,8 +126,9 @@ return call_user_func( function(){
 
 ## 変更履歴 - Change Log
 
-### pickles2/px2-paprika v0.3.2 (リリース日未定)
+### pickles2/px2-paprika v0.4.0 (リリース日未定)
 
+- サポートするPHPのバージョンを `>=7.3.0` に変更。
 - 内部コードの細かい修正。
 
 ### pickles2/px2-paprika v0.3.1 (2020年1月18日)
@@ -170,6 +171,26 @@ return call_user_func( function(){
 ### tomk79/px2-paprika v0.0.1 (2018年9月19日)
 
 - Initial Release.
+
+
+## 開発者向け情報 - for Developer
+
+
+### テスト - Test
+
+```
+$ cd {$documentRoot}
+$ php vendor/phpunit/phpunit/phpunit;
+```
+
+
+### ドキュメント出力 - phpDocumentor
+
+```
+$ wget https://phpdoc.org/phpDocumentor.phar;
+$ composer run-script documentation;
+```
+
 
 ## ライセンス - License
 

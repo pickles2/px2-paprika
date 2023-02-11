@@ -3,12 +3,13 @@
  * Test for pickles2/px2-paprika
  */
 
-class cleanupTest extends PHPUnit_Framework_TestCase{
+class cleanupTest extends PHPUnit\Framework\TestCase {
+	private $fs;
 
 	/**
 	 * setup
 	 */
-	public function setup(){
+	public function setUp() : void{
 		$this->fs = new \tomk79\filesystem();
 	}
 
@@ -29,7 +30,7 @@ class cleanupTest extends PHPUnit_Framework_TestCase{
 		$this->fs->rm(__DIR__.'/testdata/standard/paprika-files/_database.sqlite');
 		$this->fs->rm(__DIR__.'/testdata/standard/px-files/dist/paprika-files/_database.sqlite');
 
-	}//testCleanup()
+	}
 
 
 	/**
@@ -48,6 +49,6 @@ class cleanupTest extends PHPUnit_Framework_TestCase{
 		passthru( $cmd );
 		$bin = ob_get_clean();
 		return $bin;
-	}// passthru()
+	}
 
 }
