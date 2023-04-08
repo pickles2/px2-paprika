@@ -225,7 +225,7 @@ class bowl{
 			if( !is_object($output_json) ){
 				$output_json = json_decode('{}');
 			}
-			if( strlen($output_json->relatedlinks ?? '') ){
+			if( is_array($output_json->relatedlinks ?? null) ){
 				foreach($output_json->relatedlinks as $url){
 					$this->px->add_relatedlink($url);
 				}
@@ -247,7 +247,10 @@ class bowl{
 
 		// -----------------------------------
 		// テンプレートを取得する
-		$tpl = $this->paprika->fs()->read_file( $realpath_tpl );
+		$tpl = "";
+		if( is_file($realpath_tpl) ){
+			$tpl = $this->paprika->fs()->read_file( $realpath_tpl );
+		}
 
 		// -----------------------------------
 		// テンプレートにHTMLをバインドする

@@ -281,10 +281,13 @@ class main{
 			}
 
 			// コンテンツを実行
-			ob_start();
-			include( $this->realpath_script );
-			$content = ob_get_clean();
-			if(strlen($content)){
+			$content = '';
+			if( is_file($this->realpath_script) ){
+				ob_start();
+				include( $this->realpath_script );
+				$content = ob_get_clean();
+			}
+			if(strlen($content ?? '')){
 				$paprika->bowl()->put($content);
 			}
 
