@@ -126,7 +126,7 @@ return call_user_func( function(){
 
 ## 変更履歴 - Change Log
 
-### pickles2/px2-paprika v0.4.0 (リリース日未定)
+### pickles2/px2-paprika v0.4.0 (2023年4月22日)
 
 - サポートするPHPのバージョンを `>=7.3.0` に変更。
 - 内部コードの細かい修正。
