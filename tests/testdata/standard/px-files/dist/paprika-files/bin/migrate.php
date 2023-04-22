@@ -37,7 +37,7 @@ var_dump($pdo->getAttribute(PDO::ATTR_DRIVER_NAME));
 // var_dump($pdo->getAttribute(PDO::ATTR_SERVER_INFO));
 // var_dump($pdo->getAttribute(PDO::ATTR_SERVER_VERSION));
 
-$result = $pdo->query('CREATE TABLE test_table (
+$result = $pdo->query('CREATE TABLE IF NOT EXISTS test_table (
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
 	name VARCHAR
 );');
