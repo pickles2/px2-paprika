@@ -43,14 +43,6 @@ class publishTest extends PHPUnit\Framework\TestCase {
 		$this->assertEquals( $json->paprikaConf->prepend2, 2 );
 		$this->assertEquals( $json->paprikaConf->custom_func_a, 'called' );
 
-
-		// 出力された test.php を実行
-		$output = $this->passthru( [
-			'php',
-			__DIR__.'/testdata/standard/px-files/dist/paprika-files/bin/test.php'
-		] );
-
-
 		// php_page.php のソースコードを検査
 		$indexHtml = $this->fs->read_file( __DIR__.'/testdata/standard/px-files/dist/basic/php_page.php' );
 		$this->assertFalse( !!preg_match('/\!doctype/si', $indexHtml) );

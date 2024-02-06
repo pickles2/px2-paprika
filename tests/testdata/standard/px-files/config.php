@@ -186,15 +186,15 @@ return call_user_func( function(){
 	 */
 	$conf->funcs->before_content = array(
 		// PX=api
-		'picklesFramework2\commands\api::register' ,
+		picklesFramework2\commands\api::register(),
 
 		// PX=publish (px2-publish-ex)
-		'tomk79\pickles2\publishEx\publish::register('.json_encode( array(
+		tomk79\pickles2\publishEx\publish::register(array(
 			'publish_vendor_dir' => false,
-		) ).')' ,
+		)),
 
 		// PX=px2dthelper
-		'tomk79\pickles2\px2dthelper\main::register' ,
+		tomk79\pickles2\px2dthelper\main::register(),
 
 		// PHPアプリケーションフレームワーク "Paprika"
 		picklesFramework2\paprikaFramework\main::before_content(array(
@@ -220,12 +220,12 @@ return call_user_func( function(){
 		// 'picklesFramework2\paprikaFramework\main::processor' , // <- *.html でも Paprika の処理を動作させたい場合に有効にする
 
 		// ページ内目次を自動生成する
-		'picklesFramework2\processors\autoindex\autoindex::exec' ,
+		picklesFramework2\processors\autoindex\autoindex::exec(),
 
 		// px2-path-resolver - 共通コンテンツのリンクやリソースのパスを解決する
 		//   このAPIは、サイトマップCSV上で path と content が異なるパスを参照している場合に、
 		//   相対的に記述されたリンクやリソースのパスがあわなくなる問題を解決します。
-		'tomk79\pickles2\pathResolver\main::resolve_common_contents()' ,
+		'tomk79\pickles2\pathResolver\main::resolve_common_contents()',
 
 		// テーマ
 		'theme'=>'tomk79\pickles2\multitheme\theme::exec('.json_encode([
@@ -234,35 +234,35 @@ return call_user_func( function(){
 			'path_theme_collection'=>'./px-files/themes/',
 			'attr_bowl_name_by'=>'data-contents-area',
 			'default_theme_id'=>'pickles2'
-		]).')' ,
+		]).')',
 
 		// Apache互換のSSIの記述を解決する
-		'picklesFramework2\processors\ssi\ssi::exec' ,
+		picklesFramework2\processors\ssi\ssi::exec(),
 
 		// 属性 data-contents-area を削除する
 		'tomk79\pickles2\remove_attr\main::exec('.json_encode(array(
 			"attrs"=>array(
 				'data-contents-area',
 			) ,
-		)).')' ,
+		)).')',
 
 		// output_encoding, output_eol_coding の設定に従ってエンコード変換する。
-		'picklesFramework2\processors\encodingconverter\encodingconverter::exec' ,
+		picklesFramework2\processors\encodingconverter\encodingconverter::exec(),
 	);
 
 	$conf->funcs->processor->css = array(
 		// output_encoding, output_eol_coding の設定に従ってエンコード変換する。
-		'picklesFramework2\processors\encodingconverter\encodingconverter::exec' ,
+		picklesFramework2\processors\encodingconverter\encodingconverter::exec(),
 	);
 
 	$conf->funcs->processor->js = array(
 		// output_encoding, output_eol_coding の設定に従ってエンコード変換する。
-		'picklesFramework2\processors\encodingconverter\encodingconverter::exec' ,
+		picklesFramework2\processors\encodingconverter\encodingconverter::exec(),
 	);
 
 	$conf->funcs->processor->md = array(
 		// Markdown文法を処理する
-		'picklesFramework2\processors\md\ext::exec' ,
+		picklesFramework2\processors\md\ext::exec(),
 
 		// html のデフォルトの処理を追加
 		$conf->funcs->processor->html ,
@@ -278,7 +278,7 @@ return call_user_func( function(){
 
 	$conf->funcs->processor->scss = array(
 		// SCSS文法を処理する
-		'picklesFramework2\processors\scss\ext::exec' ,
+		picklesFramework2\processors\scss\ext::exec(),
 
 		// css のデフォルトの処理を追加
 		$conf->funcs->processor->css ,
