@@ -103,7 +103,6 @@ class main{
 				}
 			}
 		}
-		// var_dump($this->realpath_script);
 
 		// making config object
 		$paprika_env = json_decode('{}');
@@ -126,8 +125,8 @@ class main{
 		$paprika_env->realpath_controot = $px->fs()->normalize_path($paprika_env->realpath_controot);
 
 		$paprika_env->realpath_homedir = $px->fs()->get_relatedpath(
-			$paprika_env->realpath_controot.'/paprika-files/',
-			dirname($this->realpath_script)
+			$px->get_realpath_homedir().'/paprika/',
+			strlen($px->conf()->path_publish_dir ?? '') ? dirname($px->conf()->path_publish_dir.$this->path_script) : dirname($this->realpath_script)
 		);
 		$paprika_env->realpath_homedir = $px->fs()->normalize_path($paprika_env->realpath_homedir);
 
