@@ -14,6 +14,11 @@ class main{
 	 */
 	private $px;
 
+	/**
+	 * プラグイン設定オブジェクト
+	 */
+	private $plugin_conf;
+
 	/** Paprika Environment Settings */
 	private $paprika_env;
 
@@ -42,8 +47,8 @@ class main{
 		$proc_type = $px->get_path_proc_type();
 		foreach($exts as $ext){
 			if( $proc_type == $ext || preg_match('/\.(?:'.preg_quote($ext, '/').')\//', $path_req) ){
-				$me = new self( $px );
-				$me->execute_php_contents($conf);
+				$me = new self( $px, $conf );
+				$me->execute_php_contents();
 				return;
 			}
 		}
@@ -71,9 +76,11 @@ class main{
 	/**
 	 * constructor
 	 * @param object $px Picklesオブジェクト
+	 * @param object $plugin_conf プラグイン設定
 	 */
-	public function __construct( $px ){
+	public function __construct( $px, $plugin_conf ){
 		$this->px = $px;
+		$this->plugin_conf = $plugin_conf;
 		$this->current_page_info = null;
 		if( $px->site() ){
 			$this->current_page_info = $px->site()->get_current_page_info();
@@ -218,10 +225,11 @@ class main{
 
 	/**
 	 * Execute PHP Contents
-	 * @param object $conf プラグイン設定
 	 * @return string 加工後の出力コード
 	 */
-	private function execute_php_contents($conf){
+	private function execute_php_contents(){
+		$conf = $this->plugin_conf;
+
 		if($this->px->req()->get_param('PX') == 'paprika.publish_template'){
 			// PX=paprika.publish_template は、テンプレートソースを出力するリクエストにつけられるパラメータ。
 			// テンプレート生成時には、通常のHTMLと同様に振る舞うべきなので、処理をしない。
