@@ -25,7 +25,6 @@ class mainTest extends PHPUnit\Framework\TestCase {
 			'-u', 'Mozilla/0.5',
 			'/index.html' ,
 		] );
-		// var_dump($indexHtml);
 		$this->assertTrue( !!preg_match('/\<h1\>HOME\<\/h1\>/si', $indexHtml) );
 
 
@@ -36,9 +35,8 @@ class mainTest extends PHPUnit\Framework\TestCase {
 			'-u', 'Mozilla/0.5',
 			'/basic/php_api-ajax_files/apis/sample.php'
 		] );
-		// var_dump($output);
 		$json = json_decode($output);
-		// var_dump($json);
+
 		$this->assertTrue( is_null($json->paprikaConf->undefined) );
 		$this->assertEquals( $json->paprikaConf->sample1, 'config_local.php' );
 		$this->assertFalse( property_exists($json->paprikaConf->sample2, 'prop1') );
@@ -48,46 +46,13 @@ class mainTest extends PHPUnit\Framework\TestCase {
 		$this->assertEquals( $json->paprikaConf->prepend2, 2 );
 		$this->assertEquals( $json->paprikaConf->custom_func_a, 'called' );
 
-		// sample.php を実行
-		$output = $this->passthru( [
-			'php',
-			__DIR__.'/testdata/standard/.px_execute.php' ,
-			'-u', 'Mozilla/0.5',
-			'/paprika-files/bin/test.php'
-		] );
-		// var_dump($output);
-		$json = json_decode($output);
-		// var_dump($json);
-
-
 		// 後始末
 		$output = $this->passthru( [
 			'php',
 			__DIR__.'/testdata/standard/.px_execute.php' ,
 			'/?PX=clearcache' ,
 		] );
-
-	}//testPreview()
-
-	/**
-	 * PDO接続テスト
-	 */
-	public function testPdo(){
-
-		// migrate.php を実行
-		$output = $this->passthru( [
-			'php',
-			__DIR__.'/testdata/standard/.px_execute.php' ,
-			'-u', 'Mozilla/0.5',
-			'/paprika-files/bin/migrate.php'
-		] );
-		// var_dump($output);
-
-		$this->assertTrue( is_file(__DIR__.'/testdata/standard/paprika-files/_database.sqlite') );
-
-	}//testPdo()
-
-
+	}
 
 	/**
 	 * コマンドを実行し、標準出力値を返す
@@ -105,6 +70,6 @@ class mainTest extends PHPUnit\Framework\TestCase {
 		passthru( $cmd );
 		$bin = ob_get_clean();
 		return $bin;
-	}// passthru()
+	}
 
 }

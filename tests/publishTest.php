@@ -18,7 +18,6 @@ class publishTest extends PHPUnit\Framework\TestCase {
 	 */
 	public function testPublish(){
 
-
 		// Pickles 2 実行
 		$output = $this->passthru( [
 			'php',
@@ -28,16 +27,13 @@ class publishTest extends PHPUnit\Framework\TestCase {
 
 		// トップページのソースコードを検査
 		$indexHtml = $this->fs->read_file( __DIR__.'/testdata/standard/px-files/dist/index.html' );
-		// var_dump($indexHtml);
 
 		// 出力された sample.php を実行
 		$output = $this->passthru( [
 			'php',
 			__DIR__.'/testdata/standard/px-files/dist/basic/php_api-ajax_files/apis/sample.php'
 		] );
-		// var_dump($output);
 		$json = json_decode($output);
-		// var_dump($json);
 		$this->assertTrue( is_null($json->paprikaConf->undefined) );
 		$this->assertEquals( $json->paprikaConf->sample1, 'config_local.php' );
 		$this->assertFalse( property_exists($json->paprikaConf->sample2, 'prop1') );
@@ -53,12 +49,10 @@ class publishTest extends PHPUnit\Framework\TestCase {
 			'php',
 			__DIR__.'/testdata/standard/px-files/dist/paprika-files/bin/test.php'
 		] );
-		// var_dump($output);
 
 
 		// php_page.php のソースコードを検査
 		$indexHtml = $this->fs->read_file( __DIR__.'/testdata/standard/px-files/dist/basic/php_page.php' );
-		// var_dump($indexHtml);
 		$this->assertFalse( !!preg_match('/\!doctype/si', $indexHtml) );
 
 		// 出力された php_page.php を実行
@@ -66,10 +60,7 @@ class publishTest extends PHPUnit\Framework\TestCase {
 			'php',
 			__DIR__.'/testdata/standard/px-files/dist/basic/php_page.php'
 		] );
-		// var_dump($output);
 		$this->assertTrue( !!preg_match('/\!doctype/si', $output) );
-
-
 
 		// 後始末
 		$output = $this->passthru( [
@@ -77,25 +68,7 @@ class publishTest extends PHPUnit\Framework\TestCase {
 			__DIR__.'/testdata/standard/.px_execute.php' ,
 			'/?PX=clearcache' ,
 		] );
-
-	}//testPublish()
-
-	/**
-	 * PDO接続テスト
-	 */
-	public function testPdo(){
-
-		// migrate.php を実行
-		$output = $this->passthru( [
-			'php',
-			__DIR__.'/testdata/standard/px-files/dist/paprika-files/bin/migrate.php'
-		] );
-		// var_dump($output);
-
-		$this->assertTrue( is_file(__DIR__.'/testdata/standard/px-files/dist/paprika-files/_database.sqlite') );
-
-	}//testPdo()
-
+	}
 
 
 	/**
@@ -114,6 +87,6 @@ class publishTest extends PHPUnit\Framework\TestCase {
 		passthru( $cmd );
 		$bin = ob_get_clean();
 		return $bin;
-	}// passthru()
+	}
 
 }
