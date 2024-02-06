@@ -14,7 +14,5 @@ caches/
 !caches/.gitkeep
 !px-files/dist/*
 
-paprika-files/logs/
-px-files/dist/paprika-files/logs/
-paprika-files/_database.sqlite
-px-files/dist/paprika-files/_database.sqlite
+px-files/paprika/logs/
+px-files/paprika/_database.sqlite

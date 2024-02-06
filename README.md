@@ -50,9 +50,6 @@ return call_user_func( function(){
 	$conf->paths_proc_type = array(
 		// ...中略...
 
-		'/paprika-files/bin/*.php' => 'php', // <- for Paprika Framework
-		'/paprika-files/logs/*' => 'ignore' , // <= for Paprika
-		'/paprika-files/*' => 'pass', // <- for Paprika Framework
 		'*.php' => 'php', // <- for Paprika Framework
 
 		// ...中略...
@@ -129,6 +126,7 @@ return call_user_func( function(){
 ### pickles2/px2-paprika v0.5.0 (2024年xx月xx日)
 
 - 同梱のプラグインが、より直接的な表現で設定できるようになった。
+- (破壊的変更) `paprika-files/` のパスを `px-files/paprika/` に変更した。
 
 ### pickles2/px2-paprika v0.4.0 (2023年4月22日)
 
