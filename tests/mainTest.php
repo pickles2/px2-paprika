@@ -55,6 +55,35 @@ class mainTest extends PHPUnit\Framework\TestCase {
 	}
 
 	/**
+	 * カスタムコマンドを実行するテスト
+	 */
+	public function testCustomCommands(){
+
+		// paprika.test
+		$output = $this->passthru( [
+			'php',
+			__DIR__.'/testdata/standard/.px_execute.php' ,
+			'/?PX=paprika.test' ,
+		] );
+
+		// paprika.migrate
+		$output = $this->passthru( [
+			'php',
+			__DIR__.'/testdata/standard/.px_execute.php' ,
+			'/?PX=paprika.migrate' ,
+		] );
+		$this->assertTrue( is_file(__DIR__.'/testdata/standard/px-files/paprika/_database.sqlite') );
+
+		// 後始末
+		$output = $this->passthru( [
+			'php',
+			__DIR__.'/testdata/standard/.px_execute.php' ,
+			'/?PX=clearcache' ,
+		] );
+	}
+
+
+	/**
 	 * コマンドを実行し、標準出力値を返す
 	 * @param array $ary_command コマンドのパラメータを要素として持つ配列
 	 * @return string コマンドの標準出力値

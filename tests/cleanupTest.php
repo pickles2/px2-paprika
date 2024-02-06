@@ -27,11 +27,8 @@ class cleanupTest extends PHPUnit\Framework\TestCase {
 
 		sleep(1);
 
-		$this->fs->rm(__DIR__.'/testdata/standard/paprika-files/_database.sqlite');
-		$this->fs->rm(__DIR__.'/testdata/standard/px-files/dist/paprika-files/_database.sqlite');
-
-		$this->assertFalse( is_file(__DIR__.'/testdata/standard/paprika-files/_database.sqlite') );
-		$this->assertFalse( is_file(__DIR__.'/testdata/standard/px-files/dist/paprika-files/_database.sqlite') );
+		$this->fs->rm(__DIR__.'/testdata/standard/px-files/paprika/_database.sqlite');
+		$this->assertFalse( is_file(__DIR__.'/testdata/standard/px-files/paprika/_database.sqlite') );
 	}
 
 
