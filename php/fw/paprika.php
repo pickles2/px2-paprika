@@ -296,6 +296,13 @@ class paprika{
 		return $this->pdo;
 	}
 
+	/**
+	 * ホームディレクトリのパスを取得する
+	 * @return string ホームディレクトリのパス
+	 */
+	public function get_realpath_homedir(){
+		return $this->paprika_env->realpath_homedir ?? null;
+	}
 
 	/**
 	 * リダイレクトする

@@ -48,7 +48,14 @@ class main{
 			$me = new self( $px, $conf );
 			$paprika = $me->paprika();
 
-			echo "TODO: PX=paprika.xxxxx で bin/xxxxx.php を実行する手段を追加する\n";
+			$command_name = $pxcmd[1] ?? '';
+			echo $paprika->get_realpath_homedir().'commands/'.urlencode($command_name).'.php'."\n";
+			if( !is_file($paprika->get_realpath_homedir().'commands/'.urlencode($command_name).'.php') ){
+				echo 'Command not found.'."\n";
+				exit();
+			}
+
+			include($paprika->get_realpath_homedir().'commands/'.urlencode($command_name).'.php');
 
 			exit();
 		});
@@ -96,12 +103,13 @@ class main{
 	public function __construct( $px, $plugin_conf ){
 		$this->px = $px;
 		$this->plugin_conf = $plugin_conf;
+
 		$this->current_page_info = null;
 		if( $px->site() ){
 			$this->current_page_info = $px->site()->get_current_page_info();
 		}
 		$current_content_path = $this->px->req()->get_request_file_path();
-		if( $this->current_page_info && strlen(@$this->current_page_info['content']) ){
+		if( $this->current_page_info && strlen($this->current_page_info['content'] ?? '') ){
 			$current_content_path = $this->current_page_info['content'];
 		}
 		$this->path_script = $this->px->fs()->get_realpath('/'.$this->px->get_path_controot().$current_content_path);
@@ -117,6 +125,16 @@ class main{
 					break;
 				}
 			}
+		}
+
+		$pxcmd = $px->get_px_command();
+		$current_dir = realpath('.').'/';
+		if( $pxcmd[1]??'' == '_' ){
+			$current_dir = realpath('.').'/';
+		}elseif( $px->is_publish_tool() && strlen($px->conf()->path_publish_dir ?? '') ){
+			$current_dir = dirname($px->conf()->path_publish_dir.$this->path_script);
+		}else{
+			$current_dir = dirname($this->realpath_script);
 		}
 
 		// making config object
@@ -141,12 +159,9 @@ class main{
 
 		$paprika_env->realpath_homedir = $px->fs()->get_relatedpath(
 			$px->get_realpath_homedir().'/paprika/',
-			(
-				$px->is_publish_tool() && strlen($px->conf()->path_publish_dir ?? '')
-					? dirname($px->conf()->path_publish_dir.$this->path_script)
-					: dirname($this->realpath_script)
-			)
+			$current_dir
 		);
+
 		$paprika_env->realpath_homedir = $px->fs()->normalize_path($paprika_env->realpath_homedir);
 
 		$paprika_env->path_controot = $px->get_path_controot();
