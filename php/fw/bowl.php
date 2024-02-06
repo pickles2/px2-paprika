@@ -216,7 +216,7 @@ class bowl{
 			$_SERVER = $this->SERVER_MEMO;
 			$current_page_path = $this->px->req()->get_request_file_path();
 			$output_json = $this->px->internal_sub_request(
-				$current_page_path.'?PX=paprika.publish_template',
+				$current_page_path.'?PX=paprika._.publish_template',
 				array(
 					'user_agent'=>'PicklesCrawler',
 					'output'=>'json'

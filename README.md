@@ -119,7 +119,7 @@ return call_user_func( function(){
 ## PXコマンド - PX Commands
 
 - `paprika.${xxxxx}` - カスタムコマンドを実行する。
-- `paprika.publish_template` - アプリケーションのためのテンプレートファイルを生成する。(フレームワークの内部で暗黙的にコールされます)
+- `paprika._.publish_template` - アプリケーションのためのテンプレートファイルを生成する。(フレームワークの内部で暗黙的にコールされます)
 
 
 ## 変更履歴 - Change Log
@@ -128,7 +128,7 @@ return call_user_func( function(){
 
 - 同梱のプラグインが、より直接的な表現で設定できるようになった。
 - (破壊的変更) `paprika-files/` のパスを `px-files/paprika/` に変更した。
-- `PX=paprika` を追加した。
+- `PX=paprika` を追加した。これに伴い、`PX=paprika.publish_template` を `PX=paprika._.publish_template` に変更し、 `PX=paprika._` 以下を予約語とした。
 
 ### pickles2/px2-paprika v0.4.0 (2023年4月22日)
 
