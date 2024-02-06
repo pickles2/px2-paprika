@@ -165,16 +165,16 @@ return call_user_func( function(){
 	 */
 	$conf->funcs->before_sitemap = array(
 		// PX=clearcache
-		'picklesFramework2\commands\clearcache::register' ,
+		picklesFramework2\commands\clearcache::register() ,
 
 		 // PX=config
-		'picklesFramework2\commands\config::register' ,
+		picklesFramework2\commands\config::register() ,
 
 		 // PX=phpinfo
-		'picklesFramework2\commands\phpinfo::register' ,
+		picklesFramework2\commands\phpinfo::register() ,
 
 		// sitemapExcel
-		'tomk79\pickles2\sitemap_excel\pickles_sitemap_excel::exec' ,
+		tomk79\pickles2\sitemap_excel\pickles_sitemap_excel::exec(),
 	);
 
 	/**
@@ -195,10 +195,10 @@ return call_user_func( function(){
 		'tomk79\pickles2\px2dthelper\main::register' ,
 
 		// PHPアプリケーションフレームワーク "Paprika"
-		'picklesFramework2\paprikaFramework\main::before_content('.json_encode( array(
+		picklesFramework2\paprikaFramework\main::before_content(array(
 			'bowls' => array('login_user'), // 動的に生成するコンテンツエリア名の一覧
 			'exts' => array('php'), // Paprika を適用する拡張子の一覧
-		) ).')' ,
+		)),
 	);
 
 
@@ -268,7 +268,7 @@ return call_user_func( function(){
 
 	$conf->funcs->processor->php = array( // <= for Paprika
 		// Paprika - PHPアプリケーションフレームワーク
-		'picklesFramework2\paprikaFramework\main::processor' ,
+		picklesFramework2\paprikaFramework\main::processor(),
 
 		// html のデフォルトの処理を追加
 		$conf->funcs->processor->html ,

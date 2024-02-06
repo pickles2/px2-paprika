@@ -5,7 +5,7 @@ Publishing Web Application with "Pickles 2".
 
 ## Setup - セットアップ手順
 
-### [Pickles 2 プロジェクト](https://pickles2.pxt.jp/) をセットアップ
+### [Pickles 2 プロジェクト](https://pickles2.com/) をセットアップ
 
 ### 1. `composer.json` に、パッケージ情報を追加
 
@@ -125,6 +125,10 @@ return call_user_func( function(){
 
 
 ## 変更履歴 - Change Log
+
+### pickles2/px2-paprika v0.5.0 (2024年xx月xx日)
+
+- 同梱のプラグインが、より直接的な表現で設定できるようになった。
 
 ### pickles2/px2-paprika v0.4.0 (2023年4月22日)
 

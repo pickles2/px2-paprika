@@ -28,7 +28,11 @@ class main{
 	 * @param object $px Picklesオブジェクト
 	 * @param object $conf プラグイン設定オブジェクト
 	 */
-	public static function before_content( $px, $conf ){
+	public static function before_content( $px = null, $conf = null ){
+
+		if( count(func_get_args()) <= 1 ){
+			return __CLASS__.'::'.__FUNCTION__.'('.( is_array($px) ? json_encode($px) : '' ).')';
+		}
 
 		$exts = array('php'); // Paprika を適用する拡張子の一覧
 		if( is_object($conf) && property_exists($conf, 'exts') && is_array($conf->exts) ){
@@ -50,7 +54,12 @@ class main{
 	 * @param object $px Picklesオブジェクト
 	 * @param object $conf プラグイン設定オブジェクト
 	 */
-	public static function processor( $px, $conf ){
+	public static function processor( $px = null, $conf = null ){
+
+		if( count(func_get_args()) <= 1 ){
+			return __CLASS__.'::'.__FUNCTION__.'('.( is_array($px) ? json_encode($px) : '' ).')';
+		}
+
 		$pxcmd = $px->get_px_command();
 		if( $pxcmd[1] == 'publish_template' ){
 			foreach( $px->bowl()->get_keys() as $key ){
