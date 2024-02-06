@@ -65,13 +65,12 @@ return call_user_func( function(){
 
 
 	/** サンプル1 */
-	$conf->sample1 = 'config.php';
+	$conf->sample1 = 'config_local.php';
 
 	/** サンプル2 */
 	$conf->sample2 = new \stdClass();
-	$conf->sample2->prop1 = 'config.php';
-	$conf->sample2->prop2 = 'config.php';
-	$conf->sample2->prop3 = 'config.php';
+	$conf->sample2->prop2 = 'config_local.php';
+	$conf->sample2->prop4 = 'config_local.php';
 
 	/** サンプル3 */
 	$conf->sample3 = 'config.php';

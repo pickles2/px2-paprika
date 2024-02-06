@@ -128,6 +128,7 @@ return call_user_func( function(){
 
 - 同梱のプラグインが、より直接的な表現で設定できるようになった。
 - (破壊的変更) `paprika-files/` のパスを `px-files/paprika/` に変更した。
+- (破壊的変更) `config_local.php` を廃止した。
 - `PX=paprika` を追加した。これに伴い、`PX=paprika.publish_template` を `PX=paprika._.publish_template` に変更し、 `PX=paprika._` 以下を予約語とした。
 
 ### pickles2/px2-paprika v0.4.0 (2023年4月22日)

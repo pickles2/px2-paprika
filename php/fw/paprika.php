@@ -106,16 +106,10 @@ class paprika{
 
 
 		// config をロード
-		$conf = null;
+		$this->conf = null;
 		if( is_file( $this->paprika_env->realpath_homedir.'/config.php' ) ){
-			$conf = include( $this->paprika_env->realpath_homedir.'/config.php' );
+			$this->conf = include( $this->paprika_env->realpath_homedir.'/config.php' );
 		}
-		$conf_local = null;
-		if( is_file( $this->paprika_env->realpath_homedir.'/config_local.php' ) ){
-			$conf_local = include( $this->paprika_env->realpath_homedir.'/config_local.php' );
-		}
-		$this->conf = (object) array_merge((array) $conf, (array) $conf_local);
-		unset($conf, $conf_local);
 
 
 		// make instance $log
