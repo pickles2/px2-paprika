@@ -34,11 +34,21 @@ class main{
 	 * @param object $conf プラグイン設定オブジェクト
 	 */
 	public static function before_content( $px = null, $conf = null ){
-
 		if( count(func_get_args()) <= 1 ){
 			return __CLASS__.'::'.__FUNCTION__.'('.( is_array($px) ? json_encode($px) : '' ).')';
 		}
 
+		// PX=paprika を登録
+		$px->pxcmd()->register('paprika', function($px) use ($conf){
+			$me = new self( $px, $conf );
+			$paprika = $me->paprika();
+
+			echo "TODO: PX=paprika.xxxxx で bin/xxxxx.php を実行する手段を追加する\n";
+
+			exit();
+		});
+
+		// コンテンツを処理
 		$exts = array('php'); // Paprika を適用する拡張子の一覧
 		if( is_object($conf) && property_exists($conf, 'exts') && is_array($conf->exts) ){
 			$exts = $conf->exts;
