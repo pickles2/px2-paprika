@@ -110,6 +110,7 @@ class paprika{
 		if( is_file( $this->paprika_env->realpath_homedir.'/config.php' ) ){
 			$this->conf = include( $this->paprika_env->realpath_homedir.'/config.php' );
 		}
+		$this->conf = (object) $this->conf;
 
 
 		// make instance $log
