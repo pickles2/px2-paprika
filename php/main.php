@@ -66,13 +66,19 @@ class main{
 			$exts = $conf->exts;
 		}
 		$path_req = $px->req()->get_request_file_path();
+		$path_content = $px->get_path_content();
 		$proc_type = $px->get_path_proc_type();
+		$is_paprika_target_contents = false;
 		foreach($exts as $ext){
-			if( $proc_type == $ext || preg_match('/\.(?:'.preg_quote($ext, '/').')\//', $path_req) ){
-				$me = new self( $px, $conf );
-				$me->execute_php_contents();
-				return;
+			if( $proc_type == $ext || preg_match('/\.(?:'.preg_quote($ext, '/').')$/', $path_content) ){
+				$is_paprika_target_contents = true;
+				break;
 			}
+		}
+		if( $is_paprika_target_contents ){
+			$me = new self( $px, $conf );
+			$me->execute_php_contents();
+			return;
 		}
 	}
 

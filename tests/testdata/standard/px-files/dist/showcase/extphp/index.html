@@ -1,81 +1,43 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8" />
-		<title>PHPを拡張子で適用する | Paprika Framework for Pickles 2</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<meta name="keywords" content="" />
-		<meta name="description" content="" />
- <!-- jQuery -->
-<script src="/common/scripts/jquery-1.10.1.min.js" type="text/javascript"></script>
+<?php
+// chdir
+chdir(__DIR__);
 
-<!-- Bootstrap -->
-<link rel="stylesheet" href="/common/styles/bootstrap/css/bootstrap.min.css">
-<script src="/common/styles/bootstrap/js/bootstrap.min.js"></script>
+// autoload.php をロード
+$tmp_path_autoload = __DIR__;
+while(1){
+    if( is_file( $tmp_path_autoload.'/vendor/autoload.php' ) ){
+        require_once( $tmp_path_autoload.'/vendor/autoload.php' );
+        break;
+    }
 
-<!-- Contents Stylesheets -->
-<link rel="stylesheet" href="/common/styles/contents.css" type="text/css" />
-<script src="/common/scripts/contents.js" type="text/javascript"></script>
+    if( $tmp_path_autoload == dirname($tmp_path_autoload) ){
+        // これ以上、上の階層がない。
+        break;
+    }
+    $tmp_path_autoload = dirname($tmp_path_autoload);
+    continue;
+}
+unset($tmp_path_autoload);
 
-		<!-- Bootstrap Theme -->
-		<link rel="stylesheet" href="/caches/p/theme/pickles2/styles/bootstrap-theme.min.css">
-		<link rel="stylesheet" href="/caches/p/theme/pickles2/styles/theme.css">
-	</head>
-	<body>
-		<header class="theme_header" id="page_top">
-			<div class="container">
-				<p class="theme_si"><a href="/">Paprika Framework for Pickles 2</a></p>
-				<div class="theme_shouldernavi">
-<ul></ul>				</div>
-				<div class="theme_globalnavi">
-<ul><li><a href="/basic/">基本</a></li><li><a href="/showcase/" class="current">ショーケース</a></li></ul>
-				</div>
-			</div>
-		</header>
-		<div class="theme_mainblock">
-			<div class="container">
-				<div class="row">
-					<div class="col-sm-9">
-						<div class="theme_breadcrumb"><ul><li><a href="/">HOME</a></li><li><a href="/showcase/">ショーケース</a></li><li><span>PHPを拡張子で適用する</span></li></ul></div>
-						<h1>PHPを拡張子で適用する</h1>
-						<div class="contents">
-24
+$paprika = new \picklesFramework2\paprikaFramework\fw\paprika(json_decode('{"file_default_permission":"775","dir_default_permission":"775","filesystem_encoding":"UTF-8","session_name":"PXSID","session_expire":1800,"directory_index":["index.html"],"realpath_controot":"../../","realpath_homedir":"../../../paprika/","path_controot":"/","realpath_files":"./index_files/","realpath_files_cache":"../../caches/c/showcase/extphp/index_files/","href":"/showcase/extphp/","page_info":{"path":"/showcase/extphp/index.html","content":"/showcase/extphp/index.html","id":":auto_page_id.8","title":"PHPを拡張子で適用する","title_breadcrumb":"PHPを拡張子で適用する","title_h1":"PHPを拡張子で適用する","title_label":"PHPを拡張子で適用する","title_full":"PHPを拡張子で適用する | Paprika Framework for Pickles 2","logical_path":"/showcase/index.html","list_flg":"1","layout":"","orderby":"","keywords":"","description":"","category_top_flg":"1","role":"","proc_type":""},"parent":{"title":"ショーケース","title_label":"ショーケース","href":"/showcase/"},"breadcrumb":[{"title":"HOME","title_label":"HOME","href":"/"},{"title":"ショーケース","title_label":"ショーケース","href":"/showcase/"}],"bros":[{"title":"PHPを拡張子で適用する","title_label":"PHPを拡張子で適用する","href":"/showcase/extphp/"}],"children":[]}'), false);
+
+// コンテンツが標準出力する場合があるので、それを拾う準備
+ob_start();
+
+// コンテンツを実行する
+// クロージャーの中で実行
+$execute_php_content = function()use($paprika){
+?>
+<?= 1+23 ?>
+
 これはテストページです。
-						</div>
-						<div class="theme_breadcrumb"><ul><li><a href="/">HOME</a></li><li><a href="/showcase/">ショーケース</a></li><li><span>PHPを拡張子で適用する</span></li></ul></div>
-					</div>
-					<div class="col-sm-3">
-						<nav class="theme_common_navi">
-							<p><a href="/showcase/extphp/">PHPを拡張子で適用する</a></p>
-						</nav>
-					</div>
-				</div><!-- /.row -->
-			</div><!-- /.container -->
-		</div><!-- /.theme_mainblock -->
-		<footer class="theme_footer">
-			<div class="container">
-				<nav class="theme_megafooter_navi">
-<ul>
-<li><a href="/basic/">基本</a><ul>
-<li><a href="/basic/php_api-ajax.html">1. PHPによるAPIにAJAX通信する</a></li>
-<li><a href="/basic/php_page.php">2. PHPで実行する</a></li>
-<li><a href="/basic/php_preview.html">3. プレビュー環境で動的に実行する</a></li>
-</ul>
-</li>
-<li><a href="/showcase/" class="current">ショーケース</a><ul>
-<li><a href="/showcase/extphp/" class="current">PHPを拡張子で適用する</a></li>
-</ul>
-</li>
-</ul>
-				</nav>
-			</div>
-			<div class="container theme_footer_shouldernavi">
-<ul><li><a href="/">HOME</a></li></ul>			</div>
-			<div class="theme-login-user">
-			</div>
-			<div class="container">
-				<p style="text-align:center;">&copy;Tomoya Koyanagi.</p>
-			</div>
-		</footer>
-	</body>
-</html>
+<?php
+};
+$execute_php_content();
+$content = ob_get_clean();
+if(strlen($content)){
+    $paprika->bowl()->put($content);
+}
+echo $paprika->bowl()->bind_template();
+exit;
+?>
