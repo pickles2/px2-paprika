@@ -60,9 +60,9 @@ class bowl{
 	/**
 	 * コンテンツボウルにコンテンツを入れる。
 	 *
-	 * ソースコードを `$px` オブジェクトに預けます。
+	 * ソースコードを `$paprika` オブジェクトに預けます。
 	 * このメソッドから預けられたコードは、同じ `$content_name` 値 をキーにして、
-	 * `$px->bowl()->get()` または `$px->bowl()->get_clean()` から引き出すことができます。
+	 * `$paprika->bowl()->get()` または `$paprika->bowl()->get_clean()` から引き出すことができます。
 	 *
 	 * この機能は、コンテンツからテーマへコンテンツを渡すために使用されます。
 	 *
@@ -70,12 +70,10 @@ class bowl{
 	 *
 	 * @param string $src 入れるHTMLソース
 	 * @param string $content_name ボウルの格納名。(省略時 `main`)
-	 * `$px->bowl()->get()` で取り出す際に使用する名称です。
-	 * 任意の名称が利用できます。 Pickles 2 の標準状態では、
-	 * 無名(空白文字列) = `main` = メインコンテンツ、
-	 * `head` = HEADセクション内コンテンツ(CSS等)、
-	 * `foot` = BODYセクション末尾コンテンツ(JavaScript等)、
-	 * の3種類が定義されています。
+	 * `$paprika->bowl()->get()` で取り出す際に使用する名称です。
+	 * 任意の名称が利用できます。 Paprika Framework の標準状態では、
+	 * 無名(空白文字列) = `main` = メインコンテンツ
+	 * が定義されています。
 	 *
 	 * @return bool 成功時 true、失敗時 false
 	 */
@@ -90,34 +88,14 @@ class bowl{
 	}
 
 	/**
-	 * コンテンツボウルにコンテンツを送る。 (deprecated)
-	 *
-	 * このメソッドは非推奨です。 代わりに、 `$px->bowl()->put()` を使用してください。
-	 *
-	 * @param string $src 入れるHTMLソース
-	 * @param string $content_name ボウルの格納名。(省略時 `main`)
-	 * `$px->bowl()->get()` で取り出す際に使用する名称です。
-	 * 任意の名称が利用できます。 Pickles 2 の標準状態では、
-	 * 無名(空白文字列) = `main` = メインコンテンツ、
-	 * `head` = HEADセクション内コンテンツ(CSS等)、
-	 * `foot` = BODYセクション末尾コンテンツ(JavaScript等)、
-	 * の3種類が定義されています。
-	 *
-	 * @return bool 成功時 true、失敗時 false
-	 */
-	public function send( $src, $content_name = 'main' ){
-		return $this->put( $src, $content_name );
-	}
-
-	/**
 	 * コンテンツボウルのコンテンツを置き換える。
 	 *
 	 * ソースコードを$pxオブジェクトに預けます。
-	 * `$px->bowl()->put()` と同じですが、複数回送信した場合に、このメソッドは追記ではなく上書きする点が異なります。
+	 * `$paprika->bowl()->put()` と同じですが、複数回送信した場合に、このメソッドは追記ではなく上書きする点が異なります。
 	 *
 	 * @param string $src 送るHTMLソース
 	 * @param string $content_name ボウルの格納名。(省略時 'main')
-	 * `$px->bowl()->get_clean()` から取り出す際に使用する名称です。
+	 * `$paprika->bowl()->get_clean()` から取り出す際に使用する名称です。
 	 * 任意の名称が利用できます。PxFWの標準状態では、無名(空白文字列) = メインコンテンツ、'head' = ヘッダー内コンテンツ の2種類が定義されています。
 	 *
 	 * @return bool 成功時 true、失敗時 false
@@ -164,18 +142,6 @@ class bowl{
 		$content = $this->contents_bowl[$content_name];
 
 		return $content;
-	}
-
-	/**
-	 * コンテンツボウルからコンテンツを引き出す。(deprecated)
-	 *
-	 * このメソッドは非推奨です。 代わりに `$px->bowl()->get_clean()` を使用してください。
-	 *
-	 * @param string $content_name ボウルの格納名。(省略時 `main`)
-	 * @return mixed 成功時、ボウルから得られたHTMLソースを返す。失敗時、false
-	 */
-	public function pull( $content_name = 'main' ){
-		return $this->get_clean( $content_name );
 	}
 
 	/**

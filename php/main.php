@@ -93,8 +93,7 @@ class main{
 			return __CLASS__.'::'.__FUNCTION__.'('.( is_array($px) ? json_encode($px) : '' ).')';
 		}
 
-		$pxcmd = $px->get_px_command();
-		if( ($pxcmd[1] ?? null) == '_' && ($pxcmd[2] ?? null) == 'publish_template' ){
+		if($px->req()->get_param('PX') == 'paprika._.publish_template'){
 			foreach( $px->bowl()->get_keys() as $key ){
 				$px->bowl()->replace( '{$'.$key.'}', $key );
 			}
