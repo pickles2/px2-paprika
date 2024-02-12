@@ -267,29 +267,31 @@ class main{
 	 */
 	private function execute_php_contents(){
 		$conf = $this->plugin_conf;
+		$px = $this->px;
 
-		if($this->px->req()->get_param('PX') == 'paprika._.publish_template'){
+		if($px->req()->get_param('PX') == 'paprika._.publish_template'){
 			// PX=paprika._.publish_template は、テンプレートソースを出力するリクエストにつけられるパラメータ。
-			// テンプレート生成時には、通常のHTMLと同様に振る舞うべきなので、処理をしない。
-			$this->px->bowl()->replace('{$main}', 'main');
+			// テンプレート生成時には、通常のHTMLと同様に振る舞うべきなので、
+			// ここでコンテンツの処理は実行せず、Pickles 2 の自然なコンテンツ処理に進む。
+			// ※ここでは $paprika を生成しない。
+			// ※コンテンツは、 $paprika がないことを確認したら、コンテンツの処理をキャンセルする。
+			$px->bowl()->replace('{$main}', 'main');
 			if( property_exists($conf, 'bowls') && is_array($conf->bowls) ){
 				foreach($conf->bowls as $bowl_name){
-					$this->px->bowl()->replace('{$'.$bowl_name.'}', $bowl_name);
+					$px->bowl()->replace('{$'.$bowl_name.'}', $bowl_name);
 				}
 			}
 			return;
 		}
 
-		$px = $this->px;
-
 		$src = '';
-		if( $this->px->is_publish_tool() ){
+		if( $px->is_publish_tool() ){
 			// --------------------
 			// パブリッシュ時
 
 			// 一度実行して、テンプレートを生成させる
 			if( $this->current_page_info ){
-				$output_json = $this->px->internal_sub_request(
+				$output_json = $px->internal_sub_request(
 					$this->path_script,
 					array(
 						'output'=>'json',
@@ -298,19 +300,19 @@ class main{
 				);
 				if(is_object($output_json) && property_exists($output_json, 'relatedlinks') && is_array($output_json->relatedlinks)){
 					foreach($output_json->relatedlinks as $url){
-						$this->px->add_relatedlink($url);
+						$px->add_relatedlink($url);
 					}
 				}
 
 				// テンプレートが存在するなら、パブリッシュ先に加える
-				if(is_file($this->px->realpath_files_cache('/paprika/template'))){
-					$this->px->add_relatedlink( $this->px->path_files_cache('/paprika/template') );
+				if(is_file($px->realpath_files_cache('/paprika/template'))){
+					$px->add_relatedlink( $px->path_files_cache('/paprika/template') );
 				}
 			}
 
 			// 内部パス情報の再計算
 			// 相対パスで捉え直す。
-			$tmp_realpath_script = dirname($px->fs()->get_realpath($this->px->conf()->path_publish_dir.$this->path_script));
+			$tmp_realpath_script = dirname($px->fs()->get_realpath($px->conf()->path_publish_dir.$this->path_script));
 
 			$header_template = file_get_contents( __DIR__.'/resources/dist_src/header.php.template' );
 			$header_template = str_replace( '{$paprika_env}', var_export(json_encode($this->paprika_env, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE), true), $header_template );
