@@ -5,10 +5,10 @@
     "license": "MIT",
     "scripts":{
 		"start": [
-			"@php ./tests/testdata/standard/.px_execute.php \"/?PX=admin.serve\""
+			"@php ./tests/testdata/standard/.px_execute.php \"/?PX=admin.serve&S=localhost:8080\""
 		],
 		"start-pub": [
-			"@php ./tests/testdata/standard/.px_execute.php \"/?PX=admin.serve.pub\""
+			"@php ./tests/testdata/standard/.px_execute.php \"/?PX=admin.serve.pub&S=localhost:8081\""
 		],
         "test": [
             "@php ./vendor/phpunit/phpunit/phpunit"
