@@ -28,7 +28,7 @@
 				<div class="theme_shouldernavi">
 <ul></ul>				</div>
 				<div class="theme_globalnavi">
-<ul><li><a href="/basic/" class="current">基本</a></li></ul>
+<ul><li><a href="/basic/" class="current">基本</a></li><li><a href="/showcase/">ショーケース</a></li></ul>
 				</div>
 			</div>
 		</header>
@@ -63,6 +63,10 @@
 <li><a href="/basic/php_api-ajax.html">1. PHPによるAPIにAJAX通信する</a></li>
 <li><a href="/basic/php_page.php" class="current">2. PHPで実行する</a></li>
 <li><a href="/basic/php_preview.html">3. プレビュー環境で動的に実行する</a></li>
+</ul>
+</li>
+<li><a href="/showcase/">ショーケース</a><ul>
+<li><a href="/showcase/extphp/">PHPを拡張子で適用する</a></li>
 </ul>
 </li>
 </ul>
