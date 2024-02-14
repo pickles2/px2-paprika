@@ -1,8 +1,6 @@
 <?php
-// chdir
 chdir(__DIR__);
 
-// autoload.php をロード
 $tmp_path_autoload = __DIR__;
 while(1){
     if( is_file( $tmp_path_autoload.'/vendor/autoload.php' ) ){
@@ -11,7 +9,6 @@ while(1){
     }
 
     if( $tmp_path_autoload == dirname($tmp_path_autoload) ){
-        // これ以上、上の階層がない。
         break;
     }
     $tmp_path_autoload = dirname($tmp_path_autoload);
@@ -21,10 +18,7 @@ unset($tmp_path_autoload);
 
 $paprika = new \picklesFramework2\paprikaFramework\fw\paprika(json_decode({$paprika_env}), false);
 
-// コンテンツが標準出力する場合があるので、それを拾う準備
 ob_start();
 
-// コンテンツを実行する
-// クロージャーの中で実行
-$execute_php_content = function()use($paprika){
+$execute_php_content = function($paprika){
 ?>

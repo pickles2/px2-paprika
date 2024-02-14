@@ -40,7 +40,11 @@ ob_start(); ?>
 <?php } ?>
 
 <h2>$paprika->env()</h2>
+<?php if( isset($paprika) ){ ?>
 <pre><code><?php var_dump( $paprika->env() ); ?></code></pre>
+<?php }else{ ?>
+<p><code>$paprika</code> is not set.</p>
+<?php } ?>
 
 <?php
 $content .= ob_get_clean();
