@@ -50,8 +50,7 @@ class paprika{
 	 */
 	public function __construct( $paprika_env, $px ){
 		$this->paprika_env = $paprika_env;
-		$this->px = $px; // パブリッシュ後には `false` を受け取ります。
-		// var_dump($this->paprika_env);
+		$this->px = $px; // NOTE: パブリッシュ後には `false` を受け取ります。
 
 		$this->SERVER_MEMO = $_SERVER;
 
@@ -103,7 +102,11 @@ class paprika{
 		// パス系設定の解釈
 		$this->paprika_env->realpath_controot = $this->fs->get_realpath($this->paprika_env->realpath_controot);
 		$this->paprika_env->realpath_homedir = $this->fs->get_realpath($this->paprika_env->realpath_homedir);
+		$this->paprika_env->realpath_files = $this->fs->get_realpath($this->paprika_env->realpath_files);
+		$this->paprika_env->realpath_files_cache = $this->fs->get_realpath($this->paprika_env->realpath_files_cache);
 
+		// カレントディレクトリを移動
+		chdir($this->paprika_env->realpath_controot);
 
 		// config をロード
 		$this->conf = null;

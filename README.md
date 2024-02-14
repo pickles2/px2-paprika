@@ -124,11 +124,12 @@ return call_user_func( function(){
 
 ## 変更履歴 - Change Log
 
-### pickles2/px2-paprika v0.5.0 (2024年xx月xx日)
+### pickles2/px2-paprika v0.5.0 (リリース日未定)
 
 - 同梱のプラグインが、より直接的な表現で設定できるようになった。
 - (破壊的変更) `paprika-files/` のパスを `px-files/paprika/` に変更した。
 - (破壊的変更) `config_local.php` を廃止した。
+- (破壊的変更) コンテンツのカレントディレクトリは、コンテンツルートに揃えられるようになった。
 - `PX=paprika` を追加した。これに伴い、`PX=paprika.publish_template` を `PX=paprika._.publish_template` に変更し、 `PX=paprika._` 以下を予約語とした。
 - 2重拡張子でPHPをパブリッシュできるようになった。
 

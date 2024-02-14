@@ -113,16 +113,16 @@ class main{
 		if( $px->site() ){
 			$this->current_page_info = $px->site()->get_current_page_info();
 		}
-		$current_content_path = $this->px->req()->get_request_file_path();
+		$current_content_path = $px->req()->get_request_file_path();
 		if( $this->current_page_info && strlen($this->current_page_info['content'] ?? '') ){
 			$current_content_path = $this->current_page_info['content'];
 		}
-		$this->path_script = $this->px->fs()->get_realpath('/'.$this->px->get_path_controot().$current_content_path);
-		$this->path_script = $this->px->fs()->normalize_path($this->path_script);
-		$this->realpath_script = $this->px->fs()->get_realpath($this->px->get_realpath_docroot().$this->path_script);
-		$this->realpath_script = $this->px->fs()->normalize_path($this->realpath_script);
+		$this->path_script = $px->fs()->get_realpath('/'.$px->get_path_controot().$current_content_path);
+		$this->path_script = $px->fs()->normalize_path($this->path_script);
+		$this->realpath_script = $px->fs()->get_realpath($px->get_realpath_docroot().$this->path_script);
+		$this->realpath_script = $px->fs()->normalize_path($this->realpath_script);
 		if( !is_file($this->realpath_script) ){
-			$proc_types = array_keys( get_object_vars( $this->px->conf()->funcs->processor ) );
+			$proc_types = array_keys( get_object_vars( $px->conf()->funcs->processor ) );
 			foreach($proc_types as $proc_type){
 				// 2重拡張子の場合に、実際のコンテンツファイルの名前を検索する
 				if( is_file($this->realpath_script.'.'.$proc_type) ){
