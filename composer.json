@@ -14,7 +14,7 @@
             "@php ./vendor/phpunit/phpunit/phpunit"
         ],
         "documentation": [
-            "@php ./phpDocumentor.phar  --title \"Paprika Framework 0.5.0-alpha.1 API Document\" -d \"./php/\" -t \"./docs/\""
+            "@php ./phpDocumentor.phar  --title \"Paprika Framework 0.5.0 API Document\" -d \"./php/\" -t \"./docs/\""
         ]
     } ,
     "authors": [
