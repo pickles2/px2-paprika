@@ -115,6 +115,30 @@ class paprika{
 		}
 		$this->conf = (object) $this->conf;
 
+		// 設定を整理
+		$this->conf->db = (object) $this->conf->db ?? (object) array();
+		if( !property_exists($this->conf->db, 'driver') || !strlen($this->conf->db->driver) ){
+			$this->conf->db->driver = null;
+		}
+		if( !property_exists($this->conf->db, 'dsn') ){
+			$this->conf->db->dsn = null;
+		}
+		if( !property_exists($this->conf->db, 'host') ){
+			$this->conf->db->host = null;
+		}
+		if( !property_exists($this->conf->db, 'port') ){
+			$this->conf->db->port = null;
+		}
+		if( !property_exists($this->conf->db, 'database') ){
+			$this->conf->db->database = null;
+		}
+		if( !property_exists($this->conf->db, 'username') ){
+			$this->conf->db->username = null;
+		}
+		if( !property_exists($this->conf->db, 'password') ){
+			$this->conf->db->password = null;
+		}
+
 
 		// make instance $log
 		$this->log = new log( $this );
@@ -230,34 +254,8 @@ class paprika{
 			return $this->pdo;
 		}
 
-		// 設定を整理
-		$db = (object) $this->conf('db');
-		if( !is_object($db) ){
-			return false;
-		}
-		if( !property_exists($db, 'driver') || !strlen($db->driver) ){
-			return false;
-		}
-		if( !property_exists($db, 'dsn') ){
-			$db->dsn = null;
-		}
-		if( !property_exists($db, 'host') ){
-			$db->host = null;
-		}
-		if( !property_exists($db, 'port') ){
-			$db->port = null;
-		}
-		if( !property_exists($db, 'database') ){
-			$db->database = null;
-		}
-		if( !property_exists($db, 'username') ){
-			$db->username = null;
-		}
-		if( !property_exists($db, 'password') ){
-			$db->password = null;
-		}
-
 		// PDOオプションを生成
+		$db = $this->conf('db');
 		$dsn = $db->dsn;
 		$options = array();
 		if( !strlen($dsn ?? '') ){

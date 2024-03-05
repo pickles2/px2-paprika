@@ -29,13 +29,14 @@ return call_user_func( function(){
 
 
 	// データベース接続関連
-	$conf->db = new stdClass;
-	$conf->db->driver = 'sqlite';
-	$conf->db->host = null;
-	$conf->db->port = null;
-	$conf->db->database = __DIR__.'/_database.sqlite';
-	$conf->db->username = null;
-	$conf->db->password = null;
+	$conf->db = (object) array(
+		'driver' => 'sqlite',
+		'host' => null,
+		'port' => null,
+		'database' => __DIR__.'/_database.sqlite',
+		'username' => null,
+		'password' => null,
+	);
 
 
 	// Plugins
