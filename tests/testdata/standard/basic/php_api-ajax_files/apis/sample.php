@@ -15,6 +15,7 @@ $obj['paprikaConf'] = array(
     'prepend1'=>$paprika->conf('prepend1'),
     'prepend2'=>$paprika->conf('prepend2'),
     'custom_func_a'=>$paprika->conf('custom_func_a'),
+    'dotEnvLoaded'=>$paprika->conf('extra')->dotenv_loaded,
 );
 $obj['realpath_current_dir'] = $paprika->fs()->get_realpath('./');
 echo json_encode( $obj );

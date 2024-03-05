@@ -4,6 +4,11 @@
  */
 return call_user_func( function(){
 
+	if( is_file(__DIR__.'/.env') ){
+		$dotenv = \Dotenv\Dotenv::createImmutable( __DIR__.'/' );
+		$dotenv->load();
+	}
+
 	// initialize
 
 	/** コンフィグオブジェクト */
@@ -25,13 +30,12 @@ return call_user_func( function(){
 
 	// データベース接続関連
 	$conf->db = new stdClass;
-	$conf->db->connection = 'sqlite';
+	$conf->db->driver = 'sqlite';
 	$conf->db->host = null;
 	$conf->db->port = null;
 	$conf->db->database = __DIR__.'/_database.sqlite';
 	$conf->db->username = null;
 	$conf->db->password = null;
-	$conf->db->prefix = null;
 
 
 	// Plugins
@@ -62,6 +66,8 @@ return call_user_func( function(){
 	// プロジェクトが固有に定義する設定を行います。
 	$conf->extra = new stdClass;
 
+	/** DotEnvテスト */
+	$conf->extra->dotenv_loaded = $_ENV['DOTENV_LOADING_TEST'] ?? 'DotEnvNotLoaded';
 
 
 	/** サンプル1 */

@@ -28,6 +28,24 @@ class publishTest extends PHPUnit\Framework\TestCase {
 		// トップページのソースコードを検査
 		$indexHtml = $this->fs->read_file( __DIR__.'/testdata/standard/px-files/dist/index.html' );
 
+		// プレビュー環境の sample.php を実行
+		$output = $this->passthru( [
+			'php',
+			__DIR__.'/testdata/standard/.px_execute.php',
+			'-u', "Mozilla/5.0",
+			'/basic/php_api-ajax_files/apis/sample.php'
+		] );
+		$json = json_decode($output);
+		$this->assertTrue( is_null($json->paprikaConf->undefined) );
+		$this->assertEquals( $json->paprikaConf->sample1, 'config_local.php' );
+		$this->assertFalse( property_exists($json->paprikaConf->sample2, 'prop1') );
+		$this->assertEquals( $json->paprikaConf->sample2->prop2, 'config_local.php' );
+		$this->assertEquals( $json->paprikaConf->sample3, 'config.php' );
+		$this->assertEquals( $json->paprikaConf->prepend1, 1 );
+		$this->assertEquals( $json->paprikaConf->prepend2, 2 );
+		$this->assertEquals( $json->paprikaConf->custom_func_a, 'called' );
+		$this->assertEquals( $json->paprikaConf->dotEnvLoaded, 'DotEnvLoaded' );
+
 		// 出力された sample.php を実行
 		$output = $this->passthru( [
 			'php',
@@ -42,6 +60,7 @@ class publishTest extends PHPUnit\Framework\TestCase {
 		$this->assertEquals( $json->paprikaConf->prepend1, 1 );
 		$this->assertEquals( $json->paprikaConf->prepend2, 2 );
 		$this->assertEquals( $json->paprikaConf->custom_func_a, 'called' );
+		$this->assertEquals( $json->paprikaConf->dotEnvLoaded, 'DotEnvLoaded' );
 
 		// php_page.php のソースコードを検査
 		$indexHtml = $this->fs->read_file( __DIR__.'/testdata/standard/px-files/dist/basic/php_page.php' );

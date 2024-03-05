@@ -44,7 +44,8 @@
         "pickles2/px2-remove-attr": "~2.0",
         "pickles2/px2-sitemapexcel": "~2.0",
         "pickles2/px2-publish-ex": "~2.0",
-        "phpunit/phpunit": "~9.5"
+        "phpunit/phpunit": "~9.5",
+		"vlucas/phpdotenv": "~5.4.0"
     },
     "autoload": {
         "psr-4": {

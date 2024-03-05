@@ -235,7 +235,7 @@ class paprika{
 		if( !is_object($db) ){
 			return false;
 		}
-		if( !property_exists($db, 'connection') || !strlen($db->connection) ){
+		if( !property_exists($db, 'driver') || !strlen($db->driver) ){
 			return false;
 		}
 		if( !property_exists($db, 'dsn') ){
@@ -246,6 +246,9 @@ class paprika{
 		}
 		if( !property_exists($db, 'port') ){
 			$db->port = null;
+		}
+		if( !property_exists($db, 'database') ){
+			$db->database = null;
 		}
 		if( !property_exists($db, 'username') ){
 			$db->username = null;
@@ -258,15 +261,15 @@ class paprika{
 		$dsn = $db->dsn;
 		$options = array();
 		if( !strlen($dsn ?? '') ){
-			switch( $db->connection ){
+			switch( $db->driver ){
 				case 'sqlite':
-					$dsn = $db->connection.':'.$db->database;
+					$dsn = $db->driver.':'.$db->database;
 					break;
 				case 'mysql':
-					$dsn = $db->connection.':host='.$db->host.';port='.$db->port.';dbname='.$db->database;
+					$dsn = $db->driver.':host='.$db->host.';port='.$db->port.';dbname='.$db->database.';charset=utf8';
 					break;
 				case 'pgsql':
-					$dsn = $db->connection.':host='.$db->host.';port='.$db->port.';dbname='.$db->database.';user='.$db->username.';password='.$db->password;
+					$dsn = $db->driver.':host='.$db->host.';port='.$db->port.';dbname='.$db->database.';user='.$db->username.';password='.$db->password;
 					break;
 				case 'oci':
 					$dbname = '';
@@ -278,7 +281,7 @@ class paprika{
 						$dbname .= '/';
 					}
 					$dbname .= $db->database;
-					$dsn = $db->connection.':dbname='.$dbname;
+					$dsn = $db->driver.':dbname='.$dbname;
 					break;
 			}
 		}
