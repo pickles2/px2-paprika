@@ -224,10 +224,8 @@ class bowl{
 			$this->SERVER_MEMO = $_SERVER;
 
 			// $pxにテンプレートファイルのパスを通知する
-			$path_tpl = $this->paprika->fs()->get_realpath(
-				$realpath_tpl,
-				dirname( $this->px->get_path_content() )
-			);
+			$path_tpl = $this->paprika->fs()->get_relatedpath($realpath_tpl);
+			$path_tpl = $this->paprika->fs()->normalize_path($this->paprika->fs()->get_realpath('/'.$path_tpl));
 			$this->px->add_relatedlink($path_tpl);
 		}
 
