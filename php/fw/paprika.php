@@ -120,6 +120,12 @@ class paprika{
 		if( !property_exists($this->conf->db, 'driver') || !strlen($this->conf->db->driver) ){
 			$this->conf->db->driver = null;
 		}
+		if( !strlen($this->conf->db->driver ?? '') && strlen($this->conf->db->connection ?? '') ){
+			// NOTE: 過去の互換性維持のための処理。
+			// `$conf->db->driver` は、v0.5.0 以前のバージョンでは `$conf->db->connection` という名前でした。
+			// v0.6.0 以降、 `$conf->db->connection` は非推奨ですが、引き続きサポートされます。
+			$this->conf->db->driver = $this->conf->db->connection;
+		}
 		if( !property_exists($this->conf->db, 'dsn') ){
 			$this->conf->db->dsn = null;
 		}
