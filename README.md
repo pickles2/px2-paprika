@@ -124,7 +124,7 @@ return call_user_func( function(){
 
 ## 変更履歴 - Change Log
 
-### pickles2/px2-paprika v0.6.0 (リリース日未定)
+### pickles2/px2-paprika v0.6.0 (2024年3月20日)
 
 - 設定名 `$conf->db->connection` を `$conf->db->driver` に変更した。(`$conf->db->connection` は非推奨となるが、しばらくの間は引き続きサポートされます)
 - パブリッシュ時に、誤ったパスのディレクトリが生成されることがある不具合を修正。
